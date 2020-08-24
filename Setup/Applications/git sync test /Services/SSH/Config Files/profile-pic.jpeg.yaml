@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: CONFIG_FILE
+checksum: YjIcyO9hyKX5hbUyhXy4Bg==
+checksumType: MD5
+encrypted: false
+fileName: profile-pic.jpeg
+targetFilePath: profile-pic.jpeg
+targetToAllEnv: true
