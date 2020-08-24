@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: CONFIG_FILE
+checksum: ZiuUbmG8bun5WbOEiKfqgg==
+checksumType: MD5
+encrypted: false
+fileName: harness-resources.yaml
+targetFilePath: harness-resources.yaml
+targetToAllEnv: true

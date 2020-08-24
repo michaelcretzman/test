@@ -1,0 +1,119 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: harness
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: harness-namespace-admin
+  namespace: harness
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: harness-namespace-admin-full-access
+  namespace: harness
+rules:
+- apiGroups: ["", "extensions", "apps", "autoscaling", "rbac.authorization.k8s.io", "roles.rbac.authorization.k8s.io"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources:
+  - jobs
+  - cronjobs
+  verbs: ["*"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: harness-namespace-admin-view
+  namespace: harness
+subjects:
+- kind: ServiceAccount
+  name: harness-namespace-admin
+  namespace: harness
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: harness-namespace-admin-full-access
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: harness-clusterrole
+  labels:
+    app.kubernetes.io/name: harness
+    app.kubernetes.io/part-of: harness
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - endpoints
+      - nodes
+      - pods
+      - secrets
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "extensions"
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - "extensions"
+    resources:
+      - ingresses/status
+    verbs:
+      - update
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: harness-serviceaccount
+  namespace: harness
+  labels:
+    app.kubernetes.io/name: harness
+    app.kubernetes.io/part-of: harness
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: harness-clusterrole-hsa-binding
+  labels:
+    app.kubernetes.io/name: harness
+    app.kubernetes.io/part-of: harness
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: harness-clusterrole
+subjects:
+  - kind: ServiceAccount
+    name: harness-serviceaccount
+    namespace: harness
