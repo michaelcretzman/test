@@ -1,0 +1,38 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+description: with mandatory vars
+pipelineStages:
+- type: ENV_STATE
+  name: Test Vars
+  parallel: false
+  skipCondition:
+    type: ALWAYS_SKIP
+  stageName: STAGE 1
+  workflowName: test_vars
+  workflowVariables:
+  - entityType: SERVICE
+    name: Service
+    value: k8s-latest
+  - entityType: INFRASTRUCTURE_DEFINITION
+    name: InfraDefinition_HELM
+    value: us-central1-a_harness-test -GCP_Kubernetes--Google Cloud Platform- GCP_Playground- default
+  - entityType: ENVIRONMENT
+    name: Environment2
+    value: K8sv2
+- type: ENV_STATE
+  name: Test Vars 2
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 2
+  workflowName: test_vars-2
+  workflowVariables:
+  - entityType: INFRASTRUCTURE_DEFINITION
+    name: InfraDefinition
+    value: us-central1-a_harness-test -GCP_Kubernetes--Google Cloud Platform- GCP_Playground- default
+  - entityType: SERVICE
+    name: Service
+    value: k8s-latest
+  - entityType: ENVIRONMENT
+    name: Environment2
+    value: K8sv2

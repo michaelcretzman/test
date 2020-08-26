@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: NEXUS
+artifactPaths:
+- todolist
+groupId: test
+metadataOnly: true
+repositoryFormat: maven
+repositoryName: releases
+serverName: nexus_wings

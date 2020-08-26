@@ -1,0 +1,50 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+envName: CloudFormation
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+postDeploymentSteps:
+- type: CLOUD_FORMATION_DELETE_STACK
+  name: CloudFormation Delete Stack
+  properties:
+    customStackName: test
+    timeoutMillis: 300000
+    useCustomStackName: true
+preDeploymentSteps:
+- type: CLOUD_FORMATION_CREATE_STACK
+  name: CloudFormation Create Stack
+  properties:
+    awsConfigId: ZboxJrc1QhOGQR4SSgOnUA
+    backendConfigs: null
+    customStackName: ''
+    provisionerName: CloudFormation Example
+    region: us-east-1
+    timeoutMillis: 300000
+    useCustomStackName: false
+    variables:
+    - name: KeyName
+      value: rEWkuS8pR_64FuHK2zbYng
+      valueType: ENCRYPTED_TEXT
+    - name: SSHLocation
+      value: sDQez0jBQs6P0FHsOkVw1g
+      valueType: ENCRYPTED_TEXT
+    - name: VpcId
+      value: vpc-00a7e8ea4fd1ffd9d
+      valueType: TEXT
+    - name: SgId
+      value: sg-05e7b8b9cad94b393
+      valueType: TEXT
+templatized: false

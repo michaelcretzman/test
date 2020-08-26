@@ -1,0 +1,19 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: SSH
+infrastructure:
+- type: AWS_SSH
+  cloudProviderName: AWS-Tutorial
+  desiredCapacity: 0
+  expressions:
+    vpcIds: ${cloudformation.myVPC}
+    region: us-east-1
+    tags: ${cloudformation.myTags}
+  hostConnectionAttrsName: doc-aws
+  hostConnectionType: PRIVATE_DNS
+  hostNameConvention: ${host.ec2Instance.privateDnsName.split('\.')[0]}
+  setDesiredCapacity: false
+  useAutoScalingGroup: false
+  usePublicDns: false
+provisioner: CloudFormation Example

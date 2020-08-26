@@ -1,0 +1,14 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+artifactSelections:
+- regex: false
+  serviceName: Jira-Docker
+  type: LAST_DEPLOYED
+  workflowName: JIRA-Dev
+executionName: JIRA-Dev
+executionType: Workflow
+triggerCondition:
+- type: WEBHOOK
+  eventType:
+  - push
+  repositoryType: GITHUB

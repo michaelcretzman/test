@@ -1,0 +1,15 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: PCF
+deploymentType: PCF
+infrastructure:
+- type: PCF_PCF
+  cloudProviderName: pcf
+  organization: Harness
+  routeMaps:
+  - account-3.cfapps.io
+  space: Harness_Pcf_Demo
+  tempRouteMap:
+  - account-2.cfapps.io
+scopedServices:
+- PCF

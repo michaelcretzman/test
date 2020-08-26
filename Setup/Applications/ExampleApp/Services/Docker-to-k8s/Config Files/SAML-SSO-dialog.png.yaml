@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: CONFIG_FILE
+checksumType: MD5
+description: secretconfig
+encrypted: true
+fileName: gcpkms:U8T0xjgAQK67-geEGiVbGQ
+targetFilePath: SAML-SSO-dialog.png
+targetToAllEnv: true

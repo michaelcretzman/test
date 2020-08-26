@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: OTHER
+commandUnitType: COMMAND
+targetToAllEnv: true
+templateUri: General Store Inc/test99:latest
+templateVariables:
+- name: foo
+  value: bar

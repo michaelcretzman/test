@@ -1,0 +1,251 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+envName: K8s-GCP
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-exploration-gcp
+  daemonSet: false
+  infraDefinitionName: K8sv2
+  name: Canary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_CANARY_DEPLOY
+      name: Canary Deployment
+      properties:
+        instanceUnitType: COUNT
+        instances: '1'
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    steps:
+    - type: K8S_DELETE
+      name: Canary Delete
+      properties:
+        instanceUnitType: COUNT
+        resources: ${k8s.canaryWorkload}
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: k8sv2
+  statefulSet: false
+  templateExpressions:
+  - expression: ${InfraDefinition_Kubernetes}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+- type: KUBERNETES
+  computeProviderName: harness-exploration-gcp
+  daemonSet: false
+  infraDefinitionName: K8sv2
+  name: Primary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: k8sv2
+  statefulSet: false
+  templateExpressions:
+  - expression: ${InfraDefinition_Kubernetes2}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+- type: KUBERNETES
+  computeProviderName: harness-exploration-gcp
+  daemonSet: false
+  infraDefinitionName: K8sv2
+  name: Phase 3
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: k8sv2
+  statefulSet: false
+  templateExpressions:
+  - expression: ${InfraDefinition_Kubernetes3}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+preDeploymentSteps:
+- type: TERRAFORM_PROVISION
+  name: Terraform Provision
+  properties:
+    backendConfigs: null
+    inheritApprovedPlan: false
+    provisionerName: Terraform Example
+    runPlanOnly: false
+    targets:
+    - aws_instance.tf_instance
+    templateUuid: null
+    templateVariables: null
+    templateVersion: null
+    tfVarFiles: null
+    timeoutMillis: 300000
+    variables:
+    - name: access_key
+      value: foo
+      valueType: TEXT
+    - name: tag
+      value: foo
+      valueType: TEXT
+    - name: secret_key
+      value: foo
+      valueType: TEXT
+    workspace: ${workflow.variables.workspace}
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-exploration-gcp
+  daemonSet: false
+  infraDefinitionName: K8sv2
+  name: Rollback Canary
+  phaseNameForRollback: Canary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: k8sv2
+  statefulSet: false
+  templateExpressions:
+  - expression: ${InfraDefinition_Kubernetes}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+- type: KUBERNETES
+  computeProviderName: harness-exploration-gcp
+  daemonSet: false
+  infraDefinitionName: K8sv2
+  name: Rollback Primary
+  phaseNameForRollback: Primary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: k8sv2
+  statefulSet: false
+  templateExpressions:
+  - expression: ${InfraDefinition_Kubernetes2}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+- type: KUBERNETES
+  computeProviderName: harness-exploration-gcp
+  daemonSet: false
+  infraDefinitionName: K8sv2
+  name: Rollback Phase 3
+  phaseNameForRollback: Phase 3
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: k8sv2
+  statefulSet: false
+  templateExpressions:
+  - expression: ${InfraDefinition_Kubernetes3}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+templateExpressions:
+- expression: ${Environment}
+  fieldName: envId
+  metadata:
+  - name: relatedField
+  - name: entityType
+    value: ENVIRONMENT
+templatized: true
+userVariables:
+- type: ENTITY
+  description: Variable for Environment entity
+  fixed: false
+  mandatory: true
+  name: Environment
+- type: ENTITY
+  description: Variable for Infrastructure Definition entity in Rollback Canary
+  fixed: false
+  mandatory: true
+  name: InfraDefinition_Kubernetes
+- type: ENTITY
+  description: Variable for Infrastructure Definition entity in Rollback Primary
+  fixed: false
+  mandatory: true
+  name: InfraDefinition_Kubernetes2
+- type: ENTITY
+  description: Variable for Infrastructure Definition entity in Rollback Phase 3
+  fixed: false
+  mandatory: true
+  name: InfraDefinition_Kubernetes3
+- type: TEXT
+  fixed: false
+  mandatory: false
+  name: module
+  value: child
+- type: TEXT
+  fixed: false
+  mandatory: false
+  name: workspace
+  value: production

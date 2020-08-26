@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: STOP
+commandUnitType: COMMAND
+targetToAllEnv: true
+templateUri: General Store Inc/JBoss Commands/Stop:latest
+templateVariables:
+- name: RuntimePath
+  value: ${WINGS_RUNTIME_PATH}

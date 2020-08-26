@@ -1,0 +1,46 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+envName: Dev-TAR
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  notificationGroups:
+  - General Store
+  userGroupAsExpression: false
+preDeploymentSteps:
+- type: TERRAFORM_PROVISION
+  name: Terraform Provision
+  properties:
+    provisionerName: front-end
+    timeoutMillis: 300000
+    variables:
+    - name: access key
+      value: null
+      valueType: ENCRYPTED_TEXT
+    - name: secret key
+      value: null
+      valueType: ENCRYPTED_TEXT
+- type: CLOUD_FORMATION_CREATE_STACK
+  name: Cloud Formation Create Stack
+  properties:
+    awsConfigId: 7VquTr1tQmer76b8rIW_0w
+    provisionerName: DEV-CF
+    region: us-west-1
+    timeoutMillis: 300000
+    variables:
+    - name: access key
+      value: null
+      valueType: ENCRYPTED_TEXT
+    - name: secret key
+      value: null
+      valueType: ENCRYPTED_TEXT
+templatized: false

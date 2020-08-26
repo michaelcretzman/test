@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: TERRAFORM
+path: .
+sourceRepoBranch: master
+sourceRepoSettingName: terraform
+variables:
+- name: access_key
+  valueType: TEXT
+- name: secret_key
+  valueType: TEXT
+- name: tag
+  valueType: TEXT

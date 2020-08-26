@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: CONFIG_FILE
+checksum: 888f394619a3272c062e766fad54740f
+checksumType: MD5
+description: config-demo
+encrypted: false
+fileName: config-demo.yaml
+targetFilePath: config-demo.yaml
+targetToAllEnv: true

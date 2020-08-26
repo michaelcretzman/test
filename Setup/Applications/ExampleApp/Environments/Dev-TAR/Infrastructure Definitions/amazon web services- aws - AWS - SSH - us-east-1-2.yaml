@@ -1,0 +1,20 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: SSH
+infrastructure:
+- type: AWS_SSH
+  awsInstanceFilter:
+    vpcIds:
+    - vpc-abf611d0
+  cloudProviderName: aws
+  desiredCapacity: 0
+  hostConnectionAttrsName: aws-test
+  hostConnectionType: PRIVATE_DNS
+  hostNameConvention: ${host.ec2Instance.privateDnsName.split('\.')[0]}
+  region: us-east-1
+  setDesiredCapacity: false
+  useAutoScalingGroup: false
+  usePublicDns: false
+scopedServices:
+- ZIP-file

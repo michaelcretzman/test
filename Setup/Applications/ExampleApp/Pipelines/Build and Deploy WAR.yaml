@@ -1,0 +1,34 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+description: Build ToDo List from Jenkins and Deploy to AWS
+pipelineStages:
+- type: ENV_STATE
+  name: Build ToDo List
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+  workflowName: Build File
+- type: APPROVAL
+  name: Approval 1
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    variables:
+    - name: name
+      value: johnsmith
+    stageName: STAGE 2
+    timeoutMillis: 86400000
+    approvalStateType: USER_GROUP
+    sweepingOutputName: parent
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 2
+- type: ENV_STATE
+  name: Deploy ToDo List
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 3
+  workflowName: Deploy File

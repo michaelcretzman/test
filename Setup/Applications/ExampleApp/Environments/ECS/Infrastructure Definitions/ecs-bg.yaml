@@ -1,0 +1,18 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: ECS
+infrastructure:
+- type: AWS_ECS
+  assignPublicIp: false
+  cloudProviderName: aws-example
+  clusterName: docs-ecs
+  launchType: EC2
+  region: us-west-1
+  securityGroupIds:
+  - sg-0b227bd7bf9f6e7b6
+  subnetIds:
+  - subnet-0f72694dbdb9cb120
+  vpcId: vpc-061807a1ae244b006
+scopedServices:
+- ecs-replica

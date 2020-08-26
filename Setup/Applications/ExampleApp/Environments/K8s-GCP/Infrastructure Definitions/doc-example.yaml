@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: KUBERNETES_CLUSTER
+deploymentType: KUBERNETES
+infrastructure:
+- type: DIRECT_KUBERNETES
+  cloudProviderName: kubernetes-doc-example
+  clusterName: kubernetes-doc-example
+  namespace: default
+  releaseName: ${infra.kubernetes.infraId}
+scopedServices:
+- NGINX K8s

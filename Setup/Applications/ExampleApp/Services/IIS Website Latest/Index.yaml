@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: IIS
+configVariables:
+- name: foo_IIS
+  value: '1'
+  valueType: TEXT
+deploymentType: WINRM
+description: Nov 13 2019

@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: secret-example
+  value: gcpkms:sDQez0jBQs6P0FHsOkVw1g
+  valueType: ENCRYPTED_TEXT
+deploymentType: KUBERNETES

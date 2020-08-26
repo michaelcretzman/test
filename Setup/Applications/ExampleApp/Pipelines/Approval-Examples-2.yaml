@@ -1,0 +1,27 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+description: To document Approvals via Harness UI (User Groups), Shell Scripts
+pipelineStages:
+- type: APPROVAL
+  name: Approval 0
+  parallel: false
+  properties:
+    userGroups:
+    - DocExample
+    variables:
+    - name: releaseNo
+      value: '1'
+    timeoutMillis: 86400000
+    approvalStateType: USER_GROUP
+    sweepingOutputName: test
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+- type: ENV_STATE
+  name: Build
+  parallel: false
+  skipCondition:
+    expression: ${test.releaseNo} == 1
+    type: CONDITIONAL_SKIP
+  stageName: STAGE 2
+  workflowName: Build File

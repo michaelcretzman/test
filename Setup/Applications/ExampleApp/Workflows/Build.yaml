@@ -1,0 +1,90 @@
+harnessApiVersion: '1.0'
+type: BUILD
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  notificationGroups:
+  - General Store
+  userGroupAsExpression: false
+phases:
+- daemonSet: false
+  name: Phase 1
+  phaseSteps:
+  - type: PREPARE_STEPS
+    name: Prepare Steps
+    steps:
+    - type: SHELL_SCRIPT
+      name: Shell Script
+      properties:
+        connectionType: SSH
+        executeOnDelegate: true
+        publishAsVar: false
+        scriptType: BASH
+        timeoutMillis: 600000
+    - type: COMMAND
+      name: conditional-test
+      templateUri: General Store Inc/Generic Commands/conditional-test:latest
+      templateVariables:
+      - name: cmd
+    - type: JENKINS
+      name: Jenkins
+      properties:
+        jenkinsConfigName: JenkinsDoc
+        jobName: build-descriptor-setter-with-params
+        jobNameAsExpression: false
+        jobParameters:
+        - key: Url
+          value: http://harness.io
+        - key: ReleaseName
+          value: latest
+        - key: Modifier
+          value: ==
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        timeoutMillis: 600000
+    stepsInParallel: false
+  - type: COLLECT_ARTIFACT
+    name: Collect Artifact
+    steps:
+    - type: ARTIFACT_COLLECTION
+      name: Artifact Collection
+    - type: HTTP
+      name: HTTP
+      properties:
+        executeWithPreviousSteps: false
+        header: 'content-type: application/json'
+        method: GET
+        url: http://example.com
+    - type: HTTP
+      name: HTTP_2
+      properties:
+        assertion: '${httpResponseCode}==${ResponseCode} '
+        executeWithPreviousSteps: false
+        header: 'content-type: application/json'
+        method: GET
+        socketTimeoutMillis: 0
+        url: ${Url}
+    - type: HTTP
+      name: Health Check
+      properties:
+        executeWithPreviousSteps: false
+        socketTimeoutMillis: 0
+      templateUri: General Store Inc/HTTP Verifications/Health Check:latest
+      templateVariables:
+      - name: Url
+      - name: ResponseCode
+        value: '200'
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  statefulSet: false
+templatized: true
+userVariables:
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: blah

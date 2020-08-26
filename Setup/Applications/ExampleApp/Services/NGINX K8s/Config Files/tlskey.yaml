@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: CONFIG_FILE
+checksumType: MD5
+description: tlskey
+encrypted: true
+fileName: gcpkms:U8T0xjgAQK67-geEGiVbGQ
+targetFilePath: tlskey
+targetToAllEnv: true

@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: GCP
+deploymentType: KUBERNETES
+infrastructure:
+- type: GCP_KUBERNETES
+  cloudProviderName: GCP_Playground
+  expressions:
+    releaseName: release-${infra.kubernetes.infraId}
+    clusterName: ${terraform.gcp_cluster_name}
+    namespace: ${terraform. namespace}
+provisioner: GCP K8s

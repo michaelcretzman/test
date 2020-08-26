@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: ENVIRONMENT
+configMapYamlByServiceTemplateName: {}
+environmentType: PROD
+variableOverrides:
+- name: test
+  serviceName: IIS-website
+  value: newtest1
+  valueType: TEXT

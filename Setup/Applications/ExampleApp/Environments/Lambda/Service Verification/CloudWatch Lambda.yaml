@@ -1,0 +1,44 @@
+harnessApiVersion: '1.0'
+type: CLOUD_WATCH
+alertEnabled: false
+alertThreshold: 0.5
+analysisTolerance: MEDIUM
+connectorName: aws-playground-dev-1
+enabled24x7: false
+lambdaFunctionsMetrics:
+  ExampleApp-aws-lambda-Lambda-my-function:
+  - dimension: FunctionName
+    dimensionDisplay: Lambda Function Name
+    displayName: Invocations Sum
+    enabledDefault: true
+    metricName: Invocations
+    metricType: THROUGHPUT
+    statistics: Sum
+    unit: Count
+  - dimension: FunctionName
+    dimensionDisplay: Lambda Function Name
+    displayName: Errors Sum
+    enabledDefault: true
+    metricName: Errors
+    metricType: ERROR
+    statistics: Sum
+    unit: Count
+  - dimension: FunctionName
+    dimensionDisplay: Lambda Function Name
+    displayName: Throttles Sum
+    enabledDefault: true
+    metricName: Throttles
+    metricType: ERROR
+    statistics: Sum
+    unit: Count
+  - dimension: FunctionName
+    dimensionDisplay: Lambda Function Name
+    displayName: Duration Average
+    enabledDefault: true
+    metricName: Duration
+    metricType: THROUGHPUT
+    statistics: Average
+    unit: Milliseconds
+numOfOccurrencesForAlert: 1
+region: us-east-1
+serviceName: aws-lambda

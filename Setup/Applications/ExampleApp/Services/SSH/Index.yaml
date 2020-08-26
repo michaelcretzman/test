@@ -1,0 +1,11 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: ZIP
+configVariables:
+- name: testencryp
+  value: gcpkms:fKxiwTR7QIKqrCqnlHtHXw
+  valueType: ENCRYPTED_TEXT
+- name: test
+  value: foo
+  valueType: TEXT
+deploymentType: SSH

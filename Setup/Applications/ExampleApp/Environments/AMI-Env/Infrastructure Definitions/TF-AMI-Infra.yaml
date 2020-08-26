@@ -1,0 +1,21 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: AMI
+infrastructure:
+- type: AWS_AMI
+  amiDeploymentType: AWS_ASG
+  asgIdentifiesWorkload: false
+  cloudProviderName: aws-docs
+  expressions:
+    classicLoadBalancers: ${terrafrom.prodLB}
+    stageTargetGroupArns: ${terrafrom.stageTg}
+    autoScalingGroupName: ${terrafrom.baseASG}
+    stageClassicLoadBalancers: ${terrafrom.stageLB}
+    targetGroupArns: ${terrafrom.prodTg}
+    region: ${terrafrom.region}
+  hostNameConvention: ${host.ec2Instance.privateDnsName.split('\.')[0]}
+  useTrafficShift: false
+provisioner: TF-AMI
+scopedServices:
+- AMI

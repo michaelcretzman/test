@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SHELL_SCRIPT
+scriptBody: |-
+  apt-get -y install awscli
+  aws configure set aws_access_key_id XXXX
+  aws configure set aws_secret_access_key XXXX
+  aws configure set region us-east-1
+  aws ec2 describe-instances --filters Name=tag:Name,Values=harness-provisioner

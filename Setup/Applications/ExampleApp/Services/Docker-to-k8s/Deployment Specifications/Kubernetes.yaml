@@ -1,0 +1,16 @@
+harnessApiVersion: '1.0'
+type: KUBERNETES
+containerDefinition:
+  commands:
+  - command param1
+  cpu: 4.0
+  logConfiguration: {}
+  memory: 512
+  name: DEFAULT_NAME
+  portMappings:
+  - containerPort: 1234
+    hostPort: 4321
+  storageConfigurations:
+  - containerPath: /test
+    hostSourcePath: /data
+    readonly: false

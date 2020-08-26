@@ -1,0 +1,14 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+executionName: GitOpsDemo Deployment
+executionType: Workflow
+triggerCondition:
+- type: WEBHOOK
+  eventType:
+  - push
+  repositoryType: GITHUB
+workflowVariables:
+- name: ServiceInfra_HELM
+  value: ${ref.split(‘/’)[2]}-catalog
+- name: Environment
+  value: ${ref.split('/')[2]}

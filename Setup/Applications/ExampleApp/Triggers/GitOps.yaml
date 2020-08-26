@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+executionName: GitOps
+executionType: Pipeline
+triggerCondition:
+- type: WEBHOOK
+  eventType:
+  - push
+  repositoryType: GITLAB

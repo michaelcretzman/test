@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: test
+  value: foo
+  valueType: TEXT
+description: deploy Jenkins from Docker Hub to K8s using Helm

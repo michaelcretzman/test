@@ -1,0 +1,19 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: ECS
+infrastructure:
+- type: AWS_ECS
+  assignPublicIp: false
+  cloudProviderName: aws-playground
+  clusterName: doc-example
+  launchType: EC2
+  region: us-east-1
+  securityGroupIds:
+  - sg-2aadb15f
+  subnetIds:
+  - subnet-e962248d
+  - subnet-e7c283ac
+  vpcId: vpc-e703539f
+scopedServices:
+- ecs-daemon

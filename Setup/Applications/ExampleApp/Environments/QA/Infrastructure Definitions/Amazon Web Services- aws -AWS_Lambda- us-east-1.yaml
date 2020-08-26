@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: AWS_LAMBDA
+infrastructure:
+- type: AWS_AWS_LAMBDA
+  cloudProviderName: aws
+  iamRole: arn:aws:iam::830767422336:role/aws-opsworks-service-role
+  region: us-east-1
+  vpcId: vpc-abf611d0
+scopedServices:
+- aws-lambda

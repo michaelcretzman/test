@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: IIS
+configVariables:
+- name: foo
+  value: bar
+  valueType: TEXT
+deploymentType: WINRM

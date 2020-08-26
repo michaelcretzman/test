@@ -1,0 +1,36 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: ENV_STATE
+  name: JIRA-Dev
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+  workflowName: JIRA-Dev
+- type: APPROVAL
+  name: Approval 1
+  parallel: false
+  properties:
+    approvalStateParams:
+      jiraApprovalParams:
+        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+        project: HD
+        issueId: ${Jiravar.issueId}
+        approvalField: status
+        approvalOperator: equalsTo
+        approvalValue: Approved
+        rejectionField: status
+        rejectionOperator: equalsTo
+        rejectionValue: Rejected
+    timeoutMillis: 1800000
+    approvalStateType: JIRA
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: Jira Approval
+- type: ENV_STATE
+  name: Jira-Prod
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  workflowName: JIRA-Prod

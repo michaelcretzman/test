@@ -1,0 +1,11 @@
+harnessApiVersion: '1.0'
+type: TERRAFORM
+description: module for front-end deployment infra
+path: terraform-CV
+sourceRepoBranch: master
+sourceRepoSettingName: git
+variables:
+- name: access key
+  valueType: ENCRYPTED_TEXT
+- name: secret key
+  valueType: ENCRYPTED_TEXT

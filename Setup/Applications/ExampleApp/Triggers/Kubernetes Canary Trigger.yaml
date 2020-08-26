@@ -1,0 +1,28 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+executionName: Kubernetes
+executionType: Workflow
+triggerCondition:
+- type: WEBHOOK
+  action:
+  - closed
+  eventType:
+  - pull_request
+  repositoryType: GITHUB
+workflowVariables:
+- entityType: INFRASTRUCTURE_DEFINITION
+  name: InfraDefinition_Kubernetes
+  value: ${pull_request.id}
+- name: workspace
+  value: production
+- entityType: INFRASTRUCTURE_DEFINITION
+  name: InfraDefinition_Kubernetes3
+  value: ${pull_request.id}
+- entityType: INFRASTRUCTURE_DEFINITION
+  name: InfraDefinition_Kubernetes2
+  value: ${pull_request.id}
+- name: module
+  value: child
+- entityType: ENVIRONMENT
+  name: Environment
+  value: K8sv2

@@ -1,0 +1,4 @@
+harnessApiVersion: '1.0'
+type: CLOUD_FORMATION
+sourceType: TEMPLATE_URL
+templateFilePath: https://s3.amazon.aws.com/path

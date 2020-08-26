@@ -1,0 +1,21 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: SSH
+infrastructure:
+- type: AWS_SSH
+  awsInstanceFilter:
+    vpcIds:
+    - vpc-0c8558c0f4282aa3e
+  cloudProviderName: aws-example
+  desiredCapacity: 0
+  hostConnectionAttrsName: rsingh-test
+  hostConnectionType: PRIVATE_DNS
+  hostNameConvention: ${host.ec2Instance.privateDnsName.split('\.')[0]}
+  loadBalancerName: a1055159297c711e8b6b9123361e42c3
+  region: us-east-1
+  setDesiredCapacity: false
+  useAutoScalingGroup: false
+  usePublicDns: false
+scopedServices:
+- ecs-replica

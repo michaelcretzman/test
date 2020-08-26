@@ -1,0 +1,10 @@
+harnessApiVersion: '1.0'
+type: INSTALL
+commandUnitType: COMMAND
+targetToAllEnv: true
+templateUri: General Store Inc/Tomcat Commands/Install:latest
+templateVariables:
+- name: RuntimePath
+- name: BackupPath
+- name: StagingPath
+- name: TomcatBinaryName

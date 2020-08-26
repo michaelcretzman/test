@@ -1,0 +1,17 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: AWS_LAMBDA
+infrastructure:
+- type: AWS_AWS_LAMBDA
+  cloudProviderName: aws-docs-vars
+  iamRole: arn:aws:iam::448640225317:role/service-role/TestAwsLamdaRole
+  region: us-east-1
+  securityGroupIds:
+  - sg-05e7b8b9cad94b393
+  subnetIds:
+  - subnet-0c945c814c09c9aed
+  - subnet-05788710b1b06b6b1
+  vpcId: vpc-00a7e8ea4fd1ffd9d
+scopedServices:
+- aws-lambda

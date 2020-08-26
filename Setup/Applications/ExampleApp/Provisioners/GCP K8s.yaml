@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: TERRAFORM
+path: tf-k8s
+sourceRepoBranch: master
+sourceRepoSettingName: git-example

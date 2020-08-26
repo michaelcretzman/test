@@ -1,0 +1,14 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+executionName: Kubernetes
+executionType: Workflow
+triggerCondition:
+- type: WEBHOOK
+  eventType:
+  - push
+  repositoryType: GITHUB
+workflowVariables:
+- name: workspace
+  value: production
+- name: module
+  value: child

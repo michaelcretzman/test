@@ -1,0 +1,7 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: NA-product
+  value: ${account.defaults.productName}
+  valueType: TEXT

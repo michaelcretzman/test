@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: HELM
+chartName: nginx
+chartUrl: https://charts.bitnami.com/bitnami
+chartVersion: 1.0.1

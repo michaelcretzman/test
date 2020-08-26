@@ -1,0 +1,4 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+description: Docker image for k8s deployment

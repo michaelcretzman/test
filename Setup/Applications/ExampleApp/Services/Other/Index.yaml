@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+applicationStack: Standard Tomcat 7
+artifactType: OTHER
+configVariables:
+- name: myServiceVar
+  value: test
+  valueType: TEXT

@@ -1,0 +1,6 @@
+harnessApiVersion: '1.0'
+type: AMAZON_S3
+artifactPaths:
+- todolist-v1.0.zip
+bucketName: todolist-aspnet
+serverName: aws-test

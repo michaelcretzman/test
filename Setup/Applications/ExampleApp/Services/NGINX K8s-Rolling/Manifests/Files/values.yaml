@@ -1,0 +1,3 @@
+name: harness-example
+replicas: 1
+image: ${artifact.metadata.image}

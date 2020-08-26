@@ -1,0 +1,66 @@
+harnessApiVersion: '1.0'
+type: BUILD
+description: Build an Artifact using Jenkins
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+phases:
+- daemonSet: false
+  name: Phase 1
+  phaseSteps:
+  - type: PREPARE_STEPS
+    name: Prepare Steps
+    steps:
+    - type: JENKINS
+      name: Jenkins
+      properties:
+        jenkinsConfigName: JenkinsDoc
+        jobName: todolist-war
+        jobNameAsExpression: false
+        jobParameters: null
+        sweepingOutputName: Jenkins
+        sweepingOutputScope: PIPELINE
+        timeoutMillis: 600000
+    - type: SHELL_SCRIPT
+      name: Shell Script
+      properties:
+        connectionType: SSH
+        executeOnDelegate: true
+        publishAsVar: false
+        scriptString: |-
+          echo "buildNumber: " ${Jenkins.buildNumber}
+          echo "buildUrl: " ${Jenkins.buildUrl}
+          echo "buildDisplayName: " ${Jenkins.buildDisplayName}
+          echo "buildFullDisplayName: " ${Jenkins.buildFullDisplayName}
+          echo "jobStatus: " ${Jenkins.jobStatus}
+          echo "description: " ${Jenkins.description}
+        scriptType: BASH
+        tags:
+        - docs-test
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+        timeoutMillis: 600000
+    stepsInParallel: false
+  - type: COLLECT_ARTIFACT
+    name: Collect Artifact
+    steps:
+    - type: ARTIFACT_COLLECTION
+      name: Artifact Collection
+      properties:
+        artifactStreamName: todolist-war
+        buildNo: ${Jenkins.buildNumber}
+        serviceName: ToDo List WAR
+        timeoutMillis: 300000
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  statefulSet: false
+templatized: false

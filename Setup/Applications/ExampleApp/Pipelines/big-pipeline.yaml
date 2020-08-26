@@ -1,0 +1,44 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: ENV_STATE
+  name: dev-check
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: Dev
+  workflowName: Dev-TAR-workflow
+- type: APPROVAL
+  name: Approval 1
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    timeoutMillis: 604800000
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: Dev-Approval
+- type: ENV_STATE
+  name: stage-check
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: Stage
+  workflowName: docker-to-kubernetes
+- type: APPROVAL
+  name: Approval 3
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    timeoutMillis: 604800000
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: Stage-Approval
+- type: ENV_STATE
+  name: Production
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: Release
+  workflowName: IIS-website

@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: SHELL_SCRIPT
+scriptString: printenv
+scriptType: BASH
+timeoutMillis: 600000

@@ -1,0 +1,19 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: ECS
+infrastructure:
+- type: AWS_ECS
+  assignPublicIp: true
+  cloudProviderName: aws-playground-dev-1
+  expressions:
+    securityGroupIds: sg-053e69f5ce11d3f53
+    vpcId: vpc-00a7e8ea4fd1ffd9d
+    clusterName: default
+    region: us-east-1
+    subnetIds: subnet-05788710b1b06b6b1
+  launchType: EC2
+  region: us-east-1
+provisioner: Terraform Example
+scopedServices:
+- ecs-replica

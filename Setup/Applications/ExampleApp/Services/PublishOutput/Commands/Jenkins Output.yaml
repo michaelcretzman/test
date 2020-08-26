@@ -1,0 +1,22 @@
+harnessApiVersion: '1.0'
+type: START
+commandUnitType: COMMAND
+commandUnits:
+- command: |-
+    echo buildNumber: ${Jenkins.buildNumber}
+    echo buildUrl: ${Jenkins.buildUrl}
+    echo buildDisplayName: ${Jenkins.buildDisplayName}
+    echo buildFullDisplayName: ${Jenkins.buildFullDisplayName}
+    echo jobStatus: ${Jenkins.jobStatus}
+    echo description: ${Jenkins.description}
+    : '
+    The Job parameters captured in metadata
+    can be referenced using ${context.output("Jenkins").metadata.<ParamKey>}
+    '
+
+    echo ${pipeline.startTs}
+  commandUnitType: EXEC
+  deploymentType: SSH
+  name: Exec
+  scriptType: BASH
+targetToAllEnv: true

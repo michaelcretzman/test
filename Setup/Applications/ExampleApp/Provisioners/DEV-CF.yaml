@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: CLOUD_FORMATION
+sourceType: TEMPLATE_URL
+templateFilePath: https://s3.amazon.aws.com/path
+variables:
+- name: access key
+  valueType: ENCRYPTED_TEXT
+- name: secret key
+  valueType: ENCRYPTED_TEXT
