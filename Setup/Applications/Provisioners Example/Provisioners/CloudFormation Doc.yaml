@@ -1,0 +1,13 @@
+harnessApiVersion: '1.0'
+type: CLOUD_FORMATION
+sourceType: TEMPLATE_URL
+templateFilePath: https://harness-example.s3.amazonaws.com/cloudformationtemplates/ec2.template
+variables:
+- name: InstanceType
+  valueType: TEXT
+- name: KeyName
+  valueType: TEXT
+- name: Path
+  valueType: TEXT
+- name: SSHLocation
+  valueType: TEXT

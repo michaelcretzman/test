@@ -1,0 +1,24 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: SSH
+infrastructure:
+- type: AWS_SSH
+  awsInstanceFilter:
+    vpcIds:
+    - vpc-e703539f
+  cloudProviderName: aws-playground-dev-1
+  desiredCapacity: 0
+  expressions:
+    vpcIds: ${cloudformation.myVPC}
+    tags: ${cloudformation.myTags}
+  hostConnectionAttrsName: stress-test
+  hostConnectionType: PUBLIC_DNS
+  hostNameConvention: ${host.ec2Instance.publicDnsName.split('\.')[0]}
+  region: us-east-1
+  setDesiredCapacity: false
+  useAutoScalingGroup: false
+  usePublicDns: false
+provisioner: CloudFormation Example
+scopedServices:
+- TAR

@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: TERRAFORM
+path: ${workflow.variables.path}
+sourceRepoBranch: ${workflow.variables.branch}
+sourceRepoSettingName: git-docs

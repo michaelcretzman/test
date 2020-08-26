@@ -1,0 +1,7 @@
+harnessApiVersion: '1.0'
+type: CLOUD_FORMATION
+sourceType: TEMPLATE_URL
+templateFilePath: https://harness-example.s3.amazonaws.com/cloudformationtemplates/simple.template
+variables:
+- name: VpcId
+  valueType: TEXT

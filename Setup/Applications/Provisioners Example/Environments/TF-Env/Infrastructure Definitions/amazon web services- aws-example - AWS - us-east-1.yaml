@@ -1,0 +1,23 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: SSH
+infrastructure:
+- type: AWS_SSH
+  awsInstanceFilter:
+    tags:
+    - key: Name
+      value: tf-example
+    vpcIds:
+    - vpc-0c8558c0f4282aa3e
+  cloudProviderName: aws-example
+  desiredCapacity: 0
+  hostConnectionAttrsName: aws-test
+  hostConnectionType: PUBLIC_DNS
+  hostNameConvention: ${host.ec2Instance.privateDnsName.split('\.')[0]}
+  region: us-east-1
+  setDesiredCapacity: false
+  useAutoScalingGroup: false
+  usePublicDns: false
+scopedServices:
+- TAR

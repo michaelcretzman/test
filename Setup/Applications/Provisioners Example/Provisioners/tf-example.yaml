@@ -1,0 +1,21 @@
+harnessApiVersion: '1.0'
+type: TERRAFORM
+backendConfigs:
+- name: bucket
+  valueType: TEXT
+- name: key
+  valueType: TEXT
+- name: region
+  valueType: TEXT
+path: ec2
+sourceRepoBranch: master
+sourceRepoSettingName: git-docs
+variables:
+- name: access_key
+  valueType: ENCRYPTED_TEXT
+- name: region
+  valueType: TEXT
+- name: secret_key
+  valueType: ENCRYPTED_TEXT
+- name: tag
+  valueType: TEXT
