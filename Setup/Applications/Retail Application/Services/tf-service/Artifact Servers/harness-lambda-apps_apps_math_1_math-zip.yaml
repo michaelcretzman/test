@@ -1,0 +1,6 @@
+harnessApiVersion: '1.0'
+type: AMAZON_S3
+artifactPaths:
+- apps/math/1/math.zip
+bucketName: harness-lambda-apps
+serverName: AWS-Integration

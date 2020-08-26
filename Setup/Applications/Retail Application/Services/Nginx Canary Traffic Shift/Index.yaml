@@ -1,0 +1,23 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: host
+  value: nginx-demo.harness.io
+  valueType: TEXT
+- name: name
+  value: colors
+  valueType: TEXT
+- name: loadBalancer
+  value: http://${serviceVariable.host}
+  valueType: TEXT
+- name: uiPath
+  value: nginx-canary
+  valueType: TEXT
+- name: canaryName
+  value: colors-canary
+  valueType: TEXT
+- name: stableName
+  value: colors-stable
+  valueType: TEXT
+deploymentType: KUBERNETES

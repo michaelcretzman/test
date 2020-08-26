@@ -1,0 +1,97 @@
+harnessApiVersion: '1.0'
+type: BASIC
+concurrencyStrategy: INFRA
+envName: QA
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - SUCCESS
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  notificationGroups:
+  - Ankita's group
+  userGroupAsExpression: false
+phases:
+- type: AWS_CODEDEPLOY
+  computeProviderName: aws
+  daemonSet: false
+  infraDefinitionName: Amazon Web Services- aws -AWS_CodeDeploy- us-east-1
+  name: Phase 1
+  phaseSteps:
+  - type: DEPLOY_AWSCODEDEPLOY
+    name: Deploy Service
+    steps:
+    - type: AWS_CODEDEPLOY_STATE
+      name: AWS CodeDeploy
+      properties:
+        bucket: harnessapps
+        bundleType: zip
+        commandName: Amazon Code Deploy
+        key: todolist_war/${artifact.revision}/codedeploysample.zip
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    steps:
+    - type: HTTP
+      name: Http_host_publicdns
+      properties:
+        assertion: ${httpResponseCode}==200
+        method: GET
+        url: http://${host.publicDns}
+    - type: HTTP
+      name: Http_fail
+      properties:
+        assertion: ${httpResponseCode}==200
+        method: GET
+        url: http://fail
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Account
+  statefulSet: false
+rollbackPhases:
+- type: AWS_CODEDEPLOY
+  computeProviderName: aws
+  daemonSet: false
+  infraDefinitionName: Amazon Web Services- aws -AWS_CodeDeploy- us-east-1
+  name: Rollback Phase 1
+  phaseNameForRollback: Phase 1
+  phaseSteps:
+  - type: DEPLOY_AWSCODEDEPLOY
+    name: Deploy Service
+    phaseStepNameForRollback: Deploy Service
+    statusForRollback: SUCCESS
+    steps:
+    - type: AWS_CODEDEPLOY_ROLLBACK
+      name: Rollback AWS CodeDeploy
+      properties:
+        rollback: true
+    - type: HTTP
+      name: Health Check
+      properties:
+        executeWithPreviousSteps: false
+        socketTimeoutMillis: 0
+      templateUri: General Store Inc/HTTP Verifications/Health Check:latest
+      templateVariables:
+      - name: Url
+      - name: ResponseCode
+        value: '200'
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Verify Service
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Account
+  statefulSet: false
+templatized: true
+userVariables:
+- type: TEXT
+  fixed: false
+  mandatory: false
+  name: envt

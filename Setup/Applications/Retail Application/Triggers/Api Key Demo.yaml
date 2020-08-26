@@ -1,0 +1,11 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+artifactSelections:
+- artifactStreamName: todolist-buggy
+  regex: false
+  serviceName: todo-list tomcat service
+  type: WEBHOOK_VARIABLE
+executionName: tomcat todolist workflow aws canary new relic
+executionType: Workflow
+triggerCondition:
+- type: WEBHOOK

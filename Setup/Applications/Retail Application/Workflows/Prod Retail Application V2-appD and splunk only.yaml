@@ -1,0 +1,187 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+envName: Production
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  - VERIFICATION_FAILURE
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+- executionScope: WORKFLOW
+  failureTypes:
+  - CONNECTIVITY
+  - AUTHENTICATION
+  repairActionCode: MANUAL_INTERVENTION
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - comU8qGHTi6WxK8sb1nZjA
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - Elp1y6mUQjKnTCFKoie_KQ
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Order V2
+  name: Canary Phase 1
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_CANARY_DEPLOY
+      name: Canary Deployment
+      properties:
+        instanceUnitType: COUNT
+        instances: '2'
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    steps:
+    - type: APP_DYNAMICS
+      name: AppDynamics
+      properties:
+        analysisServerConfigId: BOMCiZpNS9akFuShvfADhw
+        analysisTolerance: LOW
+        applicationId: '7596'
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        dependentTiersToAnalyze: null
+        executeWithPreviousSteps: false
+        includeTiers: false
+        templateExpressions: null
+        tierId: '147416'
+        timeDuration: 15
+    - type: SPLUNKV2
+      name: Splunkv2
+      properties:
+        analysisServerConfigId: wT3iJqyzQvWi7jkENhxjdw
+        analysisTolerance: MEDIUM
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        hostnameField: host
+        query: '*exception*'
+        timeDuration: '10'
+    stepsInParallel: true
+    waitInterval: 5
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    steps:
+    - type: K8S_DELETE
+      name: Canary Delete
+      properties:
+        instanceUnitType: COUNT
+        resources: ${k8s.canaryWorkload}
+    stepsInParallel: false
+    waitInterval: 5
+  provisionNodes: false
+  serviceName: Order V2
+  statefulSet: false
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Order V2
+  name: Canary Phase 2
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    steps:
+    - type: APP_DYNAMICS
+      name: AppDynamics
+      properties:
+        analysisServerConfigId: 2pd6OJV5Rqe2ciI3jM0y4g
+        analysisTolerance: LOW
+        applicationId: '7596'
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        dependentTiersToAnalyze: null
+        executeWithPreviousSteps: false
+        includeTiers: false
+        tierId: '147416'
+        timeDuration: '15'
+    - type: SPLUNKV2
+      name: Splunkv2
+      properties:
+        analysisServerConfigId: E8ZFr1eJRPWPKuKKZq3ebw
+        analysisTolerance: MEDIUM
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        hostnameField: host
+        query: '*exception*'
+        timeDuration: '15'
+    stepsInParallel: true
+    waitInterval: 0
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order V2
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Order V2
+  name: Rollback Canary Phase 1
+  phaseNameForRollback: Canary Phase 1
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order V2
+  statefulSet: false
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Order V2
+  name: Rollback Canary Phase 2
+  phaseNameForRollback: Canary Phase 2
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    - type: JIRA_CREATE_UPDATE
+      name: Jira
+      properties:
+        customFields: null
+        issueId: ${Jiravar.issueId}
+        issueType: Story
+        jiraAction: UPDATE_TICKET
+        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+        labels:
+        - ''
+        project: HD
+        summary: Production Deployment Failed - Rolling back
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order V2
+  statefulSet: false
+templatized: false

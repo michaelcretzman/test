@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+applicationStack: ken's tomcat
+artifactType: JAR
+deploymentType: SSH

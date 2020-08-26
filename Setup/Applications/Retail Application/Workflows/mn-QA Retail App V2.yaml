@@ -1,0 +1,127 @@
+harnessApiVersion: '1.0'
+type: ROLLING
+concurrencyStrategy: INFRA
+envName: QA
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - SUCCESS
+  - FAILED
+  - PAUSED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - 9gBB_2hwQWqDyiCI7H-o5g
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Order V2
+  name: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: JIRA
+    steps:
+    - type: JIRA_CREATE_UPDATE
+      name: JIRA Update
+      properties:
+        comment: QA Workflow has started.
+        customFields: null
+        issueId: ${Jiravar.issueId}
+        issueType: Story
+        jiraAction: UPDATE_TICKET
+        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+        labels:
+        - ''
+        priority: ''
+        project: HD
+        status: Ready for Testing
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    steps:
+    - type: HTTP
+      name: Smoke Test
+      properties:
+        assertion: ''
+        body: ''
+        executeWithPreviousSteps: false
+        header: ''
+        method: GET
+        publishAsVar: false
+        responseProcessingExpressions: ''
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        templateVariables: ''
+        timeoutMillis: 10000
+        url: https://harness.io
+    - type: HTTP
+      name: Regression Test
+      properties:
+        assertion: ''
+        body: ''
+        executeWithPreviousSteps: false
+        header: ''
+        method: GET
+        publishAsVar: false
+        responseProcessingExpressions: ''
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        templateVariables: ''
+        timeoutMillis: 10000
+        url: https://harness.io
+    - type: HTTP
+      name: Integration Test
+      properties:
+        assertion: ''
+        body: ''
+        executeWithPreviousSteps: false
+        header: ''
+        method: GET
+        publishAsVar: false
+        responseProcessingExpressions: ''
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        templateVariables: ''
+        timeoutMillis: 10000
+        url: https://harness.io
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order V2
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Order V2
+  name: Rollback Rolling
+  phaseNameForRollback: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order V2
+  statefulSet: false
+templatized: false

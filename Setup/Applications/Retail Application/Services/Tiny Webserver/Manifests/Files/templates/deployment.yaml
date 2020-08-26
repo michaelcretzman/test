@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.name}}
+spec:
+  replicas: {{int .Values.replicas}}
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+    spec:
+      containers:
+      - name: {{.Values.name}}
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - /cmds/serve.sh
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 10m
+            memory: 20Mi
+          requests:
+            cpu: 10m
+            memory: 20Mi
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 2
+        volumeMounts:
+        - name: cmds
+          mountPath: /cmds
+      volumes:
+      - name: cmds
+        configMap:
+          defaultMode: 0755
+          name: {{.Values.name}}

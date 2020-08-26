@@ -1,0 +1,452 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+envName: Production
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  - VERIFICATION_FAILURE
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Prod harness-demo cluster
+  name: Phase 1
+  phaseSteps:
+  - type: CONTAINER_SETUP
+    name: Setup Container
+    steps:
+    - type: KUBERNETES_SETUP
+      name: Kubernetes Service Setup
+      properties:
+        className: software.wings.sm.states.KubernetesSetup
+        commandName: Setup Replication Controller
+        desiredInstanceCount: fixedInstances
+        fixedInstances: '6'
+        ingressYaml: |-
+          # Required placeholders: ${SERVICE_NAME} and ${SERVICE_PORT}
+          # ---
+          apiVersion: extensions/v1beta1
+          kind: Ingress
+          metadata:
+            name: name-will-be-replaced
+            annotations:
+              ingress.kubernetes.io/rewrite-target: /
+          spec:
+            rules:
+            - http:
+               paths:
+               - path: /path
+                 backend:
+                  serviceName: ${SERVICE_NAME}
+                  servicePort: ${SERVICE_PORT}
+        istioConfig: null
+        maxAutoscaleInstances: 0
+        maxInstances: 2
+        minAutoscaleInstances: 0
+        port: 80
+        protocol: TCP
+        replicationControllerName: ${app.name}.${service.name}.${env.name}
+        resizeStrategy: RESIZE_NEW_FIRST
+        serviceSteadyStateTimeout: 10
+        serviceType: LoadBalancer
+        targetCpuUtilizationPercentage: 0
+        targetPort: 8080
+        useAutoscaler: false
+        useIngress: false
+        useIstioRouteRule: false
+    stepsInParallel: false
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    steps:
+    - type: KUBERNETES_DEPLOY
+      name: Upgrade Containers
+      properties:
+        commandName: Resize Replication Controller
+        instanceCount: '33'
+        instanceUnitType: PERCENTAGE
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    steps:
+    - type: APP_DYNAMICS
+      name: AppDynamics
+      properties:
+        analysisServerConfigId: BOMCiZpNS9akFuShvfADhw
+        analysisTolerance: LOW
+        applicationId: '7596'
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        dependentTiersToAnalyze: null
+        executeWithPreviousSteps: false
+        includeTiers: false
+        tierId: '147416'
+        timeDuration: '15'
+    - type: NEW_RELIC
+      name: NewRelic
+      properties:
+        analysisServerConfigId: hJKKzAjmS5iWVhWaE2ELHA
+        analysisTolerance: LOW
+        applicationId: '117116134'
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        executeWithPreviousSteps: false
+        timeDuration: '15'
+    - type: PROMETHEUS
+      name: Prometheus
+      properties:
+        analysisServerConfigId: H84fzJkTRceykoF5pgxvmg
+        analysisTolerance: LOW
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        executeWithPreviousSteps: false
+        includePreviousPhaseNodes: false
+        timeDuration: '15'
+        timeSeriesToAnalyze:
+        - txnName: Hardware
+          metricName: CPU
+          metricType: ERROR
+          url: /api/v1/query_range?start=$startTime&end=$endTime&step=60s&query=container_cpu_usage_seconds_total{pod_name="$hostName"}
+    - type: APM_VERIFICATION
+      name: APM Verification
+      properties:
+        analysisServerConfigId: Z9VxfmRJQ66HMlsy69MwrA
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        dataCollectionRate: '3'
+        includePreviousPhaseNodes: false
+        metricCollectionInfos:
+        - metricName: CustomKubeMemoryPct
+          metricType: INFRA
+          tag: CustomKubeMemory
+          collectionUrl: query?query=kubernetes.memory.usage_pct{pod_name:${host}}by{pod_name}.rollup(avg,60)&from=${start_time_seconds}&to=${end_time_seconds}
+          responseType: json
+          method: GET
+          responseMapping:
+            txnNameFieldValue: KubeMemory
+            metricValueJsonPath: series[*].pointlist[*].[1]
+            hostJsonPath: ''
+            timestampJsonPath: series[*].pointlist[*].[0]
+        timeDuration: '8'
+        tolerance: LOW
+    - type: ELK
+      name: ELK
+      properties:
+        analysisServerConfigId: HcLTA7-7TSKsCsVRJOpfIA
+        hostnameField: host
+        indices: filebeat-*
+        messageField: message
+        query: error
+        queryType: TERM
+        timestampField: '@timestamp'
+        timestampFormat: yyyy-MM-dd'T'HH:mm:ss.SSSX
+    - type: CLOUD_WATCH
+      name: CloudWatch
+      properties:
+        analysisServerConfigId: K7BS1kPySSaK_l3WvDwCUw
+        analysisTolerance: LOW
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        ec2Metrics:
+        - metricName: CPUUtilization
+          displayName: CPU Usage
+          dimension: InstanceId
+          dimensionDisplay: Host name expression
+          metricType: VALUE
+          enabledDefault: true
+        - metricName: DiskReadBytes
+          displayName: Disk Read Bytes
+          dimension: InstanceId
+          dimensionDisplay: Host name expression
+          metricType: VALUE
+          enabledDefault: true
+        - metricName: DiskReadOps
+          displayName: Disk Read Ops
+          dimension: InstanceId
+          dimensionDisplay: Host name expression
+          metricType: VALUE
+          enabledDefault: true
+        - metricName: DiskWriteBytes
+          displayName: Disk Write Bytes
+          dimension: InstanceId
+          dimensionDisplay: Host name expression
+          metricType: VALUE
+          enabledDefault: true
+        executeWithPreviousSteps: false
+        loadBalancerMetrics: null
+        region: us-east-1
+        timeDuration: 10
+    - type: SPLUNKV2
+      name: Splunkv2
+      properties:
+        analysisServerConfigId: wT3iJqyzQvWi7jkENhxjdw
+        analysisTolerance: MEDIUM
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        hostnameField: host
+        query: '*exception*'
+        timeDuration: '15'
+    - type: DATA_DOG
+      name: Datadog
+      properties:
+        analysisServerConfigId: loF3pB2cQciFuHiklL6APA
+        analysisTolerance: LOW
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        datadogServiceName: Test Service
+        executeWithPreviousSteps: false
+        metrics: docker.cpu.throttled,docker.cpu.usage,docker.mem.rss
+    stepsInParallel: true
+  provisionNodes: false
+  serviceName: Order
+  statefulSet: false
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Prod harness-demo cluster
+  name: Phase 2
+  phaseSteps:
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    steps:
+    - type: KUBERNETES_DEPLOY
+      name: Upgrade Containers
+      properties:
+        commandName: Resize Replication Controller
+        instanceCount: '100'
+        instanceUnitType: PERCENTAGE
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    steps:
+    - type: APP_DYNAMICS
+      name: AppDynamics
+      properties:
+        analysisServerConfigId: 2pd6OJV5Rqe2ciI3jM0y4g
+        analysisTolerance: LOW
+        applicationId: '7596'
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        dependentTiersToAnalyze: null
+        executeWithPreviousSteps: false
+        includeTiers: false
+        tierId: '147416'
+        timeDuration: '15'
+    - type: NEW_RELIC
+      name: NewRelic
+      properties:
+        analysisServerConfigId: VEMGQArgSYmKyboSKpFx7A
+        analysisTolerance: LOW
+        applicationId: '117116134'
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        executeWithPreviousSteps: false
+        timeDuration: '15'
+    - type: PROMETHEUS
+      name: Prometheus
+      properties:
+        analysisServerConfigId: D4c-nj43TJ6cBjwacjnmQg
+        analysisTolerance: LOW
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        executeWithPreviousSteps: false
+        includePreviousPhaseNodes: false
+        timeDuration: '15'
+        timeSeriesToAnalyze:
+        - txnName: Hardware
+          metricName: CPU
+          metricType: ERROR
+          url: /api/v1/query_range?start=$startTime&end=$endTime&step=60s&query=container_cpu_usage_seconds_total{pod_name="$hostName"}
+    - type: APM_VERIFICATION
+      name: APM Verification
+      properties:
+        analysisServerConfigId: 8pdQDNUvTCCHmLcUUTaQcg
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        dataCollectionRate: '3'
+        includePreviousPhaseNodes: false
+        metricCollectionInfos:
+        - metricName: CustomKubeMemoryPct
+          metricType: INFRA
+          tag: CustomKubeMemory
+          collectionUrl: query?query=kubernetes.memory.usage_pct{pod_name:${host}}by{pod_name}.rollup(avg,60)&from=${start_time_seconds}&to=${end_time_seconds}
+          responseType: json
+          method: GET
+          responseMapping:
+            txnNameFieldValue: KubeMemory
+            metricValueJsonPath: series[*].pointlist[*].[1]
+            timestampJsonPath: series[*].pointlist[*].[1]
+        timeDuration: '8'
+        tolerance: LOW
+    - type: ELK
+      name: ELK
+      properties:
+        analysisServerConfigId: HtdcnW_RS5y1BEOa2WW6dQ
+        hostnameField: host
+        indices: filebeat-*
+        messageField: log
+        query: error
+        queryType: TERM
+        timestampField: '@timestamp'
+        timestampFormat: yyyy-MM-dd'T'HH:mm:ss.SSSX
+    - type: CLOUD_WATCH
+      name: CloudWatch
+      properties:
+        analysisServerConfigId: w2T-JlMnSIO17xJ7gKoKSw
+        analysisTolerance: LOW
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        ec2Metrics:
+        - metricName: CPUUtilization
+          displayName: CPU Usage
+          dimension: InstanceId
+          dimensionDisplay: Host name expression
+          metricType: VALUE
+          enabledDefault: true
+        - metricName: DiskReadBytes
+          displayName: Disk Read Bytes
+          dimension: InstanceId
+          dimensionDisplay: Host name expression
+          metricType: VALUE
+          enabledDefault: true
+        - metricName: DiskReadOps
+          displayName: Disk Read Ops
+          dimension: InstanceId
+          dimensionDisplay: Host name expression
+          metricType: VALUE
+          enabledDefault: true
+        executeWithPreviousSteps: false
+        loadBalancerMetrics: null
+        region: us-east-1
+        timeDuration: 0
+    - type: SPLUNKV2
+      name: Splunkv2
+      properties:
+        analysisServerConfigId: E8ZFr1eJRPWPKuKKZq3ebw
+        analysisTolerance: MEDIUM
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        hostnameField: host
+        query: '*exception*'
+        timeDuration: '15'
+    - type: DATA_DOG
+      name: Datadog
+      properties:
+        analysisServerConfigId: d0s23pTARqCCSJGP0w5Cyw
+        analysisTolerance: LOW
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        datadogServiceName: Test Service
+        executeWithPreviousSteps: false
+        metrics: docker.cpu.throttled,docker.cpu.usage,docker.mem.rss
+    stepsInParallel: true
+  - type: WRAP_UP
+    name: Wrap Up
+    steps:
+    - type: JIRA_CREATE_UPDATE
+      name: JIRA
+      properties:
+        comment: 'Phase 2 completed successfully. '
+        issueId: ${Jiravar.issueId}
+        jiraAction: UPDATE_TICKET
+        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+        labels:
+        - ''
+        project: HD
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order
+  statefulSet: false
+postDeploymentSteps:
+- type: JIRA_CREATE_UPDATE
+  name: JIRA
+  properties:
+    comment: 'Prod Deployment completed. '
+    issueId: ${Jiravar.issueId}
+    jiraAction: UPDATE_TICKET
+    jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+    labels:
+    - ''
+    project: HD
+    status: Done
+preDeploymentSteps:
+- type: JIRA_CREATE_UPDATE
+  name: JIRA update
+  properties:
+    comment: Prod workflow has started
+    issueId: ${Jiravar.issueId}
+    jiraAction: UPDATE_TICKET
+    jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+    labels:
+    - ''
+    project: HCM
+    templateUuid: null
+    templateVariables: null
+    templateVersion: null
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Prod harness-demo cluster
+  name: Rollback Phase 1
+  phaseNameForRollback: Phase 1
+  phaseSteps:
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    phaseStepNameForRollback: Deploy Containers
+    statusForRollback: SUCCESS
+    steps:
+    - type: KUBERNETES_DEPLOY_ROLLBACK
+      name: Rollback Containers
+      properties:
+        className: software.wings.sm.states.KubernetesDeployRollback
+        rollback: true
+    - type: JIRA_CREATE_UPDATE
+      name: JIRA
+      properties:
+        comment: Rollback completed
+        issueId: ${Jiravar.issueId}
+        jiraAction: UPDATE_TICKET
+        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+        labels:
+        - ''
+        project: HD
+        status: Done
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Verify Service
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order
+  statefulSet: false
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Prod harness-demo cluster
+  name: Rollback Phase 2
+  phaseNameForRollback: Phase 2
+  phaseSteps:
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    phaseStepNameForRollback: Deploy Containers
+    statusForRollback: SUCCESS
+    steps:
+    - type: JIRA_CREATE_UPDATE
+      name: JIRA
+      properties:
+        comment: 'Phase 2 failed. Rolling back. '
+        issueId: ${Jiravar.issueId}
+        jiraAction: UPDATE_TICKET
+        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+        labels:
+        - ''
+        project: HD
+    - type: KUBERNETES_DEPLOY_ROLLBACK
+      name: Rollback Containers
+      properties:
+        className: software.wings.sm.states.KubernetesDeployRollback
+        rollback: true
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Verify Service
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order
+  statefulSet: false
+templatized: false

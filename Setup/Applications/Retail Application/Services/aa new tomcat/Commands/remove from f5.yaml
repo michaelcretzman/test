@@ -1,0 +1,13 @@
+harnessApiVersion: '1.0'
+type: DISABLE
+commandUnitType: COMMAND
+commandUnits:
+- command: |-
+    ll
+    hatrylvs
+    ${instance.hostName}
+  commandUnitType: EXEC
+  deploymentType: SSH
+  name: Exec
+  scriptType: BASH
+targetToAllEnv: true

@@ -1,0 +1,14 @@
+harnessApiVersion: '1.0'
+type: PROMETHEUS
+alertEnabled: false
+alertThreshold: 0.5
+analysisTolerance: LOW
+connectorName: Prometheus-CV
+enabled24x7: true
+numOfOccurrencesForAlert: 1
+serviceName: Order V2
+timeSeriesList:
+- metricName: CPU
+  metricType: INFRA
+  txnName: Hardware
+  url: container_cpu_system_seconds_total{container_name="harness-example"}

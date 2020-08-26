@@ -1,0 +1,78 @@
+harnessApiVersion: '1.0'
+type: ROLLING
+concurrencyStrategy: INFRA
+envName: QA
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Order V2
+  name: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: JIRA
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    steps:
+    - type: APP_DYNAMICS
+      name: AppDynamics
+      properties:
+        analysisServerConfigId: BOMCiZpNS9akFuShvfADhw
+        analysisTolerance: LOW
+        applicationId: '7596'
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        dependentTiersToAnalyze: null
+        executeWithPreviousSteps: false
+        includeTiers: false
+        tierId: '147416'
+        timeDuration: '15'
+    - type: SPLUNKV2
+      name: Splunkv2
+      properties:
+        analysisServerConfigId: wT3iJqyzQvWi7jkENhxjdw
+        analysisTolerance: MEDIUM
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        hostnameField: host
+        query: '*exception*'
+        timeDuration: '15'
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order V2
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Order V2
+  name: Rollback Rolling
+  phaseNameForRollback: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order V2
+  statefulSet: false
+templatized: false

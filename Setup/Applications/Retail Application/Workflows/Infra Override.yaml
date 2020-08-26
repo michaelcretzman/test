@@ -1,0 +1,126 @@
+harnessApiVersion: '1.0'
+type: ROLLING
+concurrencyStrategy: NONE
+envName: Infra Override
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: infra1
+  name: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: SHELL_SCRIPT
+      name: Override Variables for Infra
+      properties:
+        commandPath: null
+        connectionAttributes: null
+        executeOnDelegate: true
+        host: null
+        outputVars: appEnv1,appEnv2
+        publishAsVar: true
+        scriptString: |
+          echo
+          echo Using infrastructure definition [${infra.name}]
+          echo
+
+          appEnv1=${serviceVariable.appEnv1}
+          appEnv2=${serviceVariable.appEnv2}
+
+          if [[ "${infra.name}" == infra2 ]]; then
+
+            appEnv2=${serviceVariable.infra2_appEnv2}
+
+          elif [[ "${infra.name}" == infra3 ]]; then
+
+            appEnv1=${serviceVariable.infra3_appEnv1}
+            appEnv2=${serviceVariable.infra3_appEnv2}
+
+          fi
+
+          echo Setting appEnv1 to [$appEnv1]
+          echo Setting appEnv2 to [$appEnv2]
+          echo
+        scriptType: BASH
+        sshKeyRef: null
+        sweepingOutputName: override
+        sweepingOutputScope: PHASE
+        tags: ''
+        templateExpressions: null
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+        timeoutMillis: 60000
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Infra Override
+  statefulSet: false
+  templateExpressions:
+  - expression: ${InfraDefinition_KUBERNETES}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: relatedField
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: infra1
+  name: Rollback Rolling
+  phaseNameForRollback: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Infra Override
+  statefulSet: false
+  templateExpressions:
+  - expression: ${InfraDefinition_KUBERNETES}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: relatedField
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+templateExpressions:
+- expression: ${Environment}
+  fieldName: envId
+  metadata:
+  - name: relatedField
+    value: ${InfraDefinition_KUBERNETES}
+  - name: entityType
+    value: ENVIRONMENT
+- expression: ${InfraDefinition_KUBERNETES}
+  fieldName: infraDefinitionId
+  metadata:
+  - name: relatedField
+  - name: entityType
+    value: INFRASTRUCTURE_DEFINITION
+templatized: true
+userVariables:
+- type: ENTITY
+  description: Variable for Environment entity
+  fixed: false
+  mandatory: true
+  name: Environment
+- type: ENTITY
+  description: Variable for Infrastructure Definition entity in Rollback Rolling
+  fixed: false
+  mandatory: true
+  name: InfraDefinition_KUBERNETES

@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: ENVIRONMENT
+configMapYamlByServiceTemplateName: {}
+environmentType: NON_PROD
+variableOverrides:
+- name: test_var
+  value: '5432'
+  valueType: TEXT

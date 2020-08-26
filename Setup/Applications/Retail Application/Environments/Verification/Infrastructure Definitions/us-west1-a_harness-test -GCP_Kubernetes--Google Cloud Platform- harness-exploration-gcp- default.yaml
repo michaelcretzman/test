@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: GCP
+deploymentType: KUBERNETES
+infrastructure:
+- type: GCP_KUBERNETES
+  cloudProviderName: harness-exploration-gcp
+  clusterName: us-west1-a/harness-test
+  namespace: default
+  releaseName: ${infra.kubernetes.infraId}
+scopedServices:
+- Todolist-Datadog

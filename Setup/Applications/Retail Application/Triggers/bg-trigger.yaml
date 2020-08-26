@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+executionName: bg-basic
+executionType: Workflow
+triggerCondition:
+- type: NEW_ARTIFACT
+  artifactStreamName: harness_todolist-sample
+  regex: false
+  serviceName: ECS-test

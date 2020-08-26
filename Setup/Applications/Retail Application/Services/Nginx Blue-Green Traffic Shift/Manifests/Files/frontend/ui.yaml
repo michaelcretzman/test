@@ -1,0 +1,75 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{.Values.frontend.uiPath}}
+  annotations:
+    harness.io/direct-apply: true
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Values.frontend.uiPath}}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{.Values.frontend.uiPath}}
+    spec:
+      terminationGracePeriodSeconds: 2
+      containers:
+      - name: color-ui
+        image: {{.Values.frontend.image}}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: LOAD_BALANCER
+          value: {{.Values.frontend.loadBalancer}}
+        - name: ENDPOINT
+          value: {{.Values.endpoint}}
+        - name: TITLE
+          value: {{.Values.frontend.title}}
+        - name: UI_PATH
+          value: {{.Values.frontend.uiPath}}
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        resources:
+          limits:
+            memory: 50Mi
+            cpu: 10m
+          requests:
+            memory: 50Mi
+            cpu: 10m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.frontend.uiPath}}
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{.Values.frontend.uiPath}}
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.frontend.uiPath}}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - host: {{.Values.host}}
+    http:
+      paths:
+      - path: /{{.Values.frontend.uiPath}}(/|$)(.*)
+        backend:
+          serviceName: {{.Values.frontend.uiPath}}
+          servicePort: http

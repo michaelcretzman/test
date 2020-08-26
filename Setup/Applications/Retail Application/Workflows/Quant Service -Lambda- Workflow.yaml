@@ -1,0 +1,102 @@
+harnessApiVersion: '1.0'
+type: BASIC
+concurrencyStrategy: INFRA
+envName: Development
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  notificationGroups:
+  - Account Administrator
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+phases:
+- type: AWS_LAMBDA
+  computeProviderName: AWS-Integration
+  daemonSet: false
+  infraDefinitionName: aws -AWS_Lambda- us-east-1
+  name: Phase 1
+  phaseSteps:
+  - type: PREPARE_STEPS
+    name: Prepare Steps
+    stepsInParallel: false
+  - type: DEPLOY_AWS_LAMBDA
+    name: Deploy Service
+    steps:
+    - type: AWS_LAMBDA_STATE
+      name: AWS Lambda
+      properties:
+        aliases:
+        - ${env.name}
+        commandName: Deploy AWS Lambda Function
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    steps:
+    - type: AWS_LAMBDA_VERIFICATION
+      name: AwsLambdaVerification
+      properties:
+        lambdaTestEvents:
+        - functionName: ${service.name}_${env.name}_health
+          assertion: ${payload}.contains("OK")
+          payload: '{}'
+        - functionName: ${service.name}_${env.name}_version
+          assertion: ${payload}.contains(${artifact.buildNo})
+          payload: '{}'
+        - functionName: ${service.name}_${env.name}_pi
+          assertion: ${payload}==3.141592653589793
+          payload: '{}'
+        - functionName: ${service.name}_${env.name}_sqrt
+          assertion: ${payload}==8
+          payload: '{"number":64}'
+        - functionName: ${service.name}_${env.name}_fib
+          assertion: ${payload}==8
+          payload: '{"n":6}'
+        - functionName: ${service.name}_${env.name}_prime
+          assertion: ${payload}.equals("true")
+          payload: '{"number":7}'
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Quant
+  statefulSet: false
+rollbackPhases:
+- type: AWS_LAMBDA
+  computeProviderName: AWS-Integration
+  daemonSet: false
+  infraDefinitionName: aws -AWS_Lambda- us-east-1
+  name: Rollback Phase 1
+  phaseNameForRollback: Phase 1
+  phaseSteps:
+  - type: DEPLOY_AWS_LAMBDA
+    name: Deploy Service
+    phaseStepNameForRollback: Deploy Service
+    statusForRollback: SUCCESS
+    steps:
+    - type: AWS_LAMBDA_ROLLBACK
+      name: Rollback AWS Lambda
+      properties:
+        rollback: true
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Verify Service
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Quant
+  statefulSet: false
+templatized: false

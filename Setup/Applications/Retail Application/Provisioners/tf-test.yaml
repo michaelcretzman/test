@@ -1,0 +1,17 @@
+harnessApiVersion: '1.0'
+type: TERRAFORM
+backendConfigs:
+- name: bucket
+  valueType: TEXT
+- name: region
+  valueType: TEXT
+path: .
+sourceRepoBranch: master
+sourceRepoSettingName: terraform
+variables:
+- name: access-key
+  valueType: ENCRYPTED_TEXT
+- name: customer
+  valueType: TEXT
+- name: mem
+  valueType: TEXT

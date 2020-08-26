@@ -1,0 +1,20 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: port
+  value: '9080'
+  valueType: TEXT
+- name: group
+  value: multiservice
+  valueType: TEXT
+- name: endpoint
+  value: ${artifact.source.repositoryName.split('/')[2]}
+  valueType: TEXT
+- name: name
+  value: ${serviceVariable.group}-${serviceVariable.endpoint}
+  valueType: TEXT
+- name: host
+  value: 34.67.111.21
+  valueType: TEXT
+deploymentType: KUBERNETES

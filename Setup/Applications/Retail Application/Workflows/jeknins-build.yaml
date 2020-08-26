@@ -1,0 +1,56 @@
+harnessApiVersion: '1.0'
+type: BUILD
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+phases:
+- daemonSet: false
+  name: Phase 1
+  phaseSteps:
+  - type: PREPARE_STEPS
+    name: Prepare Steps
+    steps:
+    - type: JENKINS
+      name: Jenkins
+      properties:
+        jenkinsConfigName: Harness Jenkins Integration
+        jobName: build-descriptor-todolist
+        jobNameAsExpression: false
+        jobParameters: null
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        timeoutMillis: 600000
+    stepsInParallel: false
+  - type: COLLECT_ARTIFACT
+    name: Collect Artifact
+    steps:
+    - type: ARTIFACT_COLLECTION
+      name: Artifact Collection
+      properties:
+        artifactStreamName: harness_todolist-sample
+        serviceName: ECS-test
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+        timeoutMillis: 300000
+    - type: ARTIFACT_COLLECTION
+      name: Artifact Collection_2
+      properties:
+        artifactStreamName: harness_todolist-sample
+        serviceName: test-ecs
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+        timeoutMillis: 300000
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  statefulSet: false
+templatized: false

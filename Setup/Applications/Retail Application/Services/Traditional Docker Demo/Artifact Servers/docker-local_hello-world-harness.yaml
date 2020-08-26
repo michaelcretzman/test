@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: ARTIFACTORY
+dockerRepositoryServer: harness-docker-local.jfrog.io
+imageName: hello-world-harness
+metadataOnly: true
+repositoryName: docker-local
+repositoryType: docker
+serverName: Harness Artifactory
+useDockerFormat: false

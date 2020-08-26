@@ -1,0 +1,7 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: ONEAGENT_INSTALLER_SCRIPT_URL
+  value: gcpkms:Y7Htg3t0Slu2ME7tL7yQTg
+  valueType: ENCRYPTED_TEXT

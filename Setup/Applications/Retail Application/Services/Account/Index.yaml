@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: AWS_CODEDEPLOY
+configVariables:
+- name: demo_train
+  value: gcpkms:fadr3OHSSyecGWsN6kjPfg
+  valueType: ENCRYPTED_TEXT
+- name: branch
+  value: dev
+  valueType: TEXT
+tags:
+  environment: development

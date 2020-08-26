@@ -1,0 +1,47 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+description: CD Pipeline 2
+pipelineStages:
+- type: ENV_STATE
+  name: Dev K8s Docker Workflow (Development)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+  workflowName: Dev Retail Application V2
+- type: ENV_STATE
+  name: Qa K8s Docker Workflow H (Quality Assurance)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 2
+  workflowName: QA Retail Appliction V2
+- type: APPROVAL
+  name: Approval 2
+  parallel: false
+  properties:
+    workflowVariables: null
+    approvalStateParams:
+      jiraApprovalParams:
+        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+        project: HD
+        issueId: ${Jiravar.issueId}
+        approvalField: status
+        rejectionField: status
+        approvalOperator: equalsTo
+        rejectionOperator: equalsTo
+        approvalValue: Approved
+        rejectionValue: Rejected
+    stageName: STAGE 3
+    timeoutMillis: 1800000
+    approvalStateType: JIRA
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 3
+- type: ENV_STATE
+  name: Prod K8s Docker Workflow (Production)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 4
+  workflowName: Prod Retail Application V2-DT

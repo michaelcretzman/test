@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: PCF
+configVariables:
+- name: Alex-token
+  value: test
+  valueType: TEXT
+deploymentType: PCF

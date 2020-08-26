@@ -1,0 +1,103 @@
+harnessApiVersion: '1.0'
+type: BASIC
+concurrencyStrategy: INFRA
+envName: QA
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Kubernetes Cluster_ harness-demo_DIRECT_Kubernetes_default
+  name: Phase 1
+  phaseSteps:
+  - type: CONTAINER_SETUP
+    name: Setup Container
+    steps:
+    - type: JIRA_CREATE_UPDATE
+      name: JIRA update
+      properties:
+        comment: QA Workflow has started.
+        issueId: ${Jiravar.issueId}
+        jiraAction: UPDATE_TICKET
+        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+        labels:
+        - ''
+        project: HD
+        status: Ready For Testing
+    - type: KUBERNETES_SETUP
+      name: Kubernetes Service Setup
+      properties:
+        className: software.wings.sm.states.KubernetesSetup
+        commandName: Setup Replication Controller
+        desiredInstanceCount: fixedInstances
+        fixedInstances: '1'
+        maxInstances: 2
+        replicationControllerName: ${app.name}.${service.name}.${env.name}
+        resizeStrategy: RESIZE_NEW_FIRST
+        serviceSteadyStateTimeout: 10
+    stepsInParallel: false
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    steps:
+    - type: KUBERNETES_DEPLOY
+      name: Upgrade Containers
+      properties:
+        commandName: Resize Replication Controller
+        instanceCount: '1'
+        instanceUnitType: PERCENTAGE
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    steps:
+    - type: HTTP
+      name: Smoke test
+      properties:
+        method: GET
+        url: http://harness.io
+    - type: HTTP
+      name: Regression Test
+      properties:
+        method: GET
+        url: http://harness.io
+    - type: HTTP
+      name: Integration Test
+      properties:
+        method: GET
+        url: http://harness.io
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Kubernetes Cluster_ harness-demo_DIRECT_Kubernetes_default
+  name: Rollback Phase 1
+  phaseNameForRollback: Phase 1
+  phaseSteps:
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    phaseStepNameForRollback: Deploy Containers
+    statusForRollback: SUCCESS
+    steps:
+    - type: KUBERNETES_DEPLOY_ROLLBACK
+      name: Rollback Containers
+      properties:
+        className: software.wings.sm.states.KubernetesDeployRollback
+        rollback: true
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Verify Service
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order
+  statefulSet: false
+templatized: false

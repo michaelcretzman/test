@@ -1,0 +1,14 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: svc
+  value: ${service.name}
+  valueType: TEXT
+- name: appEnv2
+  value: bbb
+  valueType: TEXT
+- name: appEnv1
+  value: aaa
+  valueType: TEXT
+deploymentType: KUBERNETES

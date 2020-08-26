@@ -1,0 +1,16 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: SSH
+infrastructure:
+- type: AWS_SSH
+  cloudProviderName: aws
+  desiredCapacity: 0
+  hostConnectionAttrsName: ubuntu
+  hostConnectionType: PUBLIC_DNS
+  region: us-east-1
+  setDesiredCapacity: false
+  useAutoScalingGroup: false
+  usePublicDns: false
+scopedServices:
+- todo-list tomcat service

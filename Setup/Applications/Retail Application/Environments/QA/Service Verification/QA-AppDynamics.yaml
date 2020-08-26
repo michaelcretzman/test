@@ -1,0 +1,11 @@
+harnessApiVersion: '1.0'
+type: APP_DYNAMICS
+alertEnabled: false
+alertThreshold: 0.5
+analysisTolerance: LOW
+appDynamicsApplicationName: cv-app
+connectorName: AppDynamics-dev
+enabled24x7: false
+numOfOccurrencesForAlert: 1
+serviceName: Order
+tierName: docker-tier

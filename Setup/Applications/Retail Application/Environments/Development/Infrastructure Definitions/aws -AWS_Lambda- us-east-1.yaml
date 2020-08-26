@@ -1,0 +1,16 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: AWS_LAMBDA
+infrastructure:
+- type: AWS_AWS_LAMBDA
+  cloudProviderName: AWS-Integration
+  iamRole: arn:aws:iam::733017110293:role/Intgration-Test-Lambda-Role
+  region: us-east-1
+  securityGroupIds:
+  - sg-18d55550
+  subnetIds:
+  - subnet-5353d85c
+  vpcId: vpc-cb083fb0
+scopedServices:
+- Quant

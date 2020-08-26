@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: jenkins
+  value: https://www.google.com
+  valueType: TEXT
+deploymentType: ECS

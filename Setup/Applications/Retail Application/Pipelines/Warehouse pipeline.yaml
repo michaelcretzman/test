@@ -1,0 +1,43 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: ENV_STATE
+  name: DEV
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+  workflowName: Dev CS Application
+- type: ENV_STATE
+  name: QA1
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 3
+  workflowName: QA Retail Appliction V2
+- type: ENV_STATE
+  name: QA2
+  parallel: true
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 3
+  workflowName: Qa GCP Docker Workflow H
+- type: APPROVAL
+  name: Approval 3
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    stageName: STAGE 3
+    timeoutMillis: 604800000
+    approvalStateType: USER_GROUP
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 3
+- type: ENV_STATE
+  name: PROD
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 4
+  workflowName: test-prod-deploy

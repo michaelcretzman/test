@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.name}}
+  labels:
+    app: {{.Values.name}}
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: {{.Values.port}}
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{.Values.name}}
+---
+
+{{- if .Values.createVirtualService}}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{.Values.name}}
+  labels:
+    app: {{.Values.name}}
+    group: {{.Values.group}}
+spec:
+  hosts:
+  - {{.Values.name}}
+  - {{.Values.host}}
+  gateways:
+  - ingressgateway.istio-system.svc.cluster.local
+  - mesh
+  http:
+  - name: primary
+    match:
+    - uri:
+        exact: /{{.Values.endpoint}}
+    rewrite:
+      uri: /rpc
+    route:
+    - destination:
+        host: {{.Values.name}}
+        subset: {{.Values.name}}-primary
+---
+{{- end}}
+
+{{- if .Values.createDestinationRule}}
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{.Values.name}}
+  labels:
+    app: {{.Values.name}}
+    group: {{.Values.group}}
+spec:
+  host: {{.Values.name}}
+  subsets:
+  - name: {{.Values.name}}-primary
+    labels:
+      track: primary
+{{- end}}

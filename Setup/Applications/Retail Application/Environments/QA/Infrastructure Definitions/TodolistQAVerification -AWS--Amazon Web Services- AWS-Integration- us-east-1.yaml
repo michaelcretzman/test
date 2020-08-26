@@ -1,0 +1,19 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: ECS
+infrastructure:
+- type: AWS_ECS
+  assignPublicIp: false
+  cloudProviderName: AWS-Integration
+  clusterName: TodolistQAVerification
+  executionRole: arn:aws:iam::733017110293:role/aws-service-role/support.amazonaws.com/AWSServiceRoleForSupport
+  launchType: FARGATE
+  region: us-east-1
+  securityGroupIds:
+  - sg-002422cf1e5d61e22
+  subnetIds:
+  - subnet-5353d85c
+  vpcId: vpc-05cf3e55507a87b33
+scopedServices:
+- ECS-test

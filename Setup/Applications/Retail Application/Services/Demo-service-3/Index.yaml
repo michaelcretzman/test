@@ -1,0 +1,10 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: WAR
+configVariables:
+- name: serviceName
+  value: dockerimage
+  valueType: TEXT
+- name: secret123
+  value: test123
+  valueType: TEXT

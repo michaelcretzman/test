@@ -1,0 +1,53 @@
+harnessApiVersion: '1.0'
+type: BUILD
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+phases:
+- daemonSet: false
+  name: Phase 1
+  phaseSteps:
+  - type: PREPARE_STEPS
+    name: Prepare Steps
+    steps:
+    - type: COMMAND
+      name: UlanTest
+      properties:
+        commandName: UlanTest
+        connectionAttributes: null
+        executeOnDelegate: true
+        host: null
+        outputVars: ''
+        publishAsVar: false
+        sshKeyRef: null
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        tags: ''
+        templateExpressions: null
+        timeoutMillis: 60000
+      templateUri: General Store Inc/UlanTest:latest
+      templateVariables:
+      - name: my_var
+        value: ${workflow.variables.InstanceID}
+    stepsInParallel: false
+  - type: COLLECT_ARTIFACT
+    name: Collect Artifact
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  statefulSet: false
+tags:
+  UB_INSTANCE_ID: ${workflow.variables.InstanceID}
+templatized: true
+userVariables:
+- type: TEXT
+  fixed: false
+  mandatory: false
+  name: InstanceID

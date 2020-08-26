@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: GCR
+dockerImageName: sales-209522/multiservice/c
+registryHostName: us.gcr.io
+serverName: Sales GCR

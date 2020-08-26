@@ -1,0 +1,38 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+description: CD Pipeline 2
+pipelineStages:
+- type: ENV_STATE
+  name: Dev GCP Docker Workflow (Development)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+  workflowName: Dev Retail Application V2
+- type: ENV_STATE
+  name: Qa GCP Docker Workflow H (Quality Assurance)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 2
+  workflowName: QA Retail Appliction V2
+- type: APPROVAL
+  name: Approval 2
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    - admin-se-group
+    - uZifNXlUQaC6aeIrODL3ow
+    timeoutMillis: 3600000
+    approvalStateType: USER_GROUP
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 3
+- type: ENV_STATE
+  name: Prod GCP Docker Workflow (Production)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 4
+  workflowName: Prod Retail Application V2

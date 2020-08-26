@@ -1,0 +1,34 @@
+harnessApiVersion: '1.0'
+type: ENVIRONMENT
+configMapYamlByServiceTemplateName: {}
+environmentType: NON_PROD
+variableOverrides:
+- name: version
+  serviceName: Quant
+  value: ${artifact.buildNo}
+  valueType: TEXT
+- name: dbpass
+  serviceName: Order
+  value: gcpkms:MeUXYJKnReGCAv-K8VFjNA
+  valueType: ENCRYPTED_TEXT
+- name: TEST_Variable
+  serviceName: Order
+  value: environment
+  valueType: TEXT
+- name: new_variable
+  serviceName: Order
+  value: environment
+  valueType: TEXT
+- name: thing
+  serviceName: Order
+  value: '2'
+  valueType: TEXT
+- name: db_string
+  value: db.whatever
+  valueType: TEXT
+- name: command
+  value: test
+  valueType: TEXT
+- name: ENV
+  value: DEV
+  valueType: TEXT

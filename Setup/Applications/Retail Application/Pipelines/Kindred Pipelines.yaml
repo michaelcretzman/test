@@ -1,0 +1,38 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: ENV_STATE
+  name: Kindred Workflow
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+  workflowName: Kindred Workflow
+- type: ENV_STATE
+  name: QA CS Application
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: QA2
+  workflowName: QA CS Application
+- type: ENV_STATE
+  name: aa new canary
+  parallel: true
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: QA2
+  workflowName: aa new canary
+- type: APPROVAL
+  name: Approval 3
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    variables: null
+    stageName: STAGE 3
+    timeoutMillis: 86400000
+    approvalStateType: USER_GROUP
+    sweepingOutputName: ''
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 3

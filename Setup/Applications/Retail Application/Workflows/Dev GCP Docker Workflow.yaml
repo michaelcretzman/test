@@ -1,0 +1,146 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+description: Dev Workflow
+envName: Development
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Dev harness-demo cluster
+  name: Phase 1
+  phaseSteps:
+  - type: CONTAINER_SETUP
+    name: Setup Container
+    steps:
+    - type: KUBERNETES_SETUP
+      name: Kubernetes Service Setup
+      properties:
+        className: software.wings.sm.states.KubernetesSetup
+        commandName: Setup Replication Controller
+        desiredInstanceCount: fixedInstances
+        fixedInstances: '1'
+        maxInstances: 2
+        replicationControllerName: ${app.name}.${service.name}.${env.name}
+        resizeStrategy: RESIZE_NEW_FIRST
+        serviceSteadyStateTimeout: 10
+    stepsInParallel: false
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    steps:
+    - type: KUBERNETES_DEPLOY
+      name: Upgrade Containers
+      properties:
+        commandName: Resize Replication Controller
+        instanceCount: '1'
+        instanceUnitType: PERCENTAGE
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    stepsInParallel: true
+  provisionNodes: false
+  serviceName: Order
+  statefulSet: false
+preDeploymentSteps:
+- type: JIRA_CREATE_UPDATE
+  name: JIRA creation
+  properties:
+    description: "Deployment url : ${deploymentUrl}\nArtifact: ${artifact.displayName}\n\
+      Build number: ${artifact.buildNo} "
+    issueType: Story
+    jiraAction: CREATE_TICKET
+    jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+    labels:
+    - deployment
+    priority: P2
+    project: HD
+    publishAsVar: true
+    summary: Ticket to track deployment for ${pipeline.name}
+    sweepingOutputName: Jiravar
+    sweepingOutputScope: PIPELINE
+    templateUuid: null
+    templateVariables: null
+    templateVersion: null
+- type: HTTP
+  name: Custom Test
+  properties:
+    method: GET
+    url: http://harness.io
+- type: HTTP
+  name: Verify Fortify Scan
+  properties:
+    method: GET
+    url: http://harness.io
+- type: HTTP
+  name: Security Analyses
+  properties:
+    assertion: ''
+    body: ''
+    executeWithPreviousSteps: false
+    header: ''
+    method: GET
+    publishAsVar: false
+    responseProcessingExpressions: ''
+    sweepingOutputName: null
+    sweepingOutputScope: null
+    templateUuid: null
+    templateVariables: null
+    templateVersion: null
+    timeoutMillis: 10000
+    url: http://harness.io
+- type: JIRA_CREATE_UPDATE
+  name: JIRA update
+  properties:
+    comment: Dev Workflow has started
+    customFields: null
+    issueId: ${Jiravar.issueId}
+    jiraAction: UPDATE_TICKET
+    jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
+    labels:
+    - ''
+    project: HD
+    status: In Progress
+    templateUuid: null
+    templateVariables: null
+    templateVersion: null
+- type: APPROVAL
+  name: Wait for DB Migration
+  properties:
+    approvalStateType: USER_GROUP
+    timeoutMillis: 1800000
+    userGroups:
+    - GXFtTUS2Q9Gmo1r4MhqS4g
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Dev harness-demo cluster
+  name: Rollback Phase 1
+  phaseNameForRollback: Phase 1
+  phaseSteps:
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    phaseStepNameForRollback: Deploy Containers
+    statusForRollback: SUCCESS
+    steps:
+    - type: KUBERNETES_DEPLOY_ROLLBACK
+      name: Rollback Containers
+      properties:
+        className: software.wings.sm.states.KubernetesDeployRollback
+        rollback: true
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Verify Service
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Order
+  statefulSet: false
+templatized: false

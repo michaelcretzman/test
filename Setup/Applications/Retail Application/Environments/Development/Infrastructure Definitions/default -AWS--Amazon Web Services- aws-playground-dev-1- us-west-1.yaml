@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: ECS
+infrastructure:
+- type: AWS_ECS
+  assignPublicIp: false
+  cloudProviderName: aws-playground-dev-1
+  clusterName: default
+  region: us-west-1
+scopedServices:
+- Order-ECS

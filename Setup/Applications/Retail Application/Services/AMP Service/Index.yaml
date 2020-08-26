@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: db_password
+  value: gcpkms:DQZ7RIHjQDWtqnkZBNs8MQ
+  valueType: ENCRYPTED_TEXT
+deploymentType: KUBERNETES

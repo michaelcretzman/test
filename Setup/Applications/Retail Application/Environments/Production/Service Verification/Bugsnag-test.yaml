@@ -1,0 +1,15 @@
+harnessApiVersion: '1.0'
+type: BUG_SNAG
+alertEnabled: false
+alertPriority: P5
+alertThreshold: 0.5
+baselineEndMinute: 26126205
+baselineStartMinute: 26126176
+browserApplication: true
+connectorName: Bugsnag
+enabled24x7: true
+numOfOccurrencesForAlert: 1
+orgName: Harness
+projectName: Prod (app.harness.io)
+query: '*exception*'
+serviceName: Order V2

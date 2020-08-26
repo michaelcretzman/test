@@ -1,0 +1,10 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: dbpass
+  value: gcpkms:m2VGVyPyTBaOU0Lmup0aaQ
+  valueType: ENCRYPTED_TEXT
+- name: BB_var
+  value: test
+  valueType: TEXT

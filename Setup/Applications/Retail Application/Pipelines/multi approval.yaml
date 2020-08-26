@@ -1,0 +1,43 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: APPROVAL
+  name: Approval 0
+  parallel: false
+  properties:
+    userGroups:
+    - CS Dev Mgr
+    timeoutMillis: 604800000
+    approvalStateType: USER_GROUP
+  skipCondition:
+    type: DO_NOT_SKIP
+- type: APPROVAL
+  name: Approval 1
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    timeoutMillis: 604800000
+    approvalStateType: USER_GROUP
+  skipCondition:
+    type: DO_NOT_SKIP
+- type: APPROVAL
+  name: Approval 2
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    timeoutMillis: 604800000
+    approvalStateType: USER_GROUP
+  skipCondition:
+    type: DO_NOT_SKIP
+- type: APPROVAL
+  name: Approval 3
+  parallel: false
+  properties:
+    userGroups:
+    - CS Dev Mgr
+    timeoutMillis: 604800000
+    approvalStateType: USER_GROUP
+  skipCondition:
+    type: DO_NOT_SKIP

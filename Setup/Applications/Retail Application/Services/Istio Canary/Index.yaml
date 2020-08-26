@@ -1,0 +1,20 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: stableName
+  value: colors-stable
+  valueType: TEXT
+- name: canaryName
+  value: colors-canary
+  valueType: TEXT
+- name: uiPath
+  value: istio-canary
+  valueType: TEXT
+- name: loadBalancer
+  value: http://istio-demo.harness.io
+  valueType: TEXT
+- name: name
+  value: colors
+  valueType: TEXT
+deploymentType: KUBERNETES

@@ -1,0 +1,27 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+description: Order Service
+pipelineStages:
+- type: ENV_STATE
+  name: Dev GCP Docker Workflow (Development)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  workflowName: Dev GCP Docker Workflow
+- type: ENV_STATE
+  name: Qa GCP Docker Workflow H (Quality Assurance)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  workflowName: Qa GCP Docker Workflow H
+- type: APPROVAL
+  name: Approval 2
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+- type: ENV_STATE
+  name: Prod GCP Docker Workflow (Production)
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  workflowName: Prod GCP Docker Workflow 2

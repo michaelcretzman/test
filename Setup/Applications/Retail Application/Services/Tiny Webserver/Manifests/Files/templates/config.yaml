@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.name}}
+data:
+  serve.sh: |
+    counter=0
+    while true; do
+      echo Counter is $((++counter))
+      { echo -e "HTTP/1.1 200 OK\r\n"; echo smallest http server $counter; } | nc -l -p 8080
+    done

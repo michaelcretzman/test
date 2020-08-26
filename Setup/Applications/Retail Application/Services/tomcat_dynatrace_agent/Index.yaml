@@ -1,0 +1,7 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: JAVA_OPTS
+  value: -Delk_url=http://ec2-54-175-185-114.compute-1.amazonaws.com:8080
+  valueType: TEXT

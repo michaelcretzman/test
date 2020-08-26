@@ -1,0 +1,18 @@
+# harness.io/skip-file-for-deploy
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.stageName}}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-weight: "50"
+spec:
+  rules:
+  - host: {{.Values.host}}
+    http:
+      paths:
+      - path: /{{.Values.endpoint}}(/|$)(.*)
+        backend:
+          serviceName: {{.Values.stageName}}
+          servicePort: http

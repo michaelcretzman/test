@@ -1,0 +1,17 @@
+name: ${serviceVariable.name}
+host: ${serviceVariable.host}
+image: ${artifact.metadata.image}
+canaryName: ${serviceVariable.canaryName}
+stableName: ${serviceVariable.stableName}
+endpoint: color
+canaryEndpoint: color-canary
+stableEndpoint: color-stable
+
+replicas: 2
+namespace: ${infra.kubernetes.namespace}
+
+frontend:
+  title: Nginx - Canary Traffic Shift
+  loadBalancer: ${serviceVariable.loadBalancer}
+  uiPath: ${serviceVariable.uiPath}
+  image: us.gcr.io/sales-209522/continuous-requests:110

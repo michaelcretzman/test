@@ -1,0 +1,12 @@
+name: retail-application
+replicas: 1
+
+image: ${artifact.metadata.image}
+dockercfg: ${artifact.source.dockerconfig}
+
+createImagePullSecret: false
+
+createNamespace: true
+namespace: ${infra.kubernetes.namespace}
+
+# memory: ${serviceVariable.memory}

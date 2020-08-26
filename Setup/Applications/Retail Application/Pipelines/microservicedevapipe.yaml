@@ -1,0 +1,22 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: APPROVAL
+  name: Approval 0
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    stageName: STAGE 1
+    timeoutMillis: 604800000
+    approvalStateType: USER_GROUP
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+- type: ENV_STATE
+  name: devdeploy
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 2
+  workflowName: microserviceAdev

@@ -1,0 +1,69 @@
+#
+# Main ingress
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.name}}
+  labels:
+    app: {{.Values.name}}
+    track: primary
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /rpc
+spec:
+  rules:
+  - host: {{.Values.host}}
+    http:
+      paths:
+      - path: /{{.Values.endpoint}}($|/)(.*)
+        backend:
+          serviceName: {{.Values.name}}
+          servicePort: http
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.name}}-{{.Values.track}}
+  labels:
+    app: {{.Values.name}}
+    track: primary
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /rpc
+spec:
+  rules:
+  - host: {{.Values.host}}
+    http:
+      paths:
+      - path: /{{.Values.endpoint}}/{{.Values.track}}
+        backend:
+          serviceName: {{.Values.name}}-{{.Values.track}}
+          servicePort: http
+---
+#
+# Track ingress
+#
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Values.name}}-{{.Values.track}}-canary
+  labels:
+    app: {{.Values.name}}
+    track: {{.Values.track}}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-by-header: track
+    nginx.ingress.kubernetes.io/canary-by-header-value: {{.Values.track}}
+spec:
+  rules:
+  - host: {{.Values.host}}
+    http:
+      paths:
+      - path: /{{.Values.endpoint}}/{{.Values.track}}
+        backend:
+          serviceName: {{.Values.name}}-{{.Values.track}}-canary
+          servicePort: http

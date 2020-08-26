@@ -1,0 +1,23 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: ENV_STATE
+  name: UB_Millenium
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: Tranche 1 EU
+  workflowName: UB_Millenium
+  workflowVariables:
+  - name: InstanceID
+    value: 1.2.3
+- type: ENV_STATE
+  name: Tranche 2EU
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: Tranche 2 EU
+  workflowName: UB_Millenium
+  workflowVariables:
+  - name: InstanceID
+    value: 1.2.3

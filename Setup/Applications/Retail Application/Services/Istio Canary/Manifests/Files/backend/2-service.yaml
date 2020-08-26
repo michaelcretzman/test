@@ -1,0 +1,52 @@
+#
+# Main service for incoming traffic
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.name}}
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9080
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{.Values.name}}
+---
+#
+# Service targeting canary only
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.canaryName}}
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9080
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{.Values.name}}
+    harness.io/track: canary
+---
+#
+# Service targeting stable only
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.stableName}}
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9080
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{.Values.name}}
+    harness.io/track: stable

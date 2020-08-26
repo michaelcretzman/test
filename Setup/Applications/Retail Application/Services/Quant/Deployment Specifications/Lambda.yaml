@@ -1,0 +1,37 @@
+harnessApiVersion: '1.0'
+type: AWS_LAMBDA
+defaults:
+  memorySize: 128
+  runtime: nodejs8.10
+  timeout: 3
+functions:
+- functionName: ${service.name}_${env.name}_health
+  handler: app.health
+  memorySize: 128
+  runtime: nodejs8.10
+  timeout: 3
+- functionName: ${service.name}_${env.name}_version
+  handler: app.version
+  memorySize: 128
+  runtime: nodejs8.10
+  timeout: 3
+- functionName: ${service.name}_${env.name}_pi
+  handler: app.pi
+  memorySize: 128
+  runtime: nodejs8.10
+  timeout: 3
+- functionName: ${service.name}_${env.name}_sqrt
+  handler: app.sqrt
+  memorySize: 128
+  runtime: nodejs8.10
+  timeout: 3
+- functionName: ${service.name}_${env.name}_fib
+  handler: app.fib
+  memorySize: 128
+  runtime: nodejs8.10
+  timeout: 3
+- functionName: ${service.name}_${env.name}_prime
+  handler: app.prime
+  memorySize: 128
+  runtime: nodejs8.10
+  timeout: 3

@@ -1,0 +1,15 @@
+namespace: ${infra.kubernetes.namespace}
+replicas: 1
+
+name: ${serviceVariable.name}
+group: ${serviceVariable.group}
+host: ${serviceVariable.host}
+port: ${serviceVariable.port}
+image: ${artifact.metadata.image}
+version: ${artifact.metadata.tag}
+track: ${workflow.variables.track}
+endpoint: ${serviceVariable.endpoint}
+appEnv: ${workflow.variables.appEnv}
+
+createVirtualService: ${create.virtualService}
+createDestinationRule: ${create.destinationRule}

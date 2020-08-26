@@ -1,0 +1,11 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+artifactSelections:
+- artifactStreamName: harness_todolist-sample
+  regex: false
+  serviceName: Order V2
+  type: WEBHOOK_VARIABLE
+executionName: CD Pipeline 2
+executionType: Pipeline
+triggerCondition:
+- type: WEBHOOK

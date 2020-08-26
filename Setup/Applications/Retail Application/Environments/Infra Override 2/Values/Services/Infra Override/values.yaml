@@ -1,0 +1,2 @@
+appEnv1: ${serviceVariable.${infra.name}_appEnv1}
+appEnv2: ${serviceVariable.${infra.name}_appEnv2}

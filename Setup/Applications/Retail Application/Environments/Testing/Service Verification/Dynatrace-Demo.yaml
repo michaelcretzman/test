@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: DYNA_TRACE
+alertEnabled: false
+alertThreshold: 0.5
+analysisTolerance: LOW
+connectorName: dyna_trace
+enabled24x7: false
+numOfOccurrencesForAlert: 1
+serviceName: Order V2

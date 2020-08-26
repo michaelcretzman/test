@@ -1,0 +1,38 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: APPROVAL
+  name: Approval 0
+  parallel: false
+  properties:
+    userGroups:
+    - Account Administrator
+    variables: null
+    stageName: STAGE 1
+    timeoutMillis: 86400000
+    approvalStateType: USER_GROUP
+    sweepingOutputName: ''
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+- type: ENV_STATE
+  name: Dev_Env_WF
+  parallel: true
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+  workflowName: Dev CS Application
+- type: ENV_STATE
+  name: qa
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 2
+  workflowName: QA CS Application
+- type: ENV_STATE
+  name: TriggerJenkinsJob
+  parallel: true
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 2
+  workflowName: Thursdays Workflow

@@ -1,0 +1,30 @@
+harnessApiVersion: '1.0'
+type: ENVIRONMENT
+configMapYamlByServiceTemplateName: {}
+description: Cloned from environment Infra Override
+environmentType: NON_PROD
+variableOverrides:
+- name: infra2_appEnv1
+  serviceName: Infra Override
+  value: coconuts
+  valueType: TEXT
+- name: infra1_appEnv2
+  serviceName: Infra Override
+  value: bananas
+  valueType: TEXT
+- name: infra1_appEnv1
+  serviceName: Infra Override
+  value: apples
+  valueType: TEXT
+- name: infra2_appEnv2
+  serviceName: Infra Override
+  value: pineapples
+  valueType: TEXT
+- name: infra3_appEnv1
+  serviceName: Infra Override
+  value: blueberries
+  valueType: TEXT
+- name: infra3_appEnv2
+  serviceName: Infra Override
+  value: raspberries
+  valueType: TEXT

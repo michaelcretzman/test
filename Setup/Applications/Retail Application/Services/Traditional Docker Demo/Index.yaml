@@ -1,0 +1,10 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: artifactoryDockerRepositoryServer
+  value: harness-docker-local.jfrog.io
+  valueType: TEXT
+- name: dockerPasswd
+  value: gcpkms:ODFw5wYhRdydRoBzlF1gmA
+  valueType: ENCRYPTED_TEXT

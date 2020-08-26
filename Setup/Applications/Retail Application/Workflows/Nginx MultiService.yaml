@@ -1,0 +1,85 @@
+harnessApiVersion: '1.0'
+type: ROLLING
+concurrencyStrategy: NONE
+envName: Development
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+phases:
+- type: KUBERNETES
+  computeProviderName: nginx
+  daemonSet: false
+  infraDefinitionName: nginx-multiservice
+  name: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: RESOURCE_CONSTRAINT
+      name: Resource Constraint
+      properties:
+        holdingScope: WORKFLOW
+        permits: 1
+        resourceConstraintId: -jxBWC-KQ9qa4cpqB3Xabw
+        resourceUnit: ${infra.kubernetes.infraId}-multiservice-${artifact.source.repositoryName.split('/')[2]}-${workflow.variables.track}
+        timeoutMillis: 600000
+    - type: SHELL_SCRIPT
+      name: Shell Script
+      properties:
+        commandPath: null
+        connectionAttributes: null
+        executeOnDelegate: true
+        host: null
+        outputVars: FULLY_QUALIFIED_DIGEST_WITH_TAG
+        publishAsVar: true
+        scriptString: FULLY_QUALIFIED_DIGEST_WITH_TAG=${artifact.metadata.image}
+        scriptType: BASH
+        sshKeyRef: null
+        sweepingOutputName: image
+        sweepingOutputScope: PHASE
+        tags: null
+        templateExpressions: null
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+        timeoutMillis: 60000
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Nginx MultiService
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: nginx
+  daemonSet: false
+  infraDefinitionName: nginx-multiservice
+  name: Rollback Rolling
+  phaseNameForRollback: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Nginx MultiService
+  statefulSet: false
+templatized: true
+userVariables:
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: track
+  value: primary
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: appEnv
+  value: default

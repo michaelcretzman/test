@@ -1,0 +1,14 @@
+release: ${workflow.releaseNo}
+namespace: ${infra.kubernetes.namespace}
+
+defaultBackend:
+  image: gcr.io/google_containers/defaultbackend:1.4
+
+ingressController:
+  staticIp: 35.184.40.20
+  image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.1
+  cpu: 200m
+  memory: 200Mi
+  instances: 2
+  maxUnavailable: 0
+  maxSurge: 100%

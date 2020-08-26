@@ -1,0 +1,91 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{.Values.name}}
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{.Values.name}}
+  annotations:
+    harness.io/managed: true
+spec:
+  host: {{.Values.name}}
+---
+#
+# Main ingress for the backend that will split between stable and canary during deployment
+#
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{.Values.name}}
+  annotations:
+    harness.io/managed: true
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - {{.Values.name}}
+  http:
+  - match:
+    - uri:
+        exact: /{{.Values.endpoint}}
+    rewrite:
+      uri: /color/index.html
+    route:
+    - destination:
+        host: {{.Values.name}}
+---
+#
+# Dedicated ingress for canary
+#
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{.Values.canaryName}}
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - {{.Values.name}}
+  http:
+  - match:
+    - uri:
+        exact: /{{.Values.canaryEndpoint}}
+    rewrite:
+      uri: /color/index.html
+    route:
+    - destination:
+        host: {{.Values.canaryName}}
+---
+#
+# Dedicated ingress for stable
+#
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{.Values.stableName}}
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - {{.Values.name}}
+  http:
+  - match:
+    - uri:
+        exact: /{{.Values.stableEndpoint}}
+    rewrite:
+      uri: /color/index.html
+    route:
+    - destination:
+        host: {{.Values.stableName}}

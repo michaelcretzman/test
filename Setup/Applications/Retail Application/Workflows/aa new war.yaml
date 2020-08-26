@@ -1,0 +1,257 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+envName: Development
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+phases:
+- type: SSH
+  computeProviderName: 40 vms
+  daemonSet: false
+  infraDefinitionName: Physical Data Center- 40 vms -Data Center_SSH-
+  name: Phase 1
+  phaseSteps:
+  - type: INFRASTRUCTURE_NODE
+    name: Prepare Infra
+    steps:
+    - type: DC_NODE_SELECT
+      name: Select Nodes
+      properties:
+        excludeSelectedHostsFromFuturePhases: true
+        instanceCount: 1
+        specificHosts: false
+    - type: BARRIER
+      name: Barrier
+      properties:
+        identifier: x
+        timeoutMillis: 600000
+    stepsInParallel: false
+  - type: DISABLE_SERVICE
+    name: Disable Service
+    steps:
+    - type: COMMAND
+      name: conditional-test
+      properties:
+        commandName: test_echo
+        connectionAttributes: ''
+        connectionType: SSH
+        executeOnDelegate: false
+        host: a
+        sshKeyRef: 6O14Kv5KQLabYP_CQgqc-Q
+        timeoutMillis: 60000
+      templateUri: General Store Inc/Generic Commands/conditional-test:latest
+      templateVariables:
+      - name: my_name
+        value: test
+    stepsInParallel: false
+  - type: DEPLOY_SERVICE
+    name: Deploy Service
+    steps:
+    - type: COMMAND
+      name: Install
+      properties:
+        commandName: Install
+    stepsInParallel: false
+  - type: ENABLE_SERVICE
+    name: Enable Service
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    failureStrategies:
+    - failureTypes:
+      - CONNECTIVITY
+      - AUTHENTICATION
+      repairActionCode: RETRY
+      repairActionCodeAfterRetry: IGNORE
+      retryCount: 5
+      retryIntervals:
+      - 30
+      specificSteps:
+      - AppDynamics
+      - Splunkv2
+    - failureTypes:
+      - VERIFICATION_FAILURE
+      repairActionCode: MANUAL_INTERVENTION
+      retryCount: 0
+      specificSteps:
+      - AppDynamics
+      - Splunkv2
+    - failureTypes:
+      - VERIFICATION_FAILURE
+      - APPLICATION_ERROR
+      repairActionCode: ROLLBACK_WORKFLOW
+      retryCount: 0
+      specificSteps:
+      - HTTP
+    name: Verify Service
+    steps:
+    - type: APP_DYNAMICS
+      name: AppDynamics
+      properties:
+        analysisServerConfigId: 2pd6OJV5Rqe2ciI3jM0y4g
+        analysisTolerance: LOW
+        applicationId: '10918'
+        comparisonStrategy: PREDICTIVE
+        dependentTiersToAnalyze: null
+        executeWithPreviousSteps: false
+        includeTiers: false
+        tierId: '152575'
+        timeDuration: '60'
+    - type: SPLUNKV2
+      name: Splunkv2
+      properties:
+        analysisServerConfigId: wT3iJqyzQvWi7jkENhxjdw
+        analysisTolerance: MEDIUM
+        comparisonStrategy: COMPARE_WITH_PREVIOUS
+        hostnameField: host
+        query: '*exception*'
+        timeDuration: '15'
+    - type: HTTP
+      name: HTTP
+      properties:
+        assertion: ${httpResponseCode}==200
+        body: ''
+        executeWithPreviousSteps: false
+        header: ''
+        method: GET
+        publishAsVar: false
+        responseProcessingExpressions: ''
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        templateVariables: ''
+        timeoutMillis: 10000
+        url: http://${instance.hostName}
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Catalog
+  statefulSet: false
+  templateExpressions:
+  - expression: ${Service}
+    fieldName: serviceId
+    metadata:
+    - name: artifactType
+      value: WAR
+    - name: relatedField
+      value: ${InfraDefinition_SSH}
+    - name: entityType
+      value: SERVICE
+  - expression: ${InfraDefinition_SSH}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: WAR
+    - name: relatedField
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+preDeploymentSteps:
+- type: ARTIFACT_CHECK
+  name: Artifact Check
+rollbackPhases:
+- type: SSH
+  computeProviderName: 40 vms
+  daemonSet: false
+  infraDefinitionName: Physical Data Center- 40 vms -Data Center_SSH-
+  name: Rollback Phase 1
+  phaseNameForRollback: Phase 1
+  phaseSteps:
+  - type: DISABLE_SERVICE
+    name: Disable Service
+    phaseStepNameForRollback: Enable Service
+    statusForRollback: SUCCESS
+    steps:
+    - type: SHELL_SCRIPT
+      name: Shell Script
+      properties:
+        connectionType: SSH
+        executeOnDelegate: true
+        publishAsVar: false
+        scriptString: lkdlakjflknas dskj dskj sfkkk${workflow.name}
+        scriptType: BASH
+        timeoutMillis: 600000
+    - type: APPROVAL
+      name: Approval
+      properties:
+        approvalStateType: USER_GROUP
+        timeoutMillis: 1800000
+        userGroups:
+        - z9V78uOkSzmtKifBG4b4dw
+    stepsInParallel: false
+  - type: STOP_SERVICE
+    name: Stop Service
+    phaseStepNameForRollback: Deploy Service
+    statusForRollback: SUCCESS
+    steps:
+    - type: COMMAND
+      name: Stop
+      properties:
+        commandName: Stop
+    stepsInParallel: false
+  - type: DEPLOY_SERVICE
+    name: Deploy Service
+    phaseStepNameForRollback: Deploy Service
+    statusForRollback: SUCCESS
+    steps:
+    - type: COMMAND
+      name: Install
+      properties:
+        commandName: Install
+    stepsInParallel: false
+  - type: ENABLE_SERVICE
+    name: Enable Service
+    phaseStepNameForRollback: Disable Service
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Deploy Service
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Catalog
+  statefulSet: false
+  templateExpressions:
+  - expression: ${Service}
+    fieldName: serviceId
+    metadata:
+    - name: artifactType
+      value: WAR
+    - name: relatedField
+      value: ${InfraDefinition_SSH}
+    - name: entityType
+      value: SERVICE
+  - expression: ${InfraDefinition_SSH}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: WAR
+    - name: relatedField
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+templatized: true
+userVariables:
+- type: ENTITY
+  description: Variable for Service entity in Rollback Phase 1
+  fixed: false
+  mandatory: true
+  name: Service
+- type: ENTITY
+  fixed: false
+  mandatory: true
+  name: InfraDefinition_SSH

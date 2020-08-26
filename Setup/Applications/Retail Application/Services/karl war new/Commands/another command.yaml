@@ -1,0 +1,10 @@
+harnessApiVersion: '1.0'
+type: OTHER
+commandUnitType: COMMAND
+commandUnits:
+- command: "clone repo\ngcloud init\ngloud deploy "
+  commandUnitType: EXEC
+  deploymentType: SSH
+  name: Exec
+  scriptType: BASH
+targetToAllEnv: true

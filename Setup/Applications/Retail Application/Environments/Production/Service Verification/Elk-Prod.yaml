@@ -1,0 +1,41 @@
+harnessApiVersion: '1.0'
+type: ELK
+alertEnabled: false
+alertPriority: P5
+alertThreshold: 0.5
+baselineEndMinute: 26139150
+baselineStartMinute: 26137711
+connectorName: elk-dev
+enabled24x7: true
+hostnameField: kubernetes.pod.name
+index: harness-qa-*
+messageField: log
+numOfOccurrencesForAlert: 1
+query: |-
+  {
+      "bool": {
+        "filter": [
+          {
+            "bool": {
+              "should": [
+                {
+                  "match": {
+                    "kubernetes.container.name": "manager"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "regexp": {
+              "log": {
+                "value": "1;31merror"
+              }
+            }
+          }
+        ]
+      }
+  }
+serviceName: Order V2
+timestampField: '@timestamp'
+timestampFormat: yyyy-MM-dd'T'HH:mm:ss.SSSX

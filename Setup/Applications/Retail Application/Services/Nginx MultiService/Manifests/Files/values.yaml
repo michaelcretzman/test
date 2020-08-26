@@ -1,0 +1,11 @@
+namespace: ${infra.kubernetes.namespace}
+apiUrl: http://${serviceVariable.host}
+host: ${serviceVariable.host}
+replicas: 1
+
+name: multiservice-${artifact.source.repositoryName.split('/')[2]}
+image: ${artifact.metadata.image}
+version: ${artifact.metadata.tag}
+track: ${workflow.variables.track}
+endpoint: ${artifact.source.repositoryName.split('/')[2]}
+appEnv: ${image.FULLY_QUALIFIED_DIGEST_WITH_TAG}

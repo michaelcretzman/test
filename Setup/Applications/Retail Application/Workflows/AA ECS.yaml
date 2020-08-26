@@ -1,0 +1,171 @@
+harnessApiVersion: '1.0'
+type: BASIC
+concurrencyStrategy: INFRA
+envName: aa new env
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+phases:
+- type: ECS
+  computeProviderName: salesECS
+  daemonSet: false
+  infraDefinitionName: salesECS
+  name: Phase 1
+  phaseSteps:
+  - type: CONTAINER_SETUP
+    name: Set up Container
+    steps:
+    - type: ECS_SERVICE_SETUP
+      name: ECS Service Setup
+      properties:
+        awsAutoScalarConfigs: null
+        desiredInstanceCount: fixedInstances
+        ecsServiceName: ${app.name}__${service.name}__${env.name}
+        fixedInstances: '1'
+        resizeStrategy: RESIZE_NEW_FIRST
+        serviceSteadyStateTimeout: 10
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+    stepsInParallel: false
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    steps:
+    - type: ECS_SERVICE_DEPLOY
+      name: Upgrade Containers
+      properties:
+        instanceCount: 100
+        instanceUnitType: PERCENTAGE
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: AA ECS
+  statefulSet: false
+  templateExpressions:
+  - expression: ${Service}
+    fieldName: serviceId
+    metadata:
+    - name: relatedField
+      value: ${InfraDefinition_ECS}
+    - name: artifactType
+      value: DOCKER
+    - name: entityType
+      value: SERVICE
+  - expression: ${InfraDefinition_ECS}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: relatedField
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+rollbackPhases:
+- type: ECS
+  computeProviderName: salesECS
+  daemonSet: false
+  infraDefinitionName: salesECS
+  name: Rollback Phase 1
+  phaseNameForRollback: Phase 1
+  phaseSteps:
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    phaseStepNameForRollback: Deploy Containers
+    statusForRollback: SUCCESS
+    steps:
+    - type: ECS_SERVICE_ROLLBACK
+      name: Rollback Containers
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Deploy Containers
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: AA ECS
+  statefulSet: false
+  templateExpressions:
+  - expression: ${Service}
+    fieldName: serviceId
+    metadata:
+    - name: relatedField
+      value: ${InfraDefinition_ECS}
+    - name: artifactType
+      value: DOCKER
+    - name: entityType
+      value: SERVICE
+  - expression: ${InfraDefinition_ECS}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: relatedField
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+templateExpressions:
+- expression: ${Environment}
+  fieldName: envId
+  metadata:
+  - name: relatedField
+    value: ${InfraDefinition_ECS}
+  - name: entityType
+    value: ENVIRONMENT
+- expression: ${Service}
+  fieldName: serviceId
+  metadata:
+  - name: relatedField
+    value: ${InfraDefinition_ECS}
+  - name: artifactType
+    value: DOCKER
+  - name: entityType
+    value: SERVICE
+- expression: ${InfraDefinition_ECS}
+  fieldName: infraDefinitionId
+  metadata:
+  - name: relatedField
+  - name: entityType
+    value: INFRASTRUCTURE_DEFINITION
+templatized: true
+userVariables:
+- type: ENTITY
+  description: Variable for Environment entity
+  fixed: false
+  mandatory: true
+  name: Environment
+- type: ENTITY
+  description: Variable for Service entity
+  fixed: false
+  mandatory: true
+  name: Service
+- type: ENTITY
+  description: Variable for Infrastructure Definition entity
+  fixed: false
+  mandatory: true
+  name: InfraDefinition_ECS
+- type: TEXT
+  allowedValues: 256,512,1028
+  fixed: false
+  mandatory: true
+  name: mem
+- type: TEXT
+  allowedValues: 1,2,4
+  fixed: false
+  mandatory: true
+  name: cpu

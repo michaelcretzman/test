@@ -1,0 +1,10 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+artifactSelections:
+- regex: false
+  serviceName: Order V2
+  type: WEBHOOK_VARIABLE
+executionName: a new canary 3
+executionType: Workflow
+triggerCondition:
+- type: WEBHOOK

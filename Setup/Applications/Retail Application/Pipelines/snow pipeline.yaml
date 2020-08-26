@@ -1,0 +1,57 @@
+harnessApiVersion: '1.0'
+type: PIPELINE
+pipelineStages:
+- type: ENV_STATE
+  name: Dev
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 1
+  workflowName: Prod GCP Docker Workflow SNOW
+  workflowVariables:
+  - entityType: INFRASTRUCTURE_DEFINITION
+    name: InfraDefinition_Kubernetes
+    value: Kubernetes Cluster_ harness-demo_DIRECT_Kubernetes_default
+  - entityType: ENVIRONMENT
+    name: Environment
+    value: Production
+- type: ENV_STATE
+  name: QA
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 2
+  workflowName: Qa GCP Docker Workflow H
+- type: APPROVAL
+  name: Approval 2
+  parallel: false
+  properties:
+    workflowVariables: null
+    approvalStateParams:
+      serviceNowApprovalParams:
+        snowConnectorId: oRWA-q15SmGfKTujuJgByg
+        ticketType: INCIDENT
+        issueNumber: ${snow.issueNumber}
+        approval:
+          operator: AND
+          conditions:
+            state:
+            - Resolved
+        rejection:
+          operator: AND
+          conditions:
+            state:
+            - Canceled
+    stageName: ServiceNow Approval Stage
+    timeoutMillis: 1800000
+    approvalStateType: SERVICENOW
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: ServiceNow Approval Stage
+- type: ENV_STATE
+  name: Production
+  parallel: false
+  skipCondition:
+    type: DO_NOT_SKIP
+  stageName: STAGE 4
+  workflowName: Prod GCP Docker Workflow 2

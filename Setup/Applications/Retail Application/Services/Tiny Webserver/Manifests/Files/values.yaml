@@ -1,0 +1,4 @@
+name: tiny-webserver
+host: nginx-demo.harness.io
+namespace: ${infra.kubernetes.namespace}
+replicas: 1

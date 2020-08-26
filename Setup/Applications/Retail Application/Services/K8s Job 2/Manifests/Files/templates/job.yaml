@@ -1,0 +1,46 @@
+# harness.io/skip-file-for-deploy
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-job
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      serviceAccountName: job-sa
+      restartPolicy: Never
+      containers:
+      - name: my-job
+        image: bitnami/kubectl
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/bash
+        - -c
+        - /cmds/execute.sh
+        volumeMounts:
+        - name: cmds
+          mountPath: /cmds
+      volumes:
+      - name: cmds
+        configMap:
+          defaultMode: 0755
+          name: job-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: job-config
+data:
+  execute.sh: |
+    echo Result 1
+    echo Result 2
+    echo Result 3
+    echo Done
+---
+{{- if .Values.createNamespace}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{.Values.namespace}}
+{{- end}}

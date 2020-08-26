@@ -1,0 +1,2 @@
+include: true
+foobar: "${context.namespace.bar}"

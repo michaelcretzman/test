@@ -1,0 +1,7 @@
+harnessApiVersion: '1.0'
+type: BAMBOO
+artifactPaths:
+- artifacts/target
+metadataOnly: false
+planName: TOD-TODIR
+serverName: ec2_34_205_16_35_compute_wingsbuild

@@ -1,0 +1,78 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+preDeploymentSteps:
+- type: TERRAFORM_PROVISION
+  name: Terraform Provision
+  properties:
+    backendConfigs:
+    - name: bucket
+      value: ${workflow.variables.bucket}
+      valueType: TEXT
+    - name: region
+      value: ${workflow.variables.region}
+      valueType: TEXT
+    inheritApprovedPlan: false
+    provisionerName: tf-test
+    runPlanOnly: false
+    targets: null
+    tfVarFiles: null
+    timeoutMillis: 300000
+    variables:
+    - name: cpu
+      value: ${workflow.variables.cpu}
+      valueType: TEXT
+    - name: mem
+      value: ${workflow.variables.mem}
+      valueType: TEXT
+    - name: tasks
+      value: ${workflow.variables.tasks}
+      valueType: TEXT
+templateExpressions:
+- expression: ${Environment}
+  fieldName: envId
+  metadata:
+  - name: relatedField
+  - name: entityType
+    value: ENVIRONMENT
+templatized: true
+userVariables:
+- type: ENTITY
+  description: Variable for Environment entity
+  fixed: false
+  mandatory: true
+  name: Environment
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: cpu
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: mem
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: tasks
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: region
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: bucket

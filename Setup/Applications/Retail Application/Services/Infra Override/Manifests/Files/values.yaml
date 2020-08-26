@@ -1,0 +1,12 @@
+namespace: ${infra.kubernetes.namespace}
+apiUrl: http://localhost:8080
+replicas: 1
+
+name: infra-override
+image: ${artifact.metadata.image}
+version: ${artifact.metadata.tag}
+track: primary
+endpoint: rpc
+
+appEnv1: ${serviceVariable.appEnv1}
+appEnv2: ${serviceVariable.appEnv2}

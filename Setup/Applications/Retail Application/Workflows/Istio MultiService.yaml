@@ -1,0 +1,100 @@
+harnessApiVersion: '1.0'
+type: ROLLING
+concurrencyStrategy: NONE
+envName: Development
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+phases:
+- type: KUBERNETES
+  computeProviderName: istio-multiservice
+  daemonSet: false
+  infraDefinitionName: istio-multiservice
+  name: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: RESOURCE_CONSTRAINT
+      name: Resource Constraint
+      properties:
+        holdingScope: WORKFLOW
+        permits: 1
+        resourceConstraintId: -jxBWC-KQ9qa4cpqB3Xabw
+        resourceUnit: ${infra.kubernetes.infraId}-${serviceVariable.name}-${workflow.variables.track}
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+        timeoutMillis: 600000
+    - type: SHELL_SCRIPT
+      name: Check for Primary
+      properties:
+        commandPath: null
+        connectionAttributes: null
+        executeOnDelegate: true
+        host: null
+        publishAsVar: true
+        sshKeyRef: null
+        sweepingOutputName: create
+        sweepingOutputScope: PHASE
+        tags:
+        - demo
+        templateExpressions: null
+        timeoutMillis: 600000
+      templateUri: General Store Inc/MultiService/Check for Primary:latest
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    - type: SHELL_SCRIPT
+      name: Update VirtualService and DestinationRule
+      properties:
+        commandPath: null
+        connectionAttributes: null
+        executeOnDelegate: true
+        host: null
+        publishAsVar: false
+        sshKeyRef: null
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        tags:
+        - demo
+        templateExpressions: null
+        timeoutMillis: 600000
+      templateUri: General Store Inc/MultiService/Update VirtualService and DestinationRule:latest
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Istio MultiService
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: istio-multiservice
+  daemonSet: false
+  infraDefinitionName: istio-multiservice
+  name: Rollback Rolling
+  phaseNameForRollback: Rolling
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Istio MultiService
+  statefulSet: false
+templatized: true
+userVariables:
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: track
+  value: primary
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: appEnv
+  value: default

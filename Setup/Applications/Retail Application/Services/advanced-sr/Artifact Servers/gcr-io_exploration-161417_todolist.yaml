@@ -1,0 +1,5 @@
+harnessApiVersion: '1.0'
+type: GCR
+dockerImageName: exploration-161417/todolist
+registryHostName: gcr.io
+serverName: exploration-161417

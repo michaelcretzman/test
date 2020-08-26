@@ -1,0 +1,15 @@
+name: ${serviceVariable.name}
+host: ${serviceVariable.host}
+image: ${artifact.metadata.image}
+stageName: ${serviceVariable.stageName}
+primaryName: ${serviceVariable.primaryName}
+endpoint: color-bg
+
+replicas: 2
+namespace: ${infra.kubernetes.namespace}
+
+frontend:
+  title: Nginx - Blue/Green Traffic Shift
+  loadBalancer: ${serviceVariable.loadBalancer}
+  uiPath: ${serviceVariable.uiPath}
+  image: us.gcr.io/sales-209522/continuous-requests:110

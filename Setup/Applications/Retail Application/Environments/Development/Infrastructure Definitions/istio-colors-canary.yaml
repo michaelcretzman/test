@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: KUBERNETES_CLUSTER
+deploymentType: KUBERNETES
+infrastructure:
+- type: DIRECT_KUBERNETES
+  cloudProviderName: istio
+  clusterName: istio
+  namespace: colors-canary
+  releaseName: release-${infra.kubernetes.infraId}
+scopedServices:
+- Istio Canary

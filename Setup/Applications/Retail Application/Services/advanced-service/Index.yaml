@@ -1,0 +1,10 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: test_pass
+  value: gcpkms:EjXzPaySTA2jY7J6t-o8BQ
+  valueType: ENCRYPTED_TEXT
+- name: test_var
+  value: '123'
+  valueType: TEXT

@@ -1,0 +1,159 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+envName: aws-demo-1
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  notificationGroups:
+  - General Store
+  userGroupAsExpression: false
+phases:
+- type: KUBERNETES
+  computeProviderName: puneet-lab2
+  daemonSet: false
+  infraDefinitionName: harness-qa-aks_AZURE_Kubernetes_Microsoft Azure_ puneet-lab2_default
+  name: Canary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_CANARY_DEPLOY
+      name: Canary Deployment
+      properties:
+        instanceUnitType: COUNT
+        instances: '1'
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    steps:
+    - type: K8S_DELETE
+      name: Canary Delete
+      properties:
+        instanceUnitType: COUNT
+        resources: ${k8s.canaryWorkload}
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: aws-demo-1
+  statefulSet: false
+  templateExpressions:
+  - expression: ${Service}
+    fieldName: serviceId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: relatedField
+      value: ${InfraDefinition_Kubernetes}
+    - name: entityType
+      value: SERVICE
+  - expression: ${InfraDefinition_Kubernetes}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: relatedField
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+- type: KUBERNETES
+  computeProviderName: puneet-lab2
+  daemonSet: false
+  infraDefinitionName: harness-qa-aks_AZURE_Kubernetes_Microsoft Azure_ puneet-lab2_default
+  name: Primary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: aws-demo-1
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: puneet-lab2
+  daemonSet: false
+  infraDefinitionName: harness-qa-aks_AZURE_Kubernetes_Microsoft Azure_ puneet-lab2_default
+  name: Rollback Canary
+  phaseNameForRollback: Canary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: aws-demo-1
+  statefulSet: false
+  templateExpressions:
+  - expression: ${Service}
+    fieldName: serviceId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: relatedField
+      value: ${InfraDefinition_Kubernetes}
+    - name: entityType
+      value: SERVICE
+  - expression: ${InfraDefinition_Kubernetes}
+    fieldName: infraDefinitionId
+    metadata:
+    - name: artifactType
+      value: DOCKER
+    - name: relatedField
+    - name: entityType
+      value: INFRASTRUCTURE_DEFINITION
+- type: KUBERNETES
+  computeProviderName: puneet-lab2
+  daemonSet: false
+  infraDefinitionName: harness-qa-aks_AZURE_Kubernetes_Microsoft Azure_ puneet-lab2_default
+  name: Rollback Primary
+  phaseNameForRollback: Primary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: aws-demo-1
+  statefulSet: false
+templatized: true
+userVariables:
+- type: ENTITY
+  description: Variable for Service entity in Rollback Canary
+  fixed: false
+  mandatory: true
+  name: Service
+- type: ENTITY
+  fixed: false
+  mandatory: true
+  name: InfraDefinition_Kubernetes

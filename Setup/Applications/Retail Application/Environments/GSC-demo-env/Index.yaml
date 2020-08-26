@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: ENVIRONMENT
+configMapYamlByServiceTemplateName: {}
+environmentType: NON_PROD
+variableOverrides:
+- name: test
+  serviceName: Order
+  value: gcpkms:m2VGVyPyTBaOU0Lmup0aaQ
+  valueType: ENCRYPTED_TEXT

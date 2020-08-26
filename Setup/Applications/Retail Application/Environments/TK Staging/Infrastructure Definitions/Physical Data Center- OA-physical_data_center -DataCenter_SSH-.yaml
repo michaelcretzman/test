@@ -1,0 +1,13 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: PHYSICAL_DATA_CENTER
+deploymentType: SSH
+infrastructure:
+- type: PHYSICAL_DATA_CENTER_SSH
+  cloudProviderName: OA-physical_data_center
+  hostConnectionAttrsName: ubuntu
+  hostNames:
+  - hosta
+  - hostb
+scopedServices:
+- Catalog

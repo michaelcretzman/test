@@ -1,0 +1,137 @@
+harnessApiVersion: '1.0'
+type: ECS
+advancedConfig: |-
+  # Enter your Task Definition JSON spec below.
+  #
+  # Placeholders:
+  #
+  # Required: ${DOCKER_IMAGE_NAME}
+  #   - Replaced with the Docker image name and tag
+  #
+  # Optional: ${CONTAINER_NAME}
+  #   - Replaced with a container name based on the image name
+  #
+  # Required For Fargate: ${EXECUTION_ROLE}
+  #   - Replaced with execution role arn
+  #
+  # Harness will set the task family of the task definition.
+  #
+  # Service variables will be merged into environment
+  # variables for all containers, overriding values if
+  # the name is the same.
+  #
+  # ---
+  {
+    "ipcMode": null,
+    "executionRoleArn": "arn:aws:iam::759984737373:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+      {
+        "dnsSearchDomains": null,
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "secretOptions": null,
+          "options": {
+            "awslogs-group": "/ecs/job-test",
+            "awslogs-region": "us-east-2",
+            "awslogs-stream-prefix": "ecs"
+          }
+        },
+        "entryPoint": null,
+        "portMappings": [],
+        "command": [
+          "sleep 1",
+          "exit"
+        ],
+        "linuxParameters": null,
+        "cpu": 0,
+        "environment": [],
+        "resourceRequirements": null,
+        "ulimits": null,
+        "dnsServers": null,
+        "mountPoints": [],
+        "workingDirectory": null,
+        "secrets": null,
+        "dockerSecurityOptions": null,
+        "memory": 128,
+        "memoryReservation": null,
+        "volumesFrom": [],
+        "stopTimeout": null,
+        "image" : "${DOCKER_IMAGE_NAME}",
+        "startTimeout": null,
+        "firelensConfiguration": null,
+        "dependsOn": null,
+        "disableNetworking": null,
+        "interactive": null,
+        "healthCheck": null,
+        "essential": true,
+        "links": null,
+        "hostname": null,
+        "extraHosts": null,
+        "pseudoTerminal": null,
+        "user": null,
+        "readonlyRootFilesystem": null,
+        "dockerLabels": null,
+        "systemControls": null,
+        "privileged": null,
+        "name" : "${CONTAINER_NAME}"
+      }
+    ],
+    "placementConstraints": [],
+    "memory": "2048",
+    "taskRoleArn": "arn:aws:iam::759984737373:role/ecsTaskExecutionRole",
+    "compatibilities": [
+      "EC2",
+      "FARGATE"
+    ],
+    "taskDefinitionArn": "arn:aws:ecs:us-east-2:759984737373:task-definition/job-test:1",
+    "family": "job-test",
+    "requiresAttributes": [
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.execution-role-awslogs"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.task-iam-role"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.task-eni"
+      }
+    ],
+    "pidMode": null,
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "1024",
+    "revision": 1,
+    "status": "ACTIVE",
+    "inferenceAccelerators": null,
+    "proxyConfiguration": null,
+    "volumes": []
+  }

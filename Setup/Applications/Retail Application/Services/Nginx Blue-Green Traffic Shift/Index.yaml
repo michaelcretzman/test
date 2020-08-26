@@ -1,0 +1,26 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: INSTANCE_COUNT
+  value: '3'
+  valueType: TEXT
+- name: host
+  value: nginx-demo.harness.io
+  valueType: TEXT
+- name: name
+  value: colors-blue-green
+  valueType: TEXT
+- name: loadBalancer
+  value: http://${serviceVariable.host}
+  valueType: TEXT
+- name: uiPath
+  value: nginx-blue-green-traffic-shift
+  valueType: TEXT
+- name: stageName
+  value: colors-blue-green-stage
+  valueType: TEXT
+- name: primaryName
+  value: colors-blue-green-primary
+  valueType: TEXT
+deploymentType: KUBERNETES

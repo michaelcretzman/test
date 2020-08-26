@@ -1,0 +1,11 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+executionName: loop-test
+executionType: Workflow
+triggerCondition:
+- type: WEBHOOK
+workflowVariables:
+- name: index
+  value: ${index}
+- name: tag
+  value: ${tag}

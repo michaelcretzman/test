@@ -1,0 +1,11 @@
+harnessApiVersion: '1.0'
+type: SERVICE
+artifactType: DOCKER
+configVariables:
+- name: mem
+  value: '512'
+  valueType: TEXT
+- name: ALEX_TEST
+  value: FOO
+  valueType: TEXT
+deploymentType: ECS

@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.name}}
+  labels:
+    app: {{.Values.name}}
+    track: primary
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9080
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{.Values.name}}
+    track: primary
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.name}}-{{.Values.track}}
+  labels:
+    app: {{.Values.name}}
+    track: {{.Values.track}}
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9080
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{.Values.name}}
+    track: primary
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.name}}-{{.Values.track}}-canary
+  labels:
+    app: {{.Values.name}}
+    track: {{.Values.track}}
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 9080
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{.Values.name}}
+    track: {{.Values.track}}

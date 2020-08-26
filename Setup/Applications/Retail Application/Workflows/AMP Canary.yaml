@@ -1,0 +1,132 @@
+harnessApiVersion: '1.0'
+type: CANARY
+concurrencyStrategy: INFRA
+envName: Amp dev
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+phases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Kubernetes Cluster_ harness-demo_DIRECT_Kubernetes_default
+  name: Canary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_CANARY_DEPLOY
+      name: Canary Deployment
+      properties:
+        instanceUnitType: PERCENTAGE
+        instances: '25'
+        stateTimeoutInMinutes: 10
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    steps:
+    - type: APP_DYNAMICS
+      name: AppDynamics
+      properties:
+        analysisServerConfigId: 2pd6OJV5Rqe2ciI3jM0y4g
+        analysisTolerance: LOW
+        applicationId: '10918'
+        comparisonStrategy: COMPARE_WITH_CURRENT
+        executeWithPreviousSteps: false
+        predictiveHistoryMinutes: ''
+        tierId: '152575'
+        timeDuration: 15
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    steps:
+    - type: K8S_DELETE
+      name: Canary Delete
+      properties:
+        instanceUnitType: COUNT
+        resources: ${k8s.canaryWorkload}
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: AMP Service
+  statefulSet: false
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Kubernetes Cluster_ harness-demo_DIRECT_Kubernetes_default
+  name: Primary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Verify
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: AMP Service
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Kubernetes Cluster_ harness-demo_DIRECT_Kubernetes_default
+  name: Rollback Canary
+  phaseNameForRollback: Canary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: AMP Service
+  statefulSet: false
+- type: KUBERNETES
+  computeProviderName: harness-demo
+  daemonSet: false
+  infraDefinitionName: Kubernetes Cluster_ harness-demo_DIRECT_Kubernetes_default
+  name: Rollback Primary
+  phaseNameForRollback: Primary
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    phaseStepNameForRollback: Deploy
+    statusForRollback: SUCCESS
+    steps:
+    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
+      name: Rollback Deployment
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Wrap Up
+    phaseStepNameForRollback: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: AMP Service
+  statefulSet: false
+tags:
+  Canary: ''
+  MyTag: ''
+templatized: false

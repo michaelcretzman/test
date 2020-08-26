@@ -1,0 +1,135 @@
+harnessApiVersion: '1.0'
+type: CLOUD_WATCH
+alertEnabled: false
+alertThreshold: 0.5
+analysisTolerance: LOW
+connectorName: satyam-play-ground
+ecsMetrics:
+  CV-ECS-QA-Test:
+  - dimension: ClusterName
+    dimensionDisplay: Cluster Name
+    displayName: CPU Utilization
+    enabledDefault: true
+    metricName: CPUUtilization
+    metricType: VALUE
+    statistics: Average
+    unit: Percent
+  - dimension: ClusterName
+    dimensionDisplay: Cluster Name
+    displayName: Memory Utilization
+    enabledDefault: true
+    metricName: MemoryUtilization
+    metricType: VALUE
+    statistics: Average
+    unit: Percent
+enabled24x7: true
+loadBalancerMetrics:
+  CVEcsDoNotDELETE:
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: HTTP 2XX
+    enabledDefault: true
+    metricName: HTTPCode_Backend_2XX
+    metricType: VALUE_LOWER
+    statistics: Sum
+    unit: Count
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: HTTP 3XX
+    enabledDefault: true
+    metricName: HTTPCode_Backend_3XX
+    metricType: ERROR
+    statistics: Sum
+    unit: Count
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: HTTP 4XX
+    enabledDefault: true
+    metricName: HTTPCode_Backend_4XX
+    metricType: ERROR
+    statistics: Sum
+    unit: Count
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: HTTP 5XX
+    enabledDefault: true
+    metricName: HTTPCode_Backend_5XX
+    metricType: ERROR
+    statistics: Sum
+    unit: Count
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: Latency
+    enabledDefault: true
+    metricName: Latency
+    metricType: ERROR
+    statistics: Average
+    unit: Milliseconds
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: Request Count
+    enabledDefault: true
+    metricName: RequestCount
+    metricType: THROUGHPUT
+    statistics: Sum
+    unit: Count
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: Estimated Processed Bytes
+    enabledDefault: true
+    metricName: EstimatedProcessedBytes
+    metricType: VALUE
+    statistics: Average
+    unit: Kilobytes
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: Estimated ALB New Connection Count
+    enabledDefault: true
+    metricName: EstimatedALBNewConnectionCount
+    metricType: VALUE_LOWER
+    statistics: Sum
+    unit: Count
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: Estimated ALB Active Connection Count
+    enabledDefault: true
+    metricName: EstimatedALBActiveConnectionCount
+    metricType: VALUE_LOWER
+    statistics: Sum
+    unit: Count
+  CV-QA-load-balancer:
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: HTTP 2XX
+    enabledDefault: true
+    metricName: HTTPCode_Backend_2XX
+    metricType: VALUE_LOWER
+    statistics: Sum
+    unit: Count
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: Latency
+    enabledDefault: true
+    metricName: Latency
+    metricType: ERROR
+    statistics: Average
+    unit: Milliseconds
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: Request Count
+    enabledDefault: true
+    metricName: RequestCount
+    metricType: THROUGHPUT
+    statistics: Sum
+    unit: Count
+  - dimension: LoadBalancerName
+    dimensionDisplay: Load balancer name
+    displayName: Estimated Processed Bytes
+    enabledDefault: true
+    metricName: EstimatedProcessedBytes
+    metricType: VALUE
+    statistics: Average
+    unit: Kilobytes
+numOfOccurrencesForAlert: 1
+region: us-east-1
+serviceName: Order V2

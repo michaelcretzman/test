@@ -1,0 +1,12 @@
+harnessApiVersion: '1.0'
+type: AWS_LAMBDA
+defaults:
+  memorySize: 128
+  runtime: nodejs10.x
+  timeout: 3
+functions:
+- functionName: ${service.name}_${env.name}_health2
+  handler: app.health
+  memorySize: 128
+  runtime: nodejs10.x
+  timeout: 3

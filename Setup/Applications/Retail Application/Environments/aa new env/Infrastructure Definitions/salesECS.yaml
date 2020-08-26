@@ -1,0 +1,20 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: ECS
+infrastructure:
+- type: AWS_ECS
+  assignPublicIp: false
+  cloudProviderName: salesECS
+  clusterName: harness-se-ecs-ec2
+  launchType: EC2
+  region: us-east-2
+  securityGroupIds:
+  - sg-00c00f54a8f8de08d
+  - sg-0312ab3442229c9f5
+  - sg-03a08ba0f5ffe7d5e
+  subnetIds:
+  - subnet-042bbb3759a8d2580
+  - subnet-06de689641d8c3369
+  - subnet-0cf18be3722239692
+  vpcId: vpc-0b1c05c21a96a5aee

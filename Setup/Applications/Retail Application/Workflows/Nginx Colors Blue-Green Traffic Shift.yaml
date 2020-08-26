@@ -1,0 +1,148 @@
+harnessApiVersion: '1.0'
+type: BLUE_GREEN
+concurrencyStrategy: INFRA
+envName: Development
+phases:
+- type: KUBERNETES
+  computeProviderName: nginx
+  daemonSet: false
+  infraDefinitionName: nginx-blue-green-traffic-shift
+  name: Blue/Green
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Deploy
+    steps:
+    - type: K8S_BLUE_GREEN_DEPLOY
+      name: Stage Deployment
+    - type: HTTP
+      name: 100 Requests
+      properties:
+        assertion: ''
+        body: ''
+        executeWithPreviousSteps: false
+        header: ''
+        method: GET
+        publishAsVar: false
+        responseProcessingExpressions: ''
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+        timeoutMillis: 30000
+        url: ${serviceVariable.loadBalancer}/${serviceVariable.uiPath}
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Shift Half of Traffic
+    steps:
+    - type: APPROVAL
+      name: Approve 25% Traffic
+      properties:
+        approvalStateType: USER_GROUP
+        timeoutMillis: 1800000
+        userGroups:
+        - GXFtTUS2Q9Gmo1r4MhqS4g
+        - 9gBB_2hwQWqDyiCI7H-o5g
+    - type: K8S_APPLY
+      name: Apply 25%
+      properties:
+        filePaths: backend/5-traffic-split-25.yaml
+        stateTimeoutInMinutes: '10'
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+    - type: APPROVAL
+      name: Approve 50% Traffic
+      properties:
+        approvalStateType: USER_GROUP
+        timeoutMillis: 1800000
+        userGroups:
+        - GXFtTUS2Q9Gmo1r4MhqS4g
+        - 9gBB_2hwQWqDyiCI7H-o5g
+    - type: K8S_APPLY
+      name: Apply 50%
+      properties:
+        filePaths: backend/6-traffic-split-50.yaml
+        skipSteadyStateCheck: true
+        stateTimeoutInMinutes: '10'
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+    stepsInParallel: false
+  - type: K8S_PHASE_STEP
+    name: Route Update
+    steps:
+    - type: KUBERNETES_SWAP_SERVICE_SELECTORS
+      name: Swap Primary with Stage
+      properties:
+        service1: ${k8s.primaryServiceName}
+        service2: ${k8s.stageServiceName}
+    stepsInParallel: false
+    waitInterval: 5
+  - type: K8S_PHASE_STEP
+    name: Shift Remaining Traffic
+    steps:
+    - type: APPROVAL
+      name: Approve 75% Traffic
+      properties:
+        approvalStateType: USER_GROUP
+        timeoutMillis: 1800000
+        userGroups:
+        - GXFtTUS2Q9Gmo1r4MhqS4g
+        - 9gBB_2hwQWqDyiCI7H-o5g
+    - type: K8S_APPLY
+      name: Apply 75%
+      properties:
+        filePaths: backend/5-traffic-split-25.yaml
+        stateTimeoutInMinutes: '10'
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+    - type: APPROVAL
+      name: Approve 100% Traffic
+      properties:
+        approvalStateType: USER_GROUP
+        timeoutMillis: 1800000
+        userGroups:
+        - GXFtTUS2Q9Gmo1r4MhqS4g
+        - 9gBB_2hwQWqDyiCI7H-o5g
+    - type: K8S_APPLY
+      name: Apply 100%
+      properties:
+        filePaths: backend/4-traffic-split-0.yaml
+        stateTimeoutInMinutes: '10'
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Nginx Blue-Green Traffic Shift
+  statefulSet: false
+rollbackPhases:
+- type: KUBERNETES
+  computeProviderName: nginx
+  daemonSet: false
+  infraDefinitionName: nginx-blue-green-traffic-shift
+  name: Rollback Blue/Green
+  phaseNameForRollback: Blue/Green
+  phaseSteps:
+  - type: K8S_PHASE_STEP
+    name: Route Update
+    phaseStepNameForRollback: Route Update
+    statusForRollback: SUCCESS
+    steps:
+    - type: KUBERNETES_SWAP_SERVICE_SELECTORS
+      name: Swap Service Selectors
+      properties:
+        service1: ${k8s.primaryServiceName}
+        service2: ${k8s.stageServiceName}
+    - type: K8S_APPLY
+      name: Apply 100% Primary
+      properties:
+        filePaths: backend/4-traffic-split-0.yaml
+        stateTimeoutInMinutes: '10'
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: Nginx Blue-Green Traffic Shift
+  statefulSet: false
+templatized: false
