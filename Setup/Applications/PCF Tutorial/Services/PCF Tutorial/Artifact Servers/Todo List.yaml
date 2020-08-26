@@ -1,0 +1,8 @@
+harnessApiVersion: '1.0'
+type: ARTIFACTORY
+artifactPattern: todolist.war
+metadataOnly: false
+repositoryName: todolist-tutorial
+repositoryType: any
+serverName: Harness Artifactory
+useDockerFormat: false
