@@ -1,0 +1,15 @@
+harnessApiVersion: '1.0'
+type: INFRA_DEFINITION
+cloudProviderType: AWS
+deploymentType: AWS_LAMBDA
+infrastructure:
+- type: AWS_AWS_LAMBDA
+  cloudProviderName: awstw
+  iamRole: arn:aws:iam::479370281431:role/LambdaTutorialRole
+  region: us-east-2
+  securityGroupIds:
+  - sg-05752dc05edb7ba08
+  subnetIds:
+  - subnet-b4feecf9
+  - subnet-5b1f6e33
+  vpcId: vpc-7d713515
