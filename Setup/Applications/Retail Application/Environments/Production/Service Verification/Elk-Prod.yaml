@@ -6,7 +6,7 @@ alertThreshold: 0.5
 baselineEndMinute: 26139150
 baselineStartMinute: 26137711
 connectorName: elk-dev
-enabled24x7: true
+enabled24x7: false
 hostnameField: kubernetes.pod.name
 index: harness-qa-*
 messageField: log

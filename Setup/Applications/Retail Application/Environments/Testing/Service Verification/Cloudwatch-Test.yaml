@@ -22,7 +22,7 @@ ecsMetrics:
     metricType: VALUE
     statistics: Average
     unit: Percent
-enabled24x7: true
+enabled24x7: false
 loadBalancerMetrics:
   CVEcsDoNotDELETE:
   - dimension: LoadBalancerName

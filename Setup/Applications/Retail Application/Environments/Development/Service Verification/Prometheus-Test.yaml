@@ -4,7 +4,7 @@ alertEnabled: false
 alertThreshold: 0.5
 analysisTolerance: LOW
 connectorName: Prometheus-CV
-enabled24x7: true
+enabled24x7: false
 numOfOccurrencesForAlert: 1
 serviceName: Order V2
 timeSeriesList:
