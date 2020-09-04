@@ -18,9 +18,9 @@ notificationRules:
   - GXFtTUS2Q9Gmo1r4MhqS4g
 phases:
 - type: AMI
-  computeProviderName: aws-playground-dev-1
+  computeProviderName: aws-playground
   daemonSet: false
-  infraDefinitionName: blue-green
+  infraDefinitionName: ami provision
   name: Phase 1
   phaseSteps:
   - type: AMI_AUTOSCALING_GROUP_SETUP
@@ -58,9 +58,9 @@ phases:
   statefulSet: false
 rollbackPhases:
 - type: AMI
-  computeProviderName: aws-playground-dev-1
+  computeProviderName: aws-playground
   daemonSet: false
-  infraDefinitionName: blue-green
+  infraDefinitionName: ami provision
   name: Rollback Phase 1
   phaseNameForRollback: Phase 1
   phaseSteps:
