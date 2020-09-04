@@ -176,6 +176,10 @@ phases:
       name: Install_2
       properties:
         commandName: Install
+    - type: COMMAND
+      name: Install_3
+      properties:
+        commandName: Install
     stepsInParallel: false
   - type: ENABLE_SERVICE
     name: Enable Service
