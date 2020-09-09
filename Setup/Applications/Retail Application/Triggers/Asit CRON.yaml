@@ -1,9 +1,0 @@
-harnessApiVersion: '1.0'
-type: TRIGGER
-executionName: Asit Test
-executionType: Pipeline
-triggerCondition:
-- type: SCHEDULED
-  cronDescription: at 16:46 at 9 day at September month at 2020 year UTC
-  cronExpression: 46 16 9 SEP ? 2020
-  onNewArtifact: false
