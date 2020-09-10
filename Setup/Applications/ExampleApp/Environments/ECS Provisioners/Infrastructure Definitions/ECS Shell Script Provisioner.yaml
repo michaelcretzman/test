@@ -7,7 +7,7 @@ infrastructure:
   assignPublicIp: false
   cloudProviderName: aws-playground
   expressions:
-    region: region
     clusterName: example
+    region: region
   launchType: EC2
 provisioner: SSH Example
