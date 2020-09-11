@@ -21,6 +21,7 @@ notificationRules:
   executionScope: WORKFLOW_PHASE
   notificationGroupAsExpression: false
   userGroupAsExpression: true
+  userGroupExpression: ${serviceVariable.test}
 - conditions:
   - PAUSED
   executionScope: WORKFLOW
