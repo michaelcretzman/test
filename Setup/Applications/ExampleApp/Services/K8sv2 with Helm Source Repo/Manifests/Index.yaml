@@ -5,4 +5,5 @@ gitFileConfig:
   connectorName: helm
   filePath: stable/chartmuseum
   useBranch: true
+  useInlineServiceDefinition: false
 storeType: HelmSourceRepo

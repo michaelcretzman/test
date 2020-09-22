@@ -5,4 +5,5 @@ gitFileConfig:
   connectorName: wings-helm-charts
   filePath: todolist/templates
   useBranch: true
+  useInlineServiceDefinition: false
 storeType: HelmSourceRepo

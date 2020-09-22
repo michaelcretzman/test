@@ -5,4 +5,5 @@ gitFileConfig:
   connectorName: git-lesson
   filePath: lesson-networking
   useBranch: true
+  useInlineServiceDefinition: false
 storeType: Remote

@@ -5,4 +5,5 @@ gitFileConfig:
   connectorName: git-example
   filePath: NGINX
   useBranch: true
+  useInlineServiceDefinition: false
 storeType: Remote
