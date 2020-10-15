@@ -19,6 +19,7 @@ phases:
       name: UlanTest
       properties:
         commandName: UlanTest
+        commandType: OTHER
         connectionAttributes: null
         executeOnDelegate: true
         host: null

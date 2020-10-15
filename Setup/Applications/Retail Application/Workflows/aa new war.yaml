@@ -45,6 +45,7 @@ phases:
       name: conditional-test
       properties:
         commandName: test_echo
+        commandType: OTHER
         connectionAttributes: ''
         connectionType: SSH
         executeOnDelegate: false

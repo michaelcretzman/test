@@ -237,6 +237,8 @@ preDeploymentSteps:
     - GXFtTUS2Q9Gmo1r4MhqS4g
 - type: SSH
   name: test OA3
+  properties:
+    commandType: OTHER
   templateUri: General Store Inc/test OA3:latest
   templateVariables:
   - name: testOA5
