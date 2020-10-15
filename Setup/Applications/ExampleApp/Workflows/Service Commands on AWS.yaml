@@ -44,6 +44,8 @@ phases:
         value: '200'
     - type: COMMAND
       name: Doc Example - Service Command
+      properties:
+        commandType: OTHER
       templateUri: General Store Inc/Doc Example - Service Command:latest
     stepsInParallel: false
   - type: DISABLE_SERVICE

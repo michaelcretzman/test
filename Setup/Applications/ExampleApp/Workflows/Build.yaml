@@ -25,6 +25,8 @@ phases:
         timeoutMillis: 600000
     - type: COMMAND
       name: conditional-test
+      properties:
+        commandType: OTHER
       templateUri: General Store Inc/Generic Commands/conditional-test:latest
       templateVariables:
       - name: cmd
