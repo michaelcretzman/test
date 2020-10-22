@@ -33,10 +33,6 @@ phases:
         instanceCount: 3
         instanceUnitType: COUNT
         specificHosts: false
-    - type: COMMAND
-      name: Service Command Example
-      properties:
-        commandName: Service Command Example
     stepsInParallel: false
   - type: DISABLE_SERVICE
     name: Disable Service
