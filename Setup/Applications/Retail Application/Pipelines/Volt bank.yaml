@@ -16,28 +16,6 @@ pipelineStages:
     type: DO_NOT_SKIP
   stageName: STAGE 2
   workflowName: QA Retail Appliction V2
-- type: APPROVAL
-  name: Approval 2
-  parallel: false
-  properties:
-    workflowVariables: null
-    approvalStateParams:
-      jiraApprovalParams:
-        jiraConnectorId: iGQfgpbFSQiEzDVYUf5CiA
-        project: HD
-        issueId: ${Jiravar.issueId}
-        approvalField: status
-        rejectionField: status
-        approvalOperator: equalsTo
-        rejectionOperator: equalsTo
-        approvalValue: Approved
-        rejectionValue: Rejected
-    stageName: STAGE 3
-    timeoutMillis: 1800000
-    approvalStateType: JIRA
-  skipCondition:
-    type: DO_NOT_SKIP
-  stageName: STAGE 3
 - type: ENV_STATE
   name: Prod K8s Docker Workflow (Production)
   parallel: false
