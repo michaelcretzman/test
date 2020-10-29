@@ -61,6 +61,20 @@ phases:
     stepsInParallel: false
   - type: VERIFY_SERVICE
     name: Verify Service
+    steps:
+    - type: NEW_RELIC_DEPLOYMENT_MARKER
+      name: New Relic Deployment Marker
+      properties:
+        analysisServerConfigId: VEMGQArgSYmKyboSKpFx7A
+        applicationId: '583544676'
+        body: |-
+          {
+                  "deployment": {
+                    "revision": "${artifact.buildNo}",
+                    "description": "Harness Deployment via workflow ${workflow.name}",
+                    "user": "${workflow.name}"
+                  }
+                }
     stepsInParallel: false
   - type: WRAP_UP
     name: Wrap Up
