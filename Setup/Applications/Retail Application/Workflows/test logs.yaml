@@ -52,6 +52,13 @@ phases:
     stepsInParallel: false
   - type: K8S_PHASE_STEP
     name: Wrap Up
+    steps:
+    - type: K8S_DELETE
+      name: Delete
+      properties:
+        deleteNamespacesForRelease: false
+        resources: Deployment/sample1-k8s, Service/sample1-k8s
+        stateTimeoutInMinutes: 10
     stepsInParallel: false
   provisionNodes: false
   serviceName: sample1-k8s
