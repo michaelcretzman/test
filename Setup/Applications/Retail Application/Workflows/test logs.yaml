@@ -60,8 +60,11 @@ phases:
       name: Delete
       properties:
         deleteNamespacesForRelease: false
-        resources: Deployment/sample1-k8s, Service/sample1-k8s
+        resources: Deployment/sample1-k8s, Service/sample1-k8s, ConfigMap/sample1-k8s
         stateTimeoutInMinutes: 10
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
     stepsInParallel: false
   provisionNodes: false
   serviceName: sample1-k8s
