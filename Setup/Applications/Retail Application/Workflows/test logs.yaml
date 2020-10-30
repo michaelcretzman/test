@@ -38,7 +38,7 @@ phases:
         outputVars: ''
         publishAsVar: false
         scriptString: |+
-          echo "$(kubectl -n harness-delegate logs -l app=harness-delegate --since=5m)"
+          echo $(tail -n 100 delegate.log)
 
 
         scriptType: BASH
