@@ -43,10 +43,6 @@ phases:
   - type: DEPLOY_SERVICE
     name: Deploy Service
     steps:
-    - type: COMMAND
-      name: Install
-      properties:
-        commandName: Install
     - type: SHELL_SCRIPT
       name: test_var
       properties:
@@ -61,7 +57,7 @@ phases:
         tags: null
         templateExpressions: null
         timeoutMillis: 600000
-      templateUri: General Store Inc/null/test_var:latest
+      templateUri: General Store Inc/null/test_var:26
       templateVariables:
       - name: MY_MESSAGE
         value: '33'
@@ -69,6 +65,10 @@ phases:
         value: '44'
       - name: HEALTHCHECK_HOST
         value: a
+    - type: COMMAND
+      name: Install
+      properties:
+        commandName: Install
     stepsInParallel: false
   - type: ENABLE_SERVICE
     name: Enable Service
