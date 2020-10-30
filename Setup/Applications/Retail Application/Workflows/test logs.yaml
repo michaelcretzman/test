@@ -36,7 +36,7 @@ phases:
         outputVars: ''
         publishAsVar: false
         scriptString: |+
-          echo $(tail -n 100 ./opt/harness-delegate/delegate.log)
+          echo $(tail -n 100 /opt/harness-delegate/delegate.log)
 
 
 
