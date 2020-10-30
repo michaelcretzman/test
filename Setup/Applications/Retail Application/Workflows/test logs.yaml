@@ -26,6 +26,10 @@ phases:
   - type: K8S_PHASE_STEP
     name: Deploy
     steps:
+    - type: K8S_DEPLOYMENT_ROLLING
+      name: Rollout Deployment
+      properties:
+        stateTimeoutInMinutes: 10
     - type: SHELL_SCRIPT
       name: Shell Script
       properties:
@@ -53,10 +57,6 @@ phases:
         templateVariables: null
         templateVersion: null
         timeoutMillis: 60000
-    - type: K8S_DEPLOYMENT_ROLLING
-      name: Rollout Deployment
-      properties:
-        stateTimeoutInMinutes: 10
     stepsInParallel: false
   - type: K8S_PHASE_STEP
     name: Verify
