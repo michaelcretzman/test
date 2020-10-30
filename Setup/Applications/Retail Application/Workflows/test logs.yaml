@@ -36,7 +36,7 @@ phases:
         outputVars: ''
         publishAsVar: false
         scriptString: |+
-          echo $(locate delegate.log)
+          echo $(find /harness -name "delegate.log")
 
 
 
