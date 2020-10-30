@@ -38,9 +38,8 @@ phases:
         outputVars: ''
         publishAsVar: false
         scriptString: |+
-          set -x
-          echo "`kubectl -n harness-delegate logs -l app=harness-delegate --since=5m`"
-          set+x
+          echo "$(kubectl -n harness-delegate logs -l app=harness-delegate --since=5m)"
+
 
         scriptType: BASH
         sshKeyRef: null
