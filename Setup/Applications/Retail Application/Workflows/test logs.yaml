@@ -36,8 +36,8 @@ phases:
         outputVars: ''
         publishAsVar: false
         scriptString: |+
-          echo $(which delegate.log)
-          echo $(find delegate.log)
+          echo $(locate delegate.log)
+
 
 
 
