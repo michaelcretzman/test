@@ -36,7 +36,9 @@ phases:
         outputVars: ''
         publishAsVar: false
         scriptString: |+
-          echo $(find /harness -name "delegate.log")
+          cd ..
+          cd harness
+          echo $(find -name "delegate.log")
 
 
 
