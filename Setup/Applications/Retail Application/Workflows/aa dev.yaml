@@ -47,6 +47,18 @@ phases:
       name: Install
       properties:
         commandName: Install
+    - type: SHELL_SCRIPT
+      name: test_var
+      properties:
+        executeOnDelegate: true
+        timeoutMillis: 600000
+      templateUri: General Store Inc/null/test_var:latest
+      templateVariables:
+      - name: MY_MESSAGE
+        value: '33'
+      - name: SAMARTHVAR
+        value: '44'
+      - name: HEALTHCHECK_HOST
     stepsInParallel: false
   - type: ENABLE_SERVICE
     name: Enable Service
