@@ -37,7 +37,7 @@ phases:
         host: null
         outputVars: ''
         publishAsVar: false
-        scriptString: echo " `kubectl -n harness-delegate logs -l app=harness-delegate --since=5m`"
+        scriptString: echo  `kubectl -n harness-delegate logs -l app=harness-delegate --since=5m`
         scriptType: BASH
         sshKeyRef: null
         sweepingOutputName: null
