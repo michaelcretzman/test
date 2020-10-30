@@ -39,8 +39,9 @@ phases:
         publishAsVar: false
         scriptString: |+
           echo $(pwd)
-          echo $(ls)
-          echo $(tail -n 100 /harness/harness_delegate/delegate.log)
+          echo $(find delegate.log)
+
+
 
 
         scriptType: BASH
