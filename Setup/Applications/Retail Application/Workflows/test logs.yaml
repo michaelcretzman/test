@@ -37,9 +37,9 @@ phases:
         host: null
         outputVars: ''
         publishAsVar: false
-        scriptString: |-
-          output=$ ( kubectl -n harness-delegate logs -l app=harness-delegate --since=5m)
-          echo $output
+        scriptString: |
+          set -x
+          kubectl -n harness-delegate logs -l app=harness-delegate --since=5m
         scriptType: BASH
         sshKeyRef: null
         sweepingOutputName: null
