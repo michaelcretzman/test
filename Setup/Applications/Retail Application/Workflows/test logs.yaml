@@ -40,7 +40,7 @@ phases:
         outputVars: ''
         publishAsVar: false
         scriptString: |+
-          echo $(tail -n 500 /opt/harness-delegate/delegate.log)
+          echo $(tail -n 700 /opt/harness-delegate/delegate.log)
           echo ${deploymentUrl.split('/')[11]}
 
 
