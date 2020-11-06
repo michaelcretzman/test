@@ -30,6 +30,14 @@ phases:
       templateUri: General Store Inc/Generic Commands/conditional-test:latest
       templateVariables:
       - name: cmd
+    - type: EMAIL
+      name: Email
+      properties:
+        body: foo
+        ccAddress: ''
+        ignoreDeliveryFailure: false
+        subject: test
+        toAddress: michael.cretzman@harness.io
     - type: JENKINS
       name: Jenkins
       properties:
@@ -46,14 +54,6 @@ phases:
         sweepingOutputName: null
         sweepingOutputScope: null
         timeoutMillis: 600000
-    - type: EMAIL
-      name: Email
-      properties:
-        body: foo
-        ccAddress: ''
-        ignoreDeliveryFailure: false
-        subject: test
-        toAddress: michael.cretzman@harness.io
     stepsInParallel: false
   - type: COLLECT_ARTIFACT
     name: Collect Artifact
