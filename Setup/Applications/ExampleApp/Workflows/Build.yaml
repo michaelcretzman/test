@@ -21,9 +21,11 @@ phases:
         body: |-
           Testing email variables:
 
-          ${app.name}
-          ${workflow.displayName}
-          ${deploymentUrl}
+          <ul>
+          <li>${app.name}</li>
+          <li>${workflow.displayName}</li>
+          <li>${deploymentUrl}</li>
+          </ul>
         ccAddress: ''
         ignoreDeliveryFailure: false
         subject: testing
