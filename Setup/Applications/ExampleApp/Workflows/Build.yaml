@@ -26,18 +26,6 @@ phases:
     stepsInParallel: false
   - type: COLLECT_ARTIFACT
     name: Collect Artifact
-    steps:
-    - type: HTTP
-      name: Health Check
-      properties:
-        executeWithPreviousSteps: false
-        socketTimeoutMillis: 0
-        timeoutMillis: 0
-      templateUri: General Store Inc/HTTP Verifications/Health Check:latest
-      templateVariables:
-      - name: Url
-      - name: ResponseCode
-        value: '200'
     stepsInParallel: false
   - type: WRAP_UP
     name: Wrap Up
