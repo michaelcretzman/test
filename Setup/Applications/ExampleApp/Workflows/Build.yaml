@@ -23,13 +23,6 @@ phases:
         ignoreDeliveryFailure: false
         subject: test
         toAddress: michael.cretzman@harness.io
-    - type: COMMAND
-      name: conditional-test
-      properties:
-        commandType: OTHER
-      templateUri: General Store Inc/Generic Commands/conditional-test:latest
-      templateVariables:
-      - name: cmd
     - type: JENKINS
       name: Jenkins
       properties:
