@@ -23,14 +23,6 @@ phases:
         ignoreDeliveryFailure: false
         subject: test
         toAddress: michael.cretzman@harness.io
-    - type: SHELL_SCRIPT
-      name: Shell Script
-      properties:
-        connectionType: SSH
-        executeOnDelegate: true
-        publishAsVar: false
-        scriptType: BASH
-        timeoutMillis: 600000
     - type: COMMAND
       name: conditional-test
       properties:
