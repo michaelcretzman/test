@@ -25,7 +25,7 @@ phases:
         templateUuid: null
         templateVariables: null
         templateVersion: null
-        toAddress: 'michael.cretzman@harness.io '
+        toAddress: 'michael.cretzdddman@harness.io '
     stepsInParallel: false
   - type: COLLECT_ARTIFACT
     name: Collect Artifact
