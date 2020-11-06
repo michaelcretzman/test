@@ -35,9 +35,4 @@ phases:
     stepsInParallel: false
   provisionNodes: false
   statefulSet: false
-templatized: true
-userVariables:
-- type: TEXT
-  fixed: false
-  mandatory: true
-  name: blah
+templatized: false
