@@ -21,7 +21,7 @@ phases:
         body: <h1>bar</h1>
         ccAddress: ''
         ignoreDeliveryFailure: false
-        subject: <h1>Test</h1>
+        subject: test
         templateUuid: null
         templateVariables: null
         templateVersion: null
