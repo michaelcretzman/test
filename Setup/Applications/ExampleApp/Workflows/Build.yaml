@@ -23,22 +23,6 @@ phases:
         ignoreDeliveryFailure: false
         subject: test
         toAddress: michael.cretzman@harness.io
-    - type: JENKINS
-      name: Jenkins
-      properties:
-        jenkinsConfigName: JenkinsDoc
-        jobName: build-descriptor-setter-with-params
-        jobNameAsExpression: false
-        jobParameters:
-        - key: Url
-          value: http://harness.io
-        - key: ReleaseName
-          value: latest
-        - key: Modifier
-          value: ==
-        sweepingOutputName: null
-        sweepingOutputScope: null
-        timeoutMillis: 600000
     stepsInParallel: false
   - type: COLLECT_ARTIFACT
     name: Collect Artifact
