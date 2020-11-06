@@ -28,13 +28,6 @@ phases:
     name: Collect Artifact
     steps:
     - type: HTTP
-      name: HTTP
-      properties:
-        executeWithPreviousSteps: false
-        header: 'content-type: application/json'
-        method: GET
-        url: http://example.com
-    - type: HTTP
       name: HTTP_2
       properties:
         assertion: '${httpResponseCode}==${ResponseCode} '
