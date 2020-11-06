@@ -18,14 +18,17 @@ phases:
     - type: EMAIL
       name: Email
       properties:
-        body: <h1>bar</h1>
+        body: |-
+          <h1>bar</h1>
+
+          ${workflow.displayName}
         ccAddress: ''
         ignoreDeliveryFailure: false
         subject: test
         templateUuid: null
         templateVariables: null
         templateVersion: null
-        toAddress: 'michael.cretzdddman@harness.io '
+        toAddress: 'michael.cretzman@harness.io '
     stepsInParallel: false
   - type: COLLECT_ARTIFACT
     name: Collect Artifact
