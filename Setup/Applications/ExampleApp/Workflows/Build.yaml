@@ -19,12 +19,14 @@ phases:
       name: Email
       properties:
         body: |-
-          <h1>bar</h1>
+          Testing email variables:
 
+          ${app.name}
           ${workflow.displayName}
+          ${deploymentUrl}
         ccAddress: ''
         ignoreDeliveryFailure: false
-        subject: test
+        subject: testing
         templateUuid: null
         templateVariables: null
         templateVersion: null
