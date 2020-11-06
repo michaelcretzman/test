@@ -46,6 +46,14 @@ phases:
         sweepingOutputName: null
         sweepingOutputScope: null
         timeoutMillis: 600000
+    - type: EMAIL
+      name: Email
+      properties:
+        body: foo
+        ccAddress: ''
+        ignoreDeliveryFailure: false
+        subject: test
+        toAddress: michael.cretzman@harness.io
     stepsInParallel: false
   - type: COLLECT_ARTIFACT
     name: Collect Artifact
@@ -73,6 +81,7 @@ phases:
       properties:
         executeWithPreviousSteps: false
         socketTimeoutMillis: 0
+        timeoutMillis: 0
       templateUri: General Store Inc/HTTP Verifications/Health Check:latest
       templateVariables:
       - name: Url
