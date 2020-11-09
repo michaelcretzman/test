@@ -27,6 +27,24 @@ phases:
     name: Deploy
     steps:
     - type: SHELL_SCRIPT
+      name: phase context
+      properties:
+        commandPath: null
+        connectionAttributes: null
+        executeOnDelegate: true
+        host: null
+        outputVars: nsph
+        publishAsVar: true
+        scriptString: nsph=${infra.kubernetes.namespace}
+        scriptType: BASH
+        sshKeyRef: null
+        sweepingOutputName: v0
+        sweepingOutputScope: PHASE
+        tags: null
+        templateExpressions: null
+        templateVariables: ''
+        timeoutMillis: 60000
+    - type: SHELL_SCRIPT
       name: WF context
       properties:
         commandPath: null
@@ -45,24 +63,6 @@ phases:
         templateUuid: null
         templateVariables: null
         templateVersion: null
-        timeoutMillis: 60000
-    - type: SHELL_SCRIPT
-      name: phase context
-      properties:
-        commandPath: null
-        connectionAttributes: null
-        executeOnDelegate: true
-        host: null
-        outputVars: nsph
-        publishAsVar: true
-        scriptString: nsph=${infra.kubernetes.namespace}
-        scriptType: BASH
-        sshKeyRef: null
-        sweepingOutputName: v0
-        sweepingOutputScope: PHASE
-        tags: null
-        templateExpressions: null
-        templateVariables: ''
         timeoutMillis: 60000
     - type: SHELL_SCRIPT
       name: pipeline context
