@@ -73,12 +73,12 @@ phases:
         connectionAttributes: null
         executeOnDelegate: true
         host: null
-        outputVars: nsp
+        outputVars: namespace
         publishAsVar: true
-        scriptString: nsp=${infra.kubernetes.namespace}
+        scriptString: namespace=${infra.kubernetes.namespace}
         scriptType: BASH
         sshKeyRef: null
-        sweepingOutputName: v2
+        sweepingOutputName: pipeline
         sweepingOutputScope: PIPELINE
         tags: null
         templateExpressions: null
