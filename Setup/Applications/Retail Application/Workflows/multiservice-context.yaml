@@ -47,18 +47,18 @@ phases:
         templateVersion: null
         timeoutMillis: 60000
     - type: SHELL_SCRIPT
-      name: WF context
+      name: workflow context
       properties:
         commandPath: null
         connectionAttributes: null
         executeOnDelegate: true
         host: null
-        outputVars: nswf
+        outputVars: namespace
         publishAsVar: true
-        scriptString: nswf=${infra.kubernetes.namespace}
+        scriptString: namespace=${infra.kubernetes.namespace}
         scriptType: BASH
         sshKeyRef: null
-        sweepingOutputName: v1
+        sweepingOutputName: workflow
         sweepingOutputScope: WORKFLOW
         tags: null
         templateExpressions: null
