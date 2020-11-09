@@ -25,6 +25,47 @@ phases:
   phaseSteps:
   - type: PROVISION_INFRASTRUCTURE
     name: Provision Infrastructure
+    steps:
+    - type: TERRAFORM_PROVISION
+      name: Terraform Provision
+      properties:
+        backendConfigs:
+        - name: bucket
+          value: null
+          valueType: TEXT
+        - name: key
+          value: null
+          valueType: TEXT
+        - name: region
+          value: null
+          valueType: TEXT
+        delegateTag: ''
+        environmentVariables: null
+        exportPlanToApplyStep: true
+        inheritApprovedPlan: false
+        name: Terraform Provision
+        provisionerName: K8s TF
+        runPlanOnly: true
+        targets: null
+        tfVarFiles: null
+        timeoutMillis: 300000
+        variables:
+        - name: cluster_name
+          value: null
+          valueType: TEXT
+        - name: password
+          value: null
+          valueType: TEXT
+        - name: kubernetes_version
+          value: null
+          valueType: TEXT
+        - name: region
+          value: null
+          valueType: TEXT
+        - name: username
+          value: null
+          valueType: TEXT
+        workspace: ''
     stepsInParallel: false
   - type: AMI_AUTOSCALING_GROUP_SETUP
     name: Setup AutoScaling Group
@@ -67,6 +108,9 @@ rollbackPhases:
   name: Rollback Phase 1
   phaseNameForRollback: Phase 1
   phaseSteps:
+  - type: ROLLBACK_PROVISION_INFRASTRUCTURE
+    name: Rollback Provision Infrastructure
+    stepsInParallel: false
   - type: AMI_SWITCH_AUTOSCALING_GROUP_ROUTES
     name: Rollback Service
     phaseStepNameForRollback: Deploy Service
