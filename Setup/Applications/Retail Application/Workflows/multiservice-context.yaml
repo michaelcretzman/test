@@ -25,6 +25,25 @@ phases:
   phaseSteps:
   - type: K8S_PHASE_STEP
     name: Deploy
+    steps:
+    - type: SHELL_SCRIPT
+      name: Shell Script
+      properties:
+        commandPath: null
+        connectionAttributes: null
+        executeOnDelegate: true
+        host: null
+        outputVars: nswf
+        publishAsVar: true
+        scriptString: nswf=${infra.kubernetes.namespace}
+        scriptType: BASH
+        sshKeyRef: null
+        sweepingOutputName: v1
+        sweepingOutputScope: WORKFLOW
+        tags: null
+        templateExpressions: null
+        templateVariables: ''
+        timeoutMillis: 60000
     stepsInParallel: false
   - type: K8S_PHASE_STEP
     name: Verify
