@@ -33,16 +33,18 @@ phases:
         connectionAttributes: null
         executeOnDelegate: true
         host: null
-        outputVars: nsph
+        outputVars: namespace
         publishAsVar: true
-        scriptString: nsph=${infra.kubernetes.namespace}
+        scriptString: namespace=${infra.kubernetes.namespace}
         scriptType: BASH
         sshKeyRef: null
-        sweepingOutputName: v0
+        sweepingOutputName: phase
         sweepingOutputScope: PHASE
         tags: null
         templateExpressions: null
-        templateVariables: ''
+        templateUuid: null
+        templateVariables: null
+        templateVersion: null
         timeoutMillis: 60000
     - type: SHELL_SCRIPT
       name: WF context
