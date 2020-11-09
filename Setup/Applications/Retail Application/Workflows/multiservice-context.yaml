@@ -21,7 +21,7 @@ phases:
   computeProviderName: istio-multiservice
   daemonSet: false
   infraDefinitionName: istio-multiservice
-  name: Canary
+  name: Phase 1
   phaseSteps:
   - type: K8S_PHASE_STEP
     name: Deploy
@@ -123,8 +123,8 @@ rollbackPhases:
   computeProviderName: istio-multiservice
   daemonSet: false
   infraDefinitionName: istio-multiservice
-  name: Rollback Canary
-  phaseNameForRollback: Canary
+  name: Rollback Phase 1
+  phaseNameForRollback: Phase 1
   phaseSteps:
   - type: K8S_PHASE_STEP
     name: Deploy
