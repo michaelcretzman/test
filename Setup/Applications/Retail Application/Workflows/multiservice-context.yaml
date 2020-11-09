@@ -44,6 +44,24 @@ phases:
         templateExpressions: null
         templateVariables: ''
         timeoutMillis: 60000
+    - type: SHELL_SCRIPT
+      name: Shell Script_2
+      properties:
+        commandPath: null
+        connectionAttributes: null
+        executeOnDelegate: true
+        host: null
+        outputVars: nsp
+        publishAsVar: true
+        scriptString: nsp=${infra.kubernetes.namespace}
+        scriptType: BASH
+        sshKeyRef: null
+        sweepingOutputName: v2
+        sweepingOutputScope: PIPELINE
+        tags: null
+        templateExpressions: null
+        templateVariables: ''
+        timeoutMillis: 60000
     stepsInParallel: false
   - type: K8S_PHASE_STEP
     name: Verify
