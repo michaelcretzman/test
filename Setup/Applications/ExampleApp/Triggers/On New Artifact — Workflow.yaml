@@ -1,0 +1,14 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+artifactSelections:
+- regex: false
+  serviceName: NGINX K8s
+  type: ARTIFACT_SOURCE
+executionName: NGINX-K8s
+executionType: Workflow
+triggerCondition:
+- type: NEW_ARTIFACT
+  artifactFilter: todolist*
+  artifactStreamName: library_nginx
+  regex: false
+  serviceName: k8sv2

@@ -1,6 +1,7 @@
 harnessApiVersion: '1.0'
 type: TERRAFORM
 path: ec2
+skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: terraform
 variables:

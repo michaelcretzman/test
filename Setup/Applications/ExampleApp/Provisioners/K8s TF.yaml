@@ -8,6 +8,7 @@ backendConfigs:
 - name: region
   valueType: TEXT
 path: _examples/google-gke-cluster
+skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: TF K8s Example
 variables:

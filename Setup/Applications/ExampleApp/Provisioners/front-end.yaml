@@ -2,6 +2,7 @@ harnessApiVersion: '1.0'
 type: TERRAFORM
 description: module for front-end deployment infra
 path: terraform-CV
+skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: git
 variables:
