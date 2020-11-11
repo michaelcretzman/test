@@ -6,6 +6,7 @@ backendConfigs:
 - name: region
   valueType: TEXT
 path: .
+skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: terraform
 variables:
