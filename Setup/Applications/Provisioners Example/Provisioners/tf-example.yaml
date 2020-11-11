@@ -8,6 +8,7 @@ backendConfigs:
 - name: region
   valueType: TEXT
 path: ec2
+skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: git-docs
 variables:
