@@ -35,6 +35,8 @@ phases:
       properties:
         commandPath: null
         connectionAttributes: null
+        delegateSelectors:
+        - foo
         executeOnDelegate: true
         host: null
         outputVars: ''
