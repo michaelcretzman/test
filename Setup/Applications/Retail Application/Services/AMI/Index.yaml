@@ -1,5 +1,4 @@
 harnessApiVersion: '1.0'
 type: SERVICE
 artifactType: AMI
-tags:
-  environment: production
+deploymentType: AMI
