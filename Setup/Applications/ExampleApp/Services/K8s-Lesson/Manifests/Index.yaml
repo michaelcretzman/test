@@ -1,9 +1,3 @@
 harnessApiVersion: '1.0'
 type: APPLICATION_MANIFEST
-gitFileConfig:
-  branch: master
-  connectorName: git-lesson
-  filePath: lesson-networking
-  useBranch: true
-  useInlineServiceDefinition: false
-storeType: Remote
+storeType: Local

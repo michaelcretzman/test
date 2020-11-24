@@ -8,6 +8,9 @@ failureStrategies:
   - APPLICATION_ERROR
   repairActionCode: ROLLBACK_WORKFLOW
   retryCount: 0
+- failureTypes:
+  - CONNECTIVITY
+  retryCount: 0
 notificationRules:
 - conditions:
   - FAILED
@@ -66,6 +69,14 @@ phases:
           value: null
           valueType: TEXT
         workspace: ''
+    - type: COMMAND
+      name: Hit Url
+      properties:
+        commandType: OTHER
+      templateUri: General Store Inc/Generate Load/Hit Url:latest
+      templateVariables:
+      - name: URL
+        value: http://www.google.com
     stepsInParallel: false
   - type: AMI_AUTOSCALING_GROUP_SETUP
     name: Setup AutoScaling Group
