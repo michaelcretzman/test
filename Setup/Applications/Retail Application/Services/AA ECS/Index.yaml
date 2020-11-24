@@ -1,4 +1,8 @@
 harnessApiVersion: '1.0'
 type: SERVICE
 artifactType: DOCKER
+configVariables:
+- name: secret
+  value: azurevault:hOguQJbcSiCoOa3tWbNLqQ
+  valueType: ENCRYPTED_TEXT
 deploymentType: ECS

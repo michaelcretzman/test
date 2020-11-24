@@ -108,6 +108,11 @@ phases:
         templateUuid: null
         templateVariables: null
         templateVersion: null
+    - type: BARRIER
+      name: Barrier
+      properties:
+        identifier: integration-test
+        timeoutMillis: 60000
     stepsInParallel: false
     waitInterval: 0
   - type: K8S_PHASE_STEP

@@ -5,7 +5,7 @@ artifactSelections:
   regex: false
   serviceName: Istio MultiService
   type: LAST_COLLECTED
-executionName: brett1
+executionName: brett3
 executionType: Pipeline
 triggerCondition:
 - type: WEBHOOK
