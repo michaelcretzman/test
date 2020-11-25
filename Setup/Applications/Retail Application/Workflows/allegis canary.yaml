@@ -16,4 +16,6 @@ notificationRules:
   userGroupAsExpression: false
   userGroupIds:
   - GXFtTUS2Q9Gmo1r4MhqS4g
+tags:
+  abc: bbb
 templatized: false
