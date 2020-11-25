@@ -2,4 +2,8 @@ harnessApiVersion: '1.0'
 type: SERVICE
 applicationStack: Tomcat 7.0.70
 artifactType: WAR
+configVariables:
+- name: super-secret-key
+  value: gcpkms:NpuglnpURGeXwjruPszN1A
+  valueType: ENCRYPTED_TEXT
 deploymentType: SSH
