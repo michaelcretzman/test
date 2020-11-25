@@ -212,4 +212,6 @@ rollbackPhases:
   provisionNodes: false
   serviceName: Alex PCF Example
   statefulSet: false
+tags:
+  abc: '123'
 templatized: false
