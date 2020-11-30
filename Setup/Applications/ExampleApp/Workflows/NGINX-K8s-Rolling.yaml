@@ -71,4 +71,13 @@ rollbackPhases:
   provisionNodes: false
   serviceName: NGINX K8s
   statefulSet: false
-templatized: false
+templatized: true
+userVariables:
+- type: TEXT
+  fixed: false
+  mandatory: false
+  name: foo
+- type: TEXT
+  fixed: false
+  mandatory: false
+  name: bar
