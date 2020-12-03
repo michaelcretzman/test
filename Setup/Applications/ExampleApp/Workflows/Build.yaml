@@ -33,29 +33,6 @@ phases:
         templateVariables: null
         templateVersion: null
         toAddress: 'michael.cretzman@harness.io '
-    - type: COMMAND
-      name: Sagemaker
-      properties:
-        commandName: Sagemaker
-        commandType: OTHER
-        connectionAttributes: null
-        executeOnDelegate: true
-        host: null
-        outputVars: ''
-        publishAsVar: false
-        sshKeyRef: null
-        sweepingOutputName: null
-        sweepingOutputScope: null
-        templateExpressions: null
-        timeoutMillis: 60000
-      templateUri: General Store Inc/Sagemaker:latest
-      templateVariables:
-      - name: deploy_instance_count
-      - name: deploy_instance_type
-      - name: train_instance_count
-      - name: train_instance_type
-      - name: deploy_endpoint_name
-      - name: train_image_name
     stepsInParallel: false
   - type: COLLECT_ARTIFACT
     name: Collect Artifact
