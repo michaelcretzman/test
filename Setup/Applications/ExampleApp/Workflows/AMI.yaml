@@ -78,6 +78,11 @@ phases:
         commandName: Resize AutoScaling Group
         instanceCount: 1
         instanceUnitType: COUNT
+    - type: COMMAND
+      name: Test Command
+      properties:
+        commandType: OTHER
+      templateUri: General Store Inc/Generic Commands/Test Command:latest
     stepsInParallel: false
   - type: VERIFY_SERVICE
     name: Verify Service
