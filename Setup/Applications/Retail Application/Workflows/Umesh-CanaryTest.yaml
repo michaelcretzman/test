@@ -16,15 +16,6 @@ notificationRules:
   userGroupAsExpression: false
   userGroupIds:
   - GXFtTUS2Q9Gmo1r4MhqS4g
-preDeploymentSteps:
-- type: COMMAND
-  name: start12
-  properties:
-    commandType: OTHER
-  templateUri: General Store Inc/start12:latest
-  templateVariables:
-  - name: test
-    value: '123'
 templateExpressions:
 - expression: ${Environment}
   fieldName: envId
