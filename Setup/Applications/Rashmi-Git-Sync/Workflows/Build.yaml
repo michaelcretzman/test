@@ -20,6 +20,25 @@ phases:
     steps:
     - type: ARTIFACT_COLLECTION
       name: Artifact Collection
+    - type: SHELL_SCRIPT
+      name: Shell Script
+      properties:
+        commandPath: null
+        connectionAttributes: null
+        delegateSelectors:
+        - rashmi-delegate
+        executeOnDelegate: true
+        host: null
+        outputVars: ''
+        publishAsVar: false
+        scriptString: echo "Hi"
+        scriptType: BASH
+        sshKeyRef: null
+        sweepingOutputName: null
+        sweepingOutputScope: null
+        templateExpressions: null
+        templateVariables: ''
+        timeoutMillis: 60000
     stepsInParallel: false
   - type: WRAP_UP
     name: Wrap Up
