@@ -9,10 +9,12 @@ failureStrategies:
   - VERIFICATION_FAILURE
   repairActionCode: ROLLBACK_WORKFLOW
   retryCount: 0
-- executionScope: WORKFLOW
+- actionAfterTimeout: END_EXECUTION
+  executionScope: WORKFLOW
   failureTypes:
   - CONNECTIVITY
   - AUTHENTICATION
+  manualInterventionTimeout: 1209600000
   repairActionCode: MANUAL_INTERVENTION
   retryCount: 0
 notificationRules:
@@ -196,6 +198,17 @@ phases:
         executeWithPreviousSteps: true
         serviceMethods: SERVICE_METHOD-991CE862F114C79F
         timeDuration: 15
+    - type: SUMO
+      name: Sumo Logic
+      properties:
+        analysisServerConfigId: X9W-WtcOSaOxZgxWLA5gww
+        comparisonStrategy: COMPARE_WITH_CURRENT
+        executeWithPreviousSteps: false
+        hostnameField: _sourceHost
+        hostnameTemplate: ''
+        includePreviousPhaseNodes: false
+        query: exception
+        timeDuration: 5
     stepsInParallel: true
     waitInterval: 5
   - type: K8S_PHASE_STEP
@@ -227,6 +240,13 @@ phases:
         templateUuid: null
         templateVariables: null
         templateVersion: null
+    - type: APPROVAL
+      name: Approval
+      properties:
+        approvalStateType: USER_GROUP
+        timeoutMillis: 86400000
+        userGroups:
+        - GXFtTUS2Q9Gmo1r4MhqS4g
     stepsInParallel: false
   - type: K8S_PHASE_STEP
     name: Verify
@@ -353,7 +373,8 @@ preDeploymentSteps:
 - type: JIRA_CREATE_UPDATE
   name: Jira
   properties:
-    comment: Deploying ${artifact.displayName}
+    comment: |
+      Deploying ${artifact.displayName}
     customFields: null
     issueId: ${Jiravar.issueId}
     issueType: Story
