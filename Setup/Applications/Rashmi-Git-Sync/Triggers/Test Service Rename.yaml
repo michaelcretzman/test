@@ -1,0 +1,10 @@
+harnessApiVersion: '1.0'
+type: TRIGGER
+continueWithDefaultValues: false
+executionName: Build Rename
+executionType: Workflow
+triggerCondition:
+- type: NEW_ARTIFACT
+  artifactStreamName: library_nginx
+  regex: false
+  serviceName: Kubernetes Service
