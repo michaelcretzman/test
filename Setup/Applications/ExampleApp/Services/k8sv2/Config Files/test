@@ -1,0 +1,70 @@
+echo "account dockerdev: "account.dockerdev
+
+echo "Harness account name: "<+account.name>
+
+echo "Harness comp name: "<+account.companyName>
+
+echo "pipeline executionId: "<+pipeline.executionId>
+
+echo "pipeline sequenceId: "<+pipeline.sequenceId>
+
+echo "stage name: "<+stage.name>
+
+echo "service name: "<+service.name>
+
+echo "service variables: "<+service.variables.example_var> 
+
+echo "artifact image: "<+artifact.image>
+
+echo "artifact.imagePath: "<+artifact.imagePath>
+
+echo "sidecar1 imagePath: "<+service.artifacts.sidecars.sidecar_example.imagePath>
+
+echo "sidecar1 tag: "<+service.artifacts.sidecars.sidecar_example.tag>
+
+echo "artifact connectorRef: "<+artifact.connectorRef>
+
+echo "environment name: "<+environment.name>
+
+echo "infrastructure connectorRef: "<+infrastructure.connectorRef>
+
+echo "infrastructure namespace: "<+infrastructure.namespace>
+
+echo "infrastructure releaseName: "<+infrastructure.releaseName>
+
+
+
+
+
+
+echo "<+pipeline.name>"
+echo "<+pipeline.identifier>"
+echo "<+pipeline.description>"
+echo "<+pipeline.tags>"
+echo "<+pipeline.startTime>"
+
+echo "artifact.tag: "<+artifact.tag>
+
+echo "artifact.image: "<+artifact.image>
+
+echo "artifact.imagePath: "<+artifact.imagePath>
+
+echo "artifact.tag: "<+artifact.tag>
+
+echo "artifact.imagePullSecret: "<+artifact.imagePullSecret>
+
+echo "artifact.type: "<+artifact.type>
+
+echo "artifact.connectorRef: "<+artifact.connectorRef>
+
+
+
+echo "<+pipeline.variables.port>"
+echo "<+pipeline.variables.url>"
+echo "<+pipeline.variables.endpoint>"
+
+
+echo "<+dev.name>"
+echo "<+dev.identifier>"
+echo "<+dev.type>"
+

@@ -4,6 +4,3 @@ path: .
 skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: TF K8s Example
-variables:
-- name: foo
-  valueType: TEXT

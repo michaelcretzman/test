@@ -4,6 +4,7 @@ artifactSelections:
 - regex: false
   serviceName: TAR-file
   type: ARTIFACT_SOURCE
+continueWithDefaultValues: false
 executionName: GitOpsDemo Deployment
 executionType: Workflow
 triggerCondition:

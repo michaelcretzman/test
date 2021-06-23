@@ -1,7 +1,7 @@
 harnessApiVersion: '1.0'
 type: MULTI_SERVICE
 concurrencyStrategy: INFRA
-envName: CloudFormation
+envName: Terraform Example
 failureStrategies:
 - executionScope: WORKFLOW
   failureTypes:
@@ -87,6 +87,49 @@ phases:
   provisionNodes: false
   serviceName: aws-lambda
   statefulSet: false
+- type: KUBERNETES
+  computeProviderName: k8s-tw-tutorial
+  daemonSet: false
+  infraDefinitionName: TF Infrastructure Definition
+  name: Phase 3
+  phaseSteps:
+  - type: CONTAINER_SETUP
+    name: Set up Container
+    steps:
+    - type: KUBERNETES_SETUP
+      name: Kubernetes Service Setup
+      properties:
+        replicationControllerName: ${app.name}-${service.name}-${env.name}
+        resizeStrategy: RESIZE_NEW_FIRST
+    stepsInParallel: false
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    steps:
+    - type: KUBERNETES_DEPLOY
+      name: Upgrade Containers
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: aws-lambda
+  statefulSet: false
+postDeploymentSteps:
+- type: APPROVAL
+  name: Approval
+  properties:
+    approvalStateType: USER_GROUP
+    templateExpressions:
+    - expression: ${User_Group}
+      fieldName: userGroups
+      metadata:
+        entityType: USER_GROUP
+        relatedField: ''
+    timeoutMillis: 86400000
+    userGroups: ${User_Group}
 preDeploymentSteps:
 - type: ARTIFACT_CHECK
   name: Artifact Check
@@ -117,7 +160,6 @@ rollbackPhases:
   serviceName: aws-lambda
   statefulSet: false
 - type: SSH
-  computeProviderName: AWS-Tutorial
   daemonSet: false
   infraDefinitionName: CloudFormation Ex
   name: Rollback Phase 2
@@ -159,4 +201,44 @@ rollbackPhases:
   provisionNodes: false
   serviceName: aws-lambda
   statefulSet: false
-templatized: false
+- type: KUBERNETES
+  computeProviderName: k8s-tw-tutorial
+  daemonSet: false
+  infraDefinitionName: TF Infrastructure Definition
+  name: Rollback Phase 3
+  phaseNameForRollback: Phase 3
+  phaseSteps:
+  - type: CONTAINER_DEPLOY
+    name: Deploy Containers
+    phaseStepNameForRollback: Deploy Containers
+    statusForRollback: SUCCESS
+    steps:
+    - type: KUBERNETES_DEPLOY_ROLLBACK
+      name: Rollback Containers
+    stepsInParallel: false
+  - type: CONTAINER_SETUP
+    name: Set up Container
+    phaseStepNameForRollback: Set up Container
+    statusForRollback: SUCCESS
+    steps:
+    - type: KUBERNETES_SETUP_ROLLBACK
+      name: Rollback Kubernetes Setup
+    stepsInParallel: false
+  - type: VERIFY_SERVICE
+    name: Verify Service
+    phaseStepNameForRollback: Deploy Containers
+    statusForRollback: SUCCESS
+    stepsInParallel: false
+  - type: WRAP_UP
+    name: Wrap Up
+    stepsInParallel: false
+  provisionNodes: false
+  serviceName: aws-lambda
+  statefulSet: false
+templatized: true
+userVariables:
+- type: ENTITY
+  description: Variable for User Group entity in Approval
+  fixed: false
+  mandatory: true
+  name: User_Group

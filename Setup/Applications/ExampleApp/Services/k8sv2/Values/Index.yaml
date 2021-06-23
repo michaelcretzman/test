@@ -1,0 +1,9 @@
+harnessApiVersion: '1.0'
+type: APPLICATION_MANIFEST
+gitFileConfig:
+  branch: master
+  connectorName: git-docs
+  filePath: test.yaml
+  useBranch: true
+  useInlineServiceDefinition: false
+storeType: Remote

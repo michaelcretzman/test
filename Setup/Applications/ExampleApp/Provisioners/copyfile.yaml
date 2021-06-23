@@ -4,12 +4,3 @@ path: applystate
 skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: git-docs
-variables:
-- name: access_key
-  valueType: ENCRYPTED_TEXT
-- name: hostname
-  valueType: TEXT
-- name: region
-  valueType: TEXT
-- name: secret_key
-  valueType: ENCRYPTED_TEXT

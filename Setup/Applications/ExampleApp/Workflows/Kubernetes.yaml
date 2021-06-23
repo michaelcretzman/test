@@ -84,26 +84,6 @@ phases:
       value: DOCKER
     - name: entityType
       value: INFRASTRUCTURE_DEFINITION
-- type: KUBERNETES
-  computeProviderName: harness-exploration-gcp
-  daemonSet: false
-  infraDefinitionName: K8sv2
-  name: Phase 3
-  phaseSteps:
-  - type: K8S_PHASE_STEP
-    name: Deploy
-    stepsInParallel: false
-  provisionNodes: false
-  serviceName: k8sv2
-  statefulSet: false
-  templateExpressions:
-  - expression: ${InfraDefinition_Kubernetes3}
-    fieldName: infraDefinitionId
-    metadata:
-    - name: artifactType
-      value: DOCKER
-    - name: entityType
-      value: INFRASTRUCTURE_DEFINITION
 preDeploymentSteps:
 - type: TERRAFORM_PROVISION
   name: Terraform Provision
@@ -188,28 +168,6 @@ rollbackPhases:
       value: DOCKER
     - name: entityType
       value: INFRASTRUCTURE_DEFINITION
-- type: KUBERNETES
-  computeProviderName: harness-exploration-gcp
-  daemonSet: false
-  infraDefinitionName: K8sv2
-  name: Rollback Phase 3
-  phaseNameForRollback: Phase 3
-  phaseSteps:
-  - type: K8S_PHASE_STEP
-    name: Deploy
-    phaseStepNameForRollback: Deploy
-    stepsInParallel: false
-  provisionNodes: false
-  serviceName: k8sv2
-  statefulSet: false
-  templateExpressions:
-  - expression: ${InfraDefinition_Kubernetes3}
-    fieldName: infraDefinitionId
-    metadata:
-    - name: artifactType
-      value: DOCKER
-    - name: entityType
-      value: INFRASTRUCTURE_DEFINITION
 templateExpressions:
 - expression: ${Environment}
   fieldName: envId
@@ -234,11 +192,6 @@ userVariables:
   fixed: false
   mandatory: true
   name: InfraDefinition_Kubernetes2
-- type: ENTITY
-  description: Variable for Infrastructure Definition entity in Rollback Phase 3
-  fixed: false
-  mandatory: true
-  name: InfraDefinition_Kubernetes3
 - type: TEXT
   fixed: false
   mandatory: false

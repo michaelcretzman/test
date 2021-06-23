@@ -1,5 +1,6 @@
 harnessApiVersion: '1.0'
 type: TRIGGER
+continueWithDefaultValues: false
 executionName: Kubernetes
 executionType: Workflow
 triggerCondition:
@@ -15,9 +16,6 @@ workflowVariables:
   value: ${pull_request.id}
 - name: workspace
   value: production
-- entityType: INFRASTRUCTURE_DEFINITION
-  name: InfraDefinition_Kubernetes3
-  value: ${pull_request.id}
 - entityType: INFRASTRUCTURE_DEFINITION
   name: InfraDefinition_Kubernetes2
   value: ${pull_request.id}

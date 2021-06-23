@@ -36,7 +36,11 @@ phases:
       name: Health Check
       properties:
         executeWithPreviousSteps: false
+        headers:
+        - key: content-type
+          value: application/json
         socketTimeoutMillis: 0
+        timeoutMillis: 0
       templateUri: General Store Inc/HTTP Verifications/Health Check:latest
       templateVariables:
       - name: Url
@@ -55,7 +59,11 @@ phases:
       name: Health Check
       properties:
         executeWithPreviousSteps: false
+        headers:
+        - key: content-type
+          value: application/json
         socketTimeoutMillis: 0
+        timeoutMillis: 0
       templateUri: General Store Inc/HTTP Verifications/Health Check:latest
       templateVariables:
       - name: Url

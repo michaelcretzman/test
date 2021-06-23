@@ -139,6 +139,50 @@ preDeploymentSteps:
       valueType: ENCRYPTED_TEXT
 - type: ARTIFACT_CHECK
   name: Artifact Check
+- type: TERRAFORM_PROVISION
+  name: Terraform Provision
+  properties:
+    backendConfigs:
+    - name: bucket
+      value: null
+      valueType: TEXT
+    - name: key
+      value: null
+      valueType: TEXT
+    - name: region
+      value: null
+      valueType: TEXT
+    delegateTag: ''
+    environmentVariables:
+    - name: foo
+      value: null
+      valueType: TEXT
+    exportPlanToApplyStep: false
+    inheritApprovedPlan: false
+    name: Terraform Provision
+    provisionerName: K8s TF
+    runPlanOnly: false
+    targets: null
+    tfVarFiles: ''
+    tfVarGitFileConfig: null
+    timeoutMillis: 300000
+    variables:
+    - name: cluster_name
+      value: null
+      valueType: TEXT
+    - name: password
+      value: null
+      valueType: TEXT
+    - name: kubernetes_version
+      value: null
+      valueType: TEXT
+    - name: region
+      value: null
+      valueType: TEXT
+    - name: username
+      value: null
+      valueType: TEXT
+    workspace: ''
 rollbackPhases:
 - type: SSH
   computeProviderName: aws-example

@@ -4,6 +4,7 @@ artifactSelections:
 - regex: false
   serviceName: NGINX K8s
   type: ARTIFACT_SOURCE
+continueWithDefaultValues: false
 executionName: NGINX-K8s
 executionType: Workflow
 triggerCondition:

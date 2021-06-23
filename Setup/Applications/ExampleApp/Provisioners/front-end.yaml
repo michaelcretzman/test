@@ -5,8 +5,3 @@ path: terraform-CV
 skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: git
-variables:
-- name: access key
-  valueType: ENCRYPTED_TEXT
-- name: secret key
-  valueType: ENCRYPTED_TEXT

@@ -1,24 +1,6 @@
 harnessApiVersion: '1.0'
 type: TERRAFORM
-backendConfigs:
-- name: bucket
-  valueType: TEXT
-- name: key
-  valueType: TEXT
-- name: region
-  valueType: TEXT
 path: _examples/google-gke-cluster
 skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: TF K8s Example
-variables:
-- name: cluster_name
-  valueType: TEXT
-- name: kubernetes_version
-  valueType: TEXT
-- name: password
-  valueType: TEXT
-- name: region
-  valueType: TEXT
-- name: username
-  valueType: TEXT

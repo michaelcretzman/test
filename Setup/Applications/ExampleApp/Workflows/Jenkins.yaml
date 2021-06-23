@@ -35,8 +35,10 @@ phases:
     stepsInParallel: false
   - type: DISABLE_SERVICE
     failureStrategies:
-    - failureTypes:
+    - actionAfterTimeout: END_EXECUTION
+      failureTypes:
       - APPLICATION_ERROR
+      manualInterventionTimeout: 1209600000
       repairActionCode: MANUAL_INTERVENTION
       retryCount: 0
       specificSteps:

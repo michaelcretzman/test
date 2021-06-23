@@ -163,11 +163,13 @@ phases:
   serviceName: AMI
   statefulSet: false
 preDeploymentFailureStrategy:
-- failureTypes:
+- actionAfterTimeout: END_EXECUTION
+  failureTypes:
   - APPLICATION_ERROR
   - CONNECTIVITY
   - AUTHENTICATION
   - VERIFICATION_FAILURE
+  manualInterventionTimeout: 1209600000
   repairActionCode: MANUAL_INTERVENTION
   retryCount: 0
 rollbackPhases:

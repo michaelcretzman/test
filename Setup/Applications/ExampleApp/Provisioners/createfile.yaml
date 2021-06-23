@@ -4,12 +4,3 @@ path: create
 skipRefreshBeforeApplyingPlan: false
 sourceRepoBranch: master
 sourceRepoSettingName: git-docs
-variables:
-- name: access_key
-  valueType: ENCRYPTED_TEXT
-- name: region
-  valueType: TEXT
-- name: secret_key
-  valueType: ENCRYPTED_TEXT
-- name: tag
-  valueType: TEXT

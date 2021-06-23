@@ -3,3 +3,4 @@ type: APPLICATION
 description: This application is for documentation.
 tags:
   DocExample: 'Yes'
+  name: docexample

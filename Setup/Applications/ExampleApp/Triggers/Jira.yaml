@@ -5,6 +5,7 @@ artifactSelections:
   serviceName: Jira-Docker
   type: LAST_DEPLOYED
   workflowName: JIRA-Dev
+continueWithDefaultValues: false
 executionName: JIRA-Dev
 executionType: Workflow
 triggerCondition:
