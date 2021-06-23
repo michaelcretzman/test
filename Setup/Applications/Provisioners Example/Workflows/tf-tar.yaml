@@ -57,8 +57,10 @@ phases:
   serviceName: TAR
   statefulSet: false
 preDeploymentFailureStrategy:
-- failureTypes:
+- actionAfterTimeout: END_EXECUTION
+  failureTypes:
   - CONNECTIVITY
+  manualInterventionTimeout: 1209600000
   repairActionCode: MANUAL_INTERVENTION
   retryCount: 0
 preDeploymentSteps:
