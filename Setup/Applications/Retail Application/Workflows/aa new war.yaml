@@ -42,9 +42,9 @@ phases:
     name: Disable Service
     steps:
     - type: COMMAND
-      name: conditional-test
+      name: test_echo
       properties:
-        commandName: test_echo
+        commandName: conditional-test
         commandType: OTHER
         connectionAttributes: ''
         connectionType: SSH
@@ -81,8 +81,10 @@ phases:
       specificSteps:
       - AppDynamics
       - Splunkv2
-    - failureTypes:
+    - actionAfterTimeout: END_EXECUTION
+      failureTypes:
       - VERIFICATION_FAILURE
+      manualInterventionTimeout: 1209600000
       repairActionCode: MANUAL_INTERVENTION
       retryCount: 0
       specificSteps:
@@ -124,7 +126,7 @@ phases:
         assertion: ${httpResponseCode}==200
         body: ''
         executeWithPreviousSteps: false
-        header: ''
+        headers: null
         method: GET
         publishAsVar: false
         responseProcessingExpressions: ''
@@ -253,6 +255,7 @@ userVariables:
   mandatory: true
   name: Service
 - type: ENTITY
+  description: Variable for Infrastructure Definition entity in Rollback Phase 1
   fixed: false
   mandatory: true
   name: InfraDefinition_SSH

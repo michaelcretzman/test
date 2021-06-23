@@ -3,6 +3,9 @@ type: ENVIRONMENT
 configMapYamlByServiceTemplateName: {}
 environmentType: NON_PROD
 variableOverrides:
+- name: mq
+  value: thing.thing.whatever
+  valueType: TEXT
 - name: password
   serviceName: Order
   value: gcpkms:Ti2TPyWeSxOM-yqsAvDgmA
@@ -14,7 +17,4 @@ variableOverrides:
 - name: env
   serviceName: Order
   value: qa
-  valueType: TEXT
-- name: mq
-  value: thing.thing.whatever
   valueType: TEXT

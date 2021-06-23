@@ -3,8 +3,6 @@ type: SPLUNKV2
 alertEnabled: false
 alertPriority: P5
 alertThreshold: 0.5
-baselineEndMinute: 26134035
-baselineStartMinute: 26134006
 connectorName: input_prd_p_429h4vj2lsng_harness-api
 enabled24x7: false
 hostnameField: host

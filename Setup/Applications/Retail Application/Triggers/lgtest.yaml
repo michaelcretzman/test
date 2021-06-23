@@ -5,6 +5,7 @@ artifactSelections:
   regex: false
   serviceName: Order V2
   type: WEBHOOK_VARIABLE
+continueWithDefaultValues: false
 executionName: CD Pipeline 2
 executionType: Pipeline
 triggerCondition:

@@ -22,6 +22,6 @@ customMetrics:
     txnName: custom
 dockerMetrics:
   cluster-name:prod-private: docker.cpu.throttled,docker.cpu.usage
-enabled24x7: true
+enabled24x7: false
 numOfOccurrencesForAlert: 1
 serviceName: Order V2

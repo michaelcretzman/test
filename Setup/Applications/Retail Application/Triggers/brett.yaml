@@ -5,6 +5,7 @@ artifactSelections:
   regex: false
   serviceName: Istio MultiService
   type: LAST_COLLECTED
+continueWithDefaultValues: false
 executionName: brett3
 executionType: Pipeline
 triggerCondition:

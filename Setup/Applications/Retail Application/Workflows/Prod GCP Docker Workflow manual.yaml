@@ -3,10 +3,12 @@ type: CANARY
 concurrencyStrategy: INFRA
 envName: Production
 failureStrategies:
-- executionScope: WORKFLOW
+- actionAfterTimeout: END_EXECUTION
+  executionScope: WORKFLOW
   failureTypes:
   - APPLICATION_ERROR
   - VERIFICATION_FAILURE
+  manualInterventionTimeout: 1209600000
   repairActionCode: MANUAL_INTERVENTION
   retryCount: 0
 notificationRules:

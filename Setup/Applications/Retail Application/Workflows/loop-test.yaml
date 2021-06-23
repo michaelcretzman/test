@@ -26,7 +26,9 @@ postDeploymentSteps:
     assertion: ${httpResponseCode} == 200
     body: '{"application":"Or2FWFL6TguB964BEiiD2A","parameters":{"index":"${context.args.nextIndex}","tag":"${workflow.variables.tag}"}}'
     executeWithPreviousSteps: false
-    header: 'content-type: application/json'
+    headers:
+    - key: content-type
+      value: application/json
     method: POST
     publishAsVar: false
     responseProcessingExpressions: ''

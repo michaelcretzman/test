@@ -3,10 +3,8 @@ type: SUMO
 alertEnabled: false
 alertPriority: P5
 alertThreshold: 0.5
-baselineEndMinute: 26127750
-baselineStartMinute: 26127511
 connectorName: Sumo Logic-dev
-enabled24x7: true
+enabled24x7: false
 numOfOccurrencesForAlert: 1
 query: '*exception*'
 serviceName: Order V2

@@ -36,6 +36,9 @@ phases:
       name: Health Check
       properties:
         executeWithPreviousSteps: false
+        headers:
+        - key: content-type
+          value: application/json
         publishAsVar: false
         responseProcessingExpressions: ''
         socketTimeoutMillis: 0
@@ -151,6 +154,7 @@ userVariables:
   mandatory: true
   name: Service
 - type: ENTITY
+  description: Variable for Infrastructure Definition entity in Rollback Blue/Green
   fixed: false
   mandatory: true
   name: InfraDefinition_Kubernetes

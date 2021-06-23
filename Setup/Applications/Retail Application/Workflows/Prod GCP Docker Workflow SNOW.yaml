@@ -9,10 +9,12 @@ failureStrategies:
   - VERIFICATION_FAILURE
   repairActionCode: ROLLBACK_WORKFLOW
   retryCount: 0
-- executionScope: WORKFLOW
+- actionAfterTimeout: END_EXECUTION
+  executionScope: WORKFLOW
   failureTypes:
   - VERIFICATION_FAILURE
   - CONNECTIVITY
+  manualInterventionTimeout: 1209600000
   repairActionCode: MANUAL_INTERVENTION
   retryCount: 0
 notificationRules:
@@ -103,9 +105,6 @@ postDeploymentSteps:
 - type: SERVICENOW_CREATE_UPDATE
   name: ServiceNow
   properties:
-    STATE: In Progress
-    WORK_NOTES: 'Started progress on Workflow: ${deploymentUrl}'
-    issueNumber: ${snow.issueNumber}
     serviceNowAction: UPDATE_TICKET
     serviceNowCreateUpdateParams:
       action: UPDATE
@@ -115,16 +114,10 @@ postDeploymentSteps:
       fields:
         WORK_NOTES: 'Started progress on Workflow: ${deploymentUrl}'
         STATE: In Progress
-    snowConnectorId: oRWA-q15SmGfKTujuJgByg
-    ticketType: INCIDENT
 preDeploymentSteps:
 - type: SERVICENOW_CREATE_UPDATE
   name: ServiceNow
   properties:
-    DESCRIPTION: KarlTest
-    IMPACT: '2'
-    SHORT_DESCRIPTION: KarTest
-    URGENCY: '2'
     publishAsVar: false
     serviceNowAction: CREATE_TICKET
     serviceNowCreateUpdateParams:
@@ -136,11 +129,9 @@ preDeploymentSteps:
         IMPACT: '2'
         DESCRIPTION: KarlTest
         SHORT_DESCRIPTION: KarTest
-    snowConnectorId: oRWA-q15SmGfKTujuJgByg
     templateUuid: null
     templateVariables: null
     templateVersion: null
-    ticketType: INCIDENT
 rollbackPhases:
 - type: KUBERNETES
   computeProviderName: harness-demo
@@ -193,6 +184,7 @@ userVariables:
   mandatory: true
   name: Environment
 - type: ENTITY
+  description: Variable for Infrastructure Definition entity in Rollback Phase 1
   fixed: false
   mandatory: true
   name: InfraDefinition_Kubernetes

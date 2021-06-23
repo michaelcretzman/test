@@ -5,6 +5,7 @@ artifactSelections:
   regex: false
   serviceName: Quant
   type: LAST_COLLECTED
+continueWithDefaultValues: false
 executionName: lambda test
 executionType: Workflow
 triggerCondition:

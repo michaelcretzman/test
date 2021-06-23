@@ -4,7 +4,7 @@ alertEnabled: false
 alertThreshold: 0.5
 analysisTolerance: LOW
 connectorName: new_relic
-enabled24x7: true
+enabled24x7: false
 newRelicApplicationName: My Application
 numOfOccurrencesForAlert: 1
 serviceName: Order V2

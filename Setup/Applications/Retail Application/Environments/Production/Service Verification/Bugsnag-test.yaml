@@ -3,11 +3,9 @@ type: BUG_SNAG
 alertEnabled: false
 alertPriority: P5
 alertThreshold: 0.5
-baselineEndMinute: 26126205
-baselineStartMinute: 26126176
 browserApplication: true
 connectorName: Bugsnag
-enabled24x7: true
+enabled24x7: false
 numOfOccurrencesForAlert: 1
 orgName: Harness
 projectName: Prod (app.harness.io)

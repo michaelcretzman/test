@@ -3,8 +3,6 @@ type: ELK
 alertEnabled: false
 alertPriority: P5
 alertThreshold: 0.5
-baselineEndMinute: 26126190
-baselineStartMinute: 26126161
 connectorName: elk-dev
 enabled24x7: false
 hostnameField: kubernetes.pod.name

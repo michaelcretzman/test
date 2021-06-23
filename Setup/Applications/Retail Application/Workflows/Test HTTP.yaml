@@ -1,0 +1,870 @@
+harnessApiVersion: '1.0'
+type: MULTI_SERVICE
+concurrencyStrategy: INFRA
+envName: Development
+failureStrategies:
+- executionScope: WORKFLOW
+  failureTypes:
+  - APPLICATION_ERROR
+  repairActionCode: ROLLBACK_WORKFLOW
+  retryCount: 0
+notificationRules:
+- conditions:
+  - FAILED
+  executionScope: WORKFLOW
+  notificationGroupAsExpression: false
+  userGroupAsExpression: false
+  userGroupIds:
+  - GXFtTUS2Q9Gmo1r4MhqS4g
+preDeploymentSteps:
+- type: SHELL_SCRIPT
+  name: Shell Script
+  properties:
+    commandPath: null
+    connectionAttributes: null
+    executeOnDelegate: true
+    host: null
+    outputVars: ''
+    publishAsVar: false
+    scriptString: |-
+      echo "releases: \n- customWorkloads: []\n  managedWorkload: \n  managedWorkloadRevision:
+          \n  managedWorkloads: \n  - revision: '193'\n    workload: \n      name: legacy-api\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '200'\n    workload: \n      name: legacy-api-core\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '166'\n    workload:
+          \n      name: legacy-api-external\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '164'\n    workload: \n      name: legacy-api-painel\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '165'\n    workload: \n      name: legacy-worker-3ds-cancel-abandoned\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '165'\n    workload: \n      name: legacy-worker-account-setup-sift\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '171'\n    workload: \n      name: legacy-worker-beanstalk-generic\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '172'\n    workload: \n      name: legacy-worker-beanstalk-update-account\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '164'\n    workload: \n      name: legacy-worker-biz-reward-push\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '165'\n    workload: \n      name: legacy-worker-bizreward-bizindicationreward\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '90'\n    workload: \n      name: legacy-worker-calculate-nr-worker\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-capture-p2b\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '164'\n    workload: \n      name: legacy-worker-capture-p2p\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '164'\n    workload:
+          \n      name: legacy-worker-clearsale-cron\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '164'\n    workload: \n      name:
+          legacy-worker-clearsale-worker\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '171'\n    workload: \n      name: legacy-worker-complete-transac-op-sellers\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-conciliation-chargeback\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-consumer-act-bus-account\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-consumer-analysis-process\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '164'\n    workload: \n      name: legacy-worker-consumer-first-payment\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-consumer-identity\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '188'\n    workload: \n      name: legacy-worker-consumer-photos-queue\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '170'\n    workload: \n      name: legacy-worker-contact-score-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '148'\n    workload: \n      name: legacy-worker-core-electronic-transfer-events-dlq\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '165'\n    workload: \n      name: legacy-worker-electronic-transfer-events-subscriber\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-email-sendgrid\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '163'\n    workload: \n      name: legacy-worker-follow-payment\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '165'\n    workload:
+          \n      name: legacy-worker-generate-movements\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '84'\n    workload: \n      name:
+          legacy-worker-herodash-consumer-add-credit\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '99'\n    workload: \n      name:
+          legacy-worker-herodash-consumer-add-debit\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '163'\n    workload: \n      name:
+          legacy-worker-identify-contacts\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '163'\n    workload: \n      name: legacy-worker-identify-contacts-process-payload\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '93'\n    workload: \n      name: legacy-worker-kafka-wallets-conc-high\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '95'\n    workload: \n      name: legacy-worker-kafka-wallets-conc-low\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-log-signup-address\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '164'\n    workload: \n      name: legacy-worker-messenger-worker\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-mixpanel-queue-consumer-create-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '171'\n    workload: \n      name: legacy-worker-mixpanel-queue-consumer-update-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '169'\n    workload: \n      name: legacy-worker-mixpanel-queue-events-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '16'\n    workload: \n      name: legacy-worker-new-credit-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-notification-pigeon\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '58'\n    workload: \n      name: legacy-worker-outbox-sync-default\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '70'\n    workload: \n      name: legacy-worker-outbox-sync-wallets\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-p2p-message-reward\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-p2p-status-change\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-p2p-status-change-notifier\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '165'\n    workload: \n      name: legacy-worker-p2ptransaction-postprocessing\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-painel-analyses-pending-cacher\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-pav-flag-for-review\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '164'\n    workload: \n      name: legacy-worker-pav-status-change\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-payment-capture-ghosts\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-payment-ghost-conciliator\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-push-sender\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '163'\n    workload: \n      name: legacy-worker-retry-update-signals\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '163'\n    workload: \n      name: legacy-worker-reward-sms-notification\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '166'\n    workload: \n      name: legacy-worker-savings-payment\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '163'\n    workload: \n      name: legacy-worker-send-analytics\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '165'\n    workload:
+          \n      name: legacy-worker-sift-science-track-listener\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '92'\n    workload:
+          \n      name: legacy-worker-sift-science-verified-phone-number-listener\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '163'\n    workload: \n      name: legacy-worker-sms-sender\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '169'\n    workload:
+          \n      name: legacy-worker-social-connection-events\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '163'\n    workload:
+          \n      name: legacy-worker-status-change-notifier\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '163'\n    workload: \n      name:
+          legacy-worker-transaction-analysis-handle\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '231'\n    workload: \n      name:
+          legacy-worker-update-device-details\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '166'\n    workload: \n      name:
+          legacy-worker-update-signals\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '167'\n    workload: \n      name: legacy-worker-username-search-queue\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-wallets-conciliator\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-withdrawal-change-status\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-withdrawal-conf-queue\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  number:
+          152\n  resources: \n  - name: ms-legacy\n    kind: Namespace\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-api\n    kind: Service\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-api-core\n    kind: Service\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-api-external\n
+          \   kind: Service\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-api-painel\n
+          \   kind: Service\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-service-metrics\n
+          \   kind: Service\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-api\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-api-core\n    kind: Deployment\n    namespace: ms-legacy\n    versioned:
+          false\n  - name: legacy-api-external\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-api-painel\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-3ds-cancel-abandoned\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-account-setup-sift\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-beanstalk-generic\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-beanstalk-update-account\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-biz-reward-push\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-bizreward-bizindicationreward\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-calculate-nr-worker\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-capture-p2b\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-capture-p2p\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-clearsale-cron\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-clearsale-worker\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-complete-transac-op-sellers\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-conciliation-chargeback\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-consumer-act-bus-account\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-analysis-process\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-consumer-first-payment\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-consumer-identity\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-photos-queue\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-contact-score-processor\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-core-electronic-transfer-events-dlq\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-electronic-transfer-events-subscriber\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-email-sendgrid\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-follow-payment\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-generate-movements\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-herodash-consumer-add-credit\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-herodash-consumer-add-debit\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-identify-contacts\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-identify-contacts-process-payload\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-kafka-wallets-conc-high\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-kafka-wallets-conc-low\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-log-signup-address\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-messenger-worker\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-mixpanel-queue-consumer-create-processor\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-mixpanel-queue-consumer-update-processor\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-mixpanel-queue-events-processor\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-new-credit-processor\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-notification-pigeon\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-outbox-sync-default\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-outbox-sync-wallets\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-p2p-message-reward\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-p2p-status-change\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-p2p-status-change-notifier\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-p2ptransaction-postprocessing\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-painel-analyses-pending-cacher\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-pav-flag-for-review\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-pav-status-change\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-payment-capture-ghosts\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-payment-ghost-conciliator\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-push-sender\n    kind: Deployment\n    namespace: ms-legacy\n    versioned:
+          false\n  - name: legacy-worker-retry-update-signals\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-reward-sms-notification\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-savings-payment\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-send-analytics\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-sift-science-track-listener\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-sift-science-verified-phone-number-listener\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-sms-sender\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-social-connection-events\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-status-change-notifier\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-transaction-analysis-handle\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-update-device-details\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-update-signals\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-username-search-queue\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-wallets-conciliator\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-withdrawal-change-status\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-withdrawal-conf-queue\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-cronjob-accountsetupconciliator\n    kind: CronJob\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-cronjob-analitico-cred-promo-mensal\n    kind:
+          CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-analitico-creditos-promocionais\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-antifraud-perf-analista\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-antifraudgeckoboard\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-applylabelemployee\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-approvebyvaluewithdrawalsonhold\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-balanceupdated\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-bankingcorereindex\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-bbbatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-bradescobatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-cachefaturamento\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-cachekpisoriginal\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-calculatenrmass\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturemasscancelpendingpav\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransaccancelnotcapturedtef\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransaccancelunreceived\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransacconnec\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransacp2p\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransacpav\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-cefbatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-changestatusbylote\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-clearsalesignalsextraction\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-conciliacaoadquirentedaily\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-consanalysisupdatequeue\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-consumernotifications\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-coremetrics\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dailyperformancerepor\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dashboarddaily\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dashboardhourly\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dashboardminute\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dashboardmonthly\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-doublechecksclearsale\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-emailsdispatchergmail-req2\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-emailsdispatchergmail-req9\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-expnotcapturedonlastdayofmont\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-exportafaturamentopav\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-faustaoarchiver\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-fixemptyusername\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-generate-movements\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-generate-movements-by-connect\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghostandzombietransactions\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghostresolvebycsv\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghosttransactionscompleteapproved\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghosttransactionsreport\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghosttransactionsresolved\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-graphicreport-daily\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-itaubatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-kafkawalletscancel\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgmaskconsumertoinvitebypush\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgminvitedispatcher\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgminvitescheduler\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgminvitesmsfromdevice\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgmmoveemailinvites\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgmmoveemailinvitescheckerqueue\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgmsmsreminder\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-migrate-consumer-restrictions\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-originalbatch-1\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-originalbatch-2\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-outbox-dropped-messages\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-p2psmsreminder\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-queuewithdrawals\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-rmexpiredpromotionalcredits\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-sellercollector\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-sendwithdrawalreport\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-sendwithdrawalstoelectronictransfer\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-spamreports\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-swift-daily-pagamento\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-swift-daily-venda\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-tedbatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-tokenizeconsumercreditcards\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-verificationsmsreminder\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-withdrawal-et-conciliation-status-c\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-withdrawal-et-conciliation-status-q\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-withdrawalsreport\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-withdrawalsscheduler\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: api-core-internal-microservices\n
+          \   kind: Ingress\n    namespace: ms-legacy\n    versioned: false\n  - name: api-external-external-dashboards-2\n
+          \   kind: Ingress\n    namespace: ms-legacy\n    versioned: false\n  - name: api-internal-microservices\n
+          \   kind: Ingress\n    namespace: ms-legacy\n    versioned: false\n  - name: api-painel-external-dashboards\n
+          \   kind: Ingress\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-api\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-api-core\n    kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-api-external\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-api-painel\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-3ds-cancel-abandoned\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-account-setup-sift\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-beanstalk-generic\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-beanstalk-update-account\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-biz-reward-push\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-bizreward-bizindicationreward\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-capture-p2b\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-capture-p2p\n    kind:
+          HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-clearsale-cron\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-clearsale-worker\n    kind:
+          HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-conciliation-chargeback\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-act-bus-account\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-consumer-analysis-process\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-first-payment\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-consumer-identity\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-live-migration\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-consumer-photos-queue\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-email-sendgrid\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-follow-payment\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-generate-movements\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-herodash-consumer-add-credit\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-identify-contacts\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-identify-contacts-process-payload\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-log-signup-address\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-messenger-worker\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-notification-pigeon\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-outbox-sync-default\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-p2p-message-reward\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-p2p-status-change\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-p2p-status-change-notifier\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-p2ptransaction-postprocessing\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-painel-analyses-pending-cacher\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-pav-flag-for-review\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-pav-status-change\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-payment-capture-ghosts\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-payment-ghost-conciliator\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-push-sender\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-retry-update-signals\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-reward-sms-notification\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-savings-payment\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-send-analytics\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-sift-science-track-listener\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-sift-science-verified-phone-number-listener\n    kind:
+          HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-sms-sender\n    kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-status-change-notifier\n    kind:
+          HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-transaction-analysis-handle\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-update-signals\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-username-search-queue\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-wallets-conciliator\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-withdrawal-change-status\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-withdrawal-conf-queue\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-api-core-pdb\n    kind: PodDisruptionBudget\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-api-external-pdb\n    kind: PodDisruptionBudget\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-api-painel-pdb\n
+          \   kind: PodDisruptionBudget\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-api-pdb\n    kind: PodDisruptionBudget\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-metrics-service-monitor\n    kind: ServiceMonitor\n
+          \   namespace: ms-legacy\n    versioned: false\n  status: Succeeded\n- customWorkloads:
+          []\n  managedWorkload: \n  managedWorkloadRevision: \n  managedWorkloads: \n  -
+          revision: '192'\n    workload: \n      name: legacy-api\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '199'\n    workload:
+          \n      name: legacy-api-core\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '165'\n    workload: \n      name: legacy-api-external\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-api-painel\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '164'\n    workload:
+          \n      name: legacy-worker-3ds-cancel-abandoned\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '164'\n    workload: \n      name:
+          legacy-worker-account-setup-sift\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '170'\n    workload: \n      name: legacy-worker-beanstalk-generic\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '170'\n    workload: \n      name: legacy-worker-beanstalk-update-account\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '164'\n    workload: \n      name: legacy-worker-biz-reward-push\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '164'\n    workload: \n      name: legacy-worker-bizreward-bizindicationreward\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '89'\n    workload: \n      name: legacy-worker-calculate-nr-worker\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-capture-p2b\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '162'\n    workload: \n      name: legacy-worker-capture-p2p\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '163'\n    workload:
+          \n      name: legacy-worker-clearsale-cron\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '162'\n    workload: \n      name:
+          legacy-worker-clearsale-worker\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '171'\n    workload: \n      name: legacy-worker-complete-transac-op-sellers\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-conciliation-chargeback\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '161'\n    workload: \n      name: legacy-worker-consumer-act-bus-account\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-consumer-analysis-process\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-consumer-first-payment\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-consumer-identity\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '185'\n    workload: \n      name: legacy-worker-consumer-photos-queue\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '169'\n    workload: \n      name: legacy-worker-contact-score-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '146'\n    workload: \n      name: legacy-worker-core-electronic-transfer-events-dlq\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-electronic-transfer-events-subscriber\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '161'\n    workload: \n      name: legacy-worker-email-sendgrid\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '161'\n    workload: \n      name: legacy-worker-follow-payment\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '164'\n    workload:
+          \n      name: legacy-worker-generate-movements\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '83'\n    workload: \n      name:
+          legacy-worker-herodash-consumer-add-credit\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '97'\n    workload: \n      name:
+          legacy-worker-herodash-consumer-add-debit\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '162'\n    workload: \n      name:
+          legacy-worker-identify-contacts\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '162'\n    workload: \n      name: legacy-worker-identify-contacts-process-payload\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '92'\n    workload: \n      name: legacy-worker-kafka-wallets-conc-high\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '94'\n    workload: \n      name: legacy-worker-kafka-wallets-conc-low\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-log-signup-address\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-messenger-worker\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-mixpanel-queue-consumer-create-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '168'\n    workload: \n      name: legacy-worker-mixpanel-queue-consumer-update-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '167'\n    workload: \n      name: legacy-worker-mixpanel-queue-events-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '12'\n    workload: \n      name: legacy-worker-new-credit-processor\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-notification-pigeon\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '56'\n    workload: \n      name: legacy-worker-outbox-sync-default\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '69'\n    workload: \n      name: legacy-worker-outbox-sync-wallets\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-p2p-message-reward\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-p2p-status-change\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-p2p-status-change-notifier\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '164'\n    workload: \n      name: legacy-worker-p2ptransaction-postprocessing\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-painel-analyses-pending-cacher\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-pav-flag-for-review\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '163'\n    workload: \n      name: legacy-worker-pav-status-change\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-payment-capture-ghosts\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-payment-ghost-conciliator\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '161'\n    workload: \n      name: legacy-worker-push-sender\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '162'\n    workload: \n      name: legacy-worker-retry-update-signals\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '162'\n    workload: \n      name: legacy-worker-reward-sms-notification\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '165'\n    workload: \n      name: legacy-worker-savings-payment\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '162'\n    workload: \n      name: legacy-worker-send-analytics\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '164'\n    workload:
+          \n      name: legacy-worker-sift-science-track-listener\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '91'\n    workload:
+          \n      name: legacy-worker-sift-science-verified-phone-number-listener\n      kind:
+          Deployment\n      namespace: ms-legacy\n      versioned: false\n  - revision:
+          '162'\n    workload: \n      name: legacy-worker-sms-sender\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '168'\n    workload:
+          \n      name: legacy-worker-social-connection-events\n      kind: Deployment\n
+          \     namespace: ms-legacy\n      versioned: false\n  - revision: '162'\n    workload:
+          \n      name: legacy-worker-status-change-notifier\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '162'\n    workload: \n      name:
+          legacy-worker-transaction-analysis-handle\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '230'\n    workload: \n      name:
+          legacy-worker-update-device-details\n      kind: Deployment\n      namespace:
+          ms-legacy\n      versioned: false\n  - revision: '165'\n    workload: \n      name:
+          legacy-worker-update-signals\n      kind: Deployment\n      namespace: ms-legacy\n
+          \     versioned: false\n  - revision: '166'\n    workload: \n      name: legacy-worker-username-search-queue\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-wallets-conciliator\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-withdrawal-change-status\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  -
+          revision: '162'\n    workload: \n      name: legacy-worker-withdrawal-conf-queue\n
+          \     kind: Deployment\n      namespace: ms-legacy\n      versioned: false\n  number:
+          151\n  resources: \n  - name: ms-legacy\n    kind: Namespace\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-api\n    kind: Service\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-api-core\n    kind: Service\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-api-external\n
+          \   kind: Service\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-api-painel\n
+          \   kind: Service\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-service-metrics\n
+          \   kind: Service\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-api\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-api-core\n    kind: Deployment\n    namespace: ms-legacy\n    versioned:
+          false\n  - name: legacy-api-external\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-api-painel\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-3ds-cancel-abandoned\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-account-setup-sift\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-beanstalk-generic\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-beanstalk-update-account\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-biz-reward-push\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-bizreward-bizindicationreward\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-calculate-nr-worker\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-capture-p2b\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-capture-p2p\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-clearsale-cron\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-clearsale-worker\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-complete-transac-op-sellers\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-conciliation-chargeback\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-consumer-act-bus-account\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-analysis-process\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-consumer-first-payment\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-consumer-identity\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-photos-queue\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-contact-score-processor\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-core-electronic-transfer-events-dlq\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-electronic-transfer-events-subscriber\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-email-sendgrid\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-follow-payment\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-generate-movements\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-herodash-consumer-add-credit\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-herodash-consumer-add-debit\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-identify-contacts\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-identify-contacts-process-payload\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-kafka-wallets-conc-high\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-kafka-wallets-conc-low\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-log-signup-address\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-messenger-worker\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-mixpanel-queue-consumer-create-processor\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-mixpanel-queue-consumer-update-processor\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-mixpanel-queue-events-processor\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-new-credit-processor\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-notification-pigeon\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-outbox-sync-default\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-outbox-sync-wallets\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-p2p-message-reward\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-p2p-status-change\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-p2p-status-change-notifier\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-p2ptransaction-postprocessing\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-painel-analyses-pending-cacher\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-pav-flag-for-review\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-pav-status-change\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-payment-capture-ghosts\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-payment-ghost-conciliator\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-push-sender\n    kind: Deployment\n    namespace: ms-legacy\n    versioned:
+          false\n  - name: legacy-worker-retry-update-signals\n    kind: Deployment\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-reward-sms-notification\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-savings-payment\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-send-analytics\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-sift-science-track-listener\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-sift-science-verified-phone-number-listener\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-sms-sender\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-social-connection-events\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-status-change-notifier\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-transaction-analysis-handle\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-update-device-details\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-update-signals\n    kind: Deployment\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-username-search-queue\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-wallets-conciliator\n    kind: Deployment\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-withdrawal-change-status\n    kind:
+          Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-withdrawal-conf-queue\n
+          \   kind: Deployment\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-cronjob-accountsetupconciliator\n    kind: CronJob\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-cronjob-analitico-cred-promo-mensal\n    kind:
+          CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-analitico-creditos-promocionais\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-antifraud-perf-analista\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-antifraudgeckoboard\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-applylabelemployee\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-approvebyvaluewithdrawalsonhold\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-balanceupdated\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-bankingcorereindex\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-bbbatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-bradescobatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-cachefaturamento\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-cachekpisoriginal\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-calculatenrmass\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturemasscancelpendingpav\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransaccancelnotcapturedtef\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransaccancelunreceived\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransacconnec\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransacp2p\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-capturetransacpav\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-cefbatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-changestatusbylote\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-clearsalesignalsextraction\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-conciliacaoadquirentedaily\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-consanalysisupdatequeue\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-consumernotifications\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-coremetrics\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dailyperformancerepor\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dashboarddaily\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dashboardhourly\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dashboardminute\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-dashboardmonthly\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-doublechecksclearsale\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-emailsdispatchergmail-req2\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-emailsdispatchergmail-req9\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-expnotcapturedonlastdayofmont\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-exportafaturamentopav\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-faustaoarchiver\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-fixemptyusername\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-generate-movements\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-generate-movements-by-connect\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghostandzombietransactions\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghostresolvebycsv\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghosttransactionscompleteapproved\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghosttransactionsreport\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-ghosttransactionsresolved\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-graphicreport-daily\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-itaubatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-kafkawalletscancel\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgmaskconsumertoinvitebypush\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgminvitedispatcher\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgminvitescheduler\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgminvitesmsfromdevice\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgmmoveemailinvites\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgmmoveemailinvitescheckerqueue\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-mgmsmsreminder\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-migrate-consumer-restrictions\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-originalbatch-1\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-originalbatch-2\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-outbox-dropped-messages\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-p2psmsreminder\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-queuewithdrawals\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-rmexpiredpromotionalcredits\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-sellercollector\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-sendwithdrawalreport\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-sendwithdrawalstoelectronictransfer\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-spamreports\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-swift-daily-pagamento\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-swift-daily-venda\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-tedbatch\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-tokenizeconsumercreditcards\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-verificationsmsreminder\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-withdrawal-et-conciliation-status-c\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-withdrawal-et-conciliation-status-q\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-withdrawalsreport\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-cronjob-withdrawalsscheduler\n
+          \   kind: CronJob\n    namespace: ms-legacy\n    versioned: false\n  - name: api-core-internal-microservices\n
+          \   kind: Ingress\n    namespace: ms-legacy\n    versioned: false\n  - name: api-external-external-dashboards-2\n
+          \   kind: Ingress\n    namespace: ms-legacy\n    versioned: false\n  - name: api-internal-microservices\n
+          \   kind: Ingress\n    namespace: ms-legacy\n    versioned: false\n  - name: api-painel-external-dashboards\n
+          \   kind: Ingress\n    namespace: ms-legacy\n    versioned: false\n  - name: legacy-api\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-api-core\n    kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-api-external\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-api-painel\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-3ds-cancel-abandoned\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-account-setup-sift\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-beanstalk-generic\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-beanstalk-update-account\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-biz-reward-push\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-bizreward-bizindicationreward\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-capture-p2b\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-capture-p2p\n    kind:
+          HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-clearsale-cron\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-clearsale-worker\n    kind:
+          HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-conciliation-chargeback\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-act-bus-account\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-consumer-analysis-process\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-first-payment\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-consumer-identity\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-consumer-live-migration\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-consumer-photos-queue\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-email-sendgrid\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-follow-payment\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-generate-movements\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-herodash-consumer-add-credit\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-identify-contacts\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-identify-contacts-process-payload\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-log-signup-address\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-messenger-worker\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-notification-pigeon\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-outbox-sync-default\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-p2p-message-reward\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-p2p-status-change\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-p2p-status-change-notifier\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-p2ptransaction-postprocessing\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-painel-analyses-pending-cacher\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-pav-flag-for-review\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-pav-status-change\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-payment-capture-ghosts\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-payment-ghost-conciliator\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-push-sender\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-retry-update-signals\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-reward-sms-notification\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-savings-payment\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-send-analytics\n    kind: HorizontalPodAutoscaler\n    namespace:
+          ms-legacy\n    versioned: false\n  - name: legacy-worker-sift-science-track-listener\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-sift-science-verified-phone-number-listener\n    kind:
+          HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-sms-sender\n    kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-worker-status-change-notifier\n    kind:
+          HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n  - name:
+          legacy-worker-transaction-analysis-handle\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-update-signals\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-username-search-queue\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-wallets-conciliator\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-worker-withdrawal-change-status\n    kind: HorizontalPodAutoscaler\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-worker-withdrawal-conf-queue\n
+          \   kind: HorizontalPodAutoscaler\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-api-core-pdb\n    kind: PodDisruptionBudget\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-api-external-pdb\n    kind: PodDisruptionBudget\n
+          \   namespace: ms-legacy\n    versioned: false\n  - name: legacy-api-painel-pdb\n
+          \   kind: PodDisruptionBudget\n    namespace: ms-legacy\n    versioned: false\n
+          \ - name: legacy-api-pdb\n    kind: PodDisruptionBudget\n    namespace: ms-legacy\n
+          \   versioned: false\n  - name: legacy-metrics-service-monitor\n    kind: ServiceMonitor\n
+          \   namespace: ms-legacy\n    versioned: false\n  status: Succeeded\nversion:
+          v1\n"
+    scriptType: BASH
+    sshKeyRef: null
+    sweepingOutputName: null
+    sweepingOutputScope: null
+    templateExpressions: null
+    templateUuid: null
+    templateVariables: null
+    templateVersion: null
+    timeoutMillis: 60000
+- type: HTTP
+  name: GoogleIt
+  properties:
+    executeWithPreviousSteps: false
+    publishAsVar: false
+    responseProcessingExpressions: ''
+    sweepingOutputName: null
+    sweepingOutputScope: null
+    tags: null
+    timeoutMillis: 10000
+    useProxy: false
+  templateUri: General Store Inc/null/GoogleIt:latest
+  templateVariables:
+  - name: query.string
+templatized: true
+userVariables:
+- type: TEXT
+  fixed: false
+  mandatory: true
+  name: query

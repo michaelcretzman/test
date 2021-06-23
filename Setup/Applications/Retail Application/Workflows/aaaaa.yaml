@@ -40,4 +40,6 @@ phases:
     stepsInParallel: false
   provisionNodes: false
   statefulSet: false
+tags:
+  abc: bbb
 templatized: false

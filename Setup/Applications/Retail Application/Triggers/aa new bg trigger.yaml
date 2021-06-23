@@ -5,6 +5,7 @@ artifactSelections:
   regex: false
   serviceName: Istio Blue-Green
   type: WEBHOOK_VARIABLE
+continueWithDefaultValues: false
 executionName: Istio Colors Blue-Green
 executionType: Workflow
 triggerCondition:

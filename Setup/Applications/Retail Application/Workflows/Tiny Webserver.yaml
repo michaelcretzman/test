@@ -3,9 +3,11 @@ type: ROLLING
 concurrencyStrategy: INFRA
 envName: Development
 failureStrategies:
-- executionScope: WORKFLOW
+- actionAfterTimeout: END_EXECUTION
+  executionScope: WORKFLOW
   failureTypes:
   - APPLICATION_ERROR
+  manualInterventionTimeout: 1209600000
   repairActionCode: MANUAL_INTERVENTION
   retryCount: 0
 phases:
@@ -30,7 +32,7 @@ phases:
         assertion: ${httpResponseCode} == 200
         body: ''
         executeWithPreviousSteps: false
-        header: ''
+        headers: null
         method: GET
         publishAsVar: false
         responseProcessingExpressions: ''

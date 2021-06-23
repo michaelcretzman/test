@@ -9,10 +9,12 @@ failureStrategies:
   - VERIFICATION_FAILURE
   repairActionCode: ROLLBACK_WORKFLOW
   retryCount: 0
-- executionScope: WORKFLOW
+- actionAfterTimeout: END_EXECUTION
+  executionScope: WORKFLOW
   failureTypes:
   - VERIFICATION_FAILURE
   - CONNECTIVITY
+  manualInterventionTimeout: 1209600000
   repairActionCode: MANUAL_INTERVENTION
   retryCount: 0
 notificationRules:
@@ -221,6 +223,7 @@ userVariables:
   mandatory: true
   name: Environment
 - type: ENTITY
+  description: Variable for Infrastructure Definition entity in Rollback Phase 2
   fixed: false
   mandatory: true
   name: InfraDefinition_Kubernetes

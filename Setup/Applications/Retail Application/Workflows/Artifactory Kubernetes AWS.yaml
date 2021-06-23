@@ -64,9 +64,11 @@ phases:
       retryCount: 5
       retryIntervals:
       - 30
-    - executionScope: WORKFLOW_PHASE
+    - actionAfterTimeout: END_EXECUTION
+      executionScope: WORKFLOW_PHASE
       failureTypes:
       - VERIFICATION_FAILURE
+      manualInterventionTimeout: 1209600000
       repairActionCode: MANUAL_INTERVENTION
       retryCount: 0
     name: Verify Service

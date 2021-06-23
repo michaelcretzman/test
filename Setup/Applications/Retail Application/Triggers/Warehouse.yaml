@@ -4,6 +4,7 @@ artifactSelections:
 - regex: false
   serviceName: Order V2
   type: WEBHOOK_VARIABLE
+continueWithDefaultValues: false
 executionName: a new canary 3
 executionType: Workflow
 triggerCondition:

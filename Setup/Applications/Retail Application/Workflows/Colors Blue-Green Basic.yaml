@@ -29,7 +29,7 @@ phases:
         assertion: ''
         body: ''
         executeWithPreviousSteps: false
-        header: ''
+        headers: null
         method: GET
         publishAsVar: false
         responseProcessingExpressions: ''

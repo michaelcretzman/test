@@ -3,6 +3,15 @@ type: ENVIRONMENT
 configMapYamlByServiceTemplateName: {}
 environmentType: NON_PROD
 variableOverrides:
+- name: db_string
+  value: db.whatever
+  valueType: TEXT
+- name: command
+  value: test
+  valueType: TEXT
+- name: ENV
+  value: DEV
+  valueType: TEXT
 - name: version
   serviceName: Quant
   value: ${artifact.buildNo}
@@ -22,13 +31,4 @@ variableOverrides:
 - name: thing
   serviceName: Order
   value: '2'
-  valueType: TEXT
-- name: db_string
-  value: db.whatever
-  valueType: TEXT
-- name: command
-  value: test
-  valueType: TEXT
-- name: ENV
-  value: DEV
   valueType: TEXT

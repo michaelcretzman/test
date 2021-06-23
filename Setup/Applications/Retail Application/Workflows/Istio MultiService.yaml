@@ -41,7 +41,7 @@ phases:
         sweepingOutputName: create
         sweepingOutputScope: PHASE
         tags:
-        - demo
+        - store-demo
         templateExpressions: null
         timeoutMillis: 600000
       templateUri: General Store Inc/MultiService/Check for Primary:latest
@@ -59,7 +59,7 @@ phases:
         sweepingOutputName: null
         sweepingOutputScope: null
         tags:
-        - demo
+        - store-demo
         templateExpressions: null
         timeoutMillis: 600000
       templateUri: General Store Inc/MultiService/Update VirtualService and DestinationRule:latest

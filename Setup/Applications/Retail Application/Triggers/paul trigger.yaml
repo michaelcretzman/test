@@ -5,6 +5,7 @@ artifactSelections:
   regex: false
   serviceName: Order V2
   type: LAST_DEPLOYED
+continueWithDefaultValues: false
 executionName: CD Pipeline 2
 executionType: Pipeline
 triggerCondition:

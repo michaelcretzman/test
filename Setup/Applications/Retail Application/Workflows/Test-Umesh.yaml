@@ -1,13 +1,5 @@
 harnessApiVersion: '1.0'
-type: ROLLING
-concurrencyStrategy: INFRA
-envName: Infra Override 2
-failureStrategies:
-- executionScope: WORKFLOW
-  failureTypes:
-  - APPLICATION_ERROR
-  repairActionCode: ROLLBACK_WORKFLOW
-  retryCount: 0
+type: BUILD
 notificationRules:
 - conditions:
   - FAILED
@@ -17,48 +9,21 @@ notificationRules:
   userGroupIds:
   - GXFtTUS2Q9Gmo1r4MhqS4g
 phases:
-- type: KUBERNETES
-  computeProviderName: harness-demo
-  daemonSet: false
-  infraDefinitionName: infra2
-  name: Rolling
+- daemonSet: false
+  name: Phase 1
   phaseSteps:
-  - type: K8S_PHASE_STEP
-    name: Deploy
+  - type: PREPARE_STEPS
+    name: Prepare Steps
+    stepsInParallel: false
+  - type: COLLECT_ARTIFACT
+    name: Collect Artifact
     steps:
-    - type: K8S_DEPLOYMENT_ROLLING
-      name: Rollout Deployment
+    - type: ARTIFACT_COLLECTION
+      name: Artifact Collection
     stepsInParallel: false
-  - type: K8S_PHASE_STEP
-    name: Verify
-    stepsInParallel: false
-  - type: K8S_PHASE_STEP
+  - type: WRAP_UP
     name: Wrap Up
     stepsInParallel: false
   provisionNodes: false
-  serviceName: ADP_Test
-  statefulSet: false
-rollbackPhases:
-- type: KUBERNETES
-  computeProviderName: harness-demo
-  daemonSet: false
-  infraDefinitionName: infra2
-  name: Rollback Rolling
-  phaseNameForRollback: Rolling
-  phaseSteps:
-  - type: K8S_PHASE_STEP
-    name: Deploy
-    phaseStepNameForRollback: Deploy
-    statusForRollback: SUCCESS
-    steps:
-    - type: K8S_DEPLOYMENT_ROLLING_ROLLBACK
-      name: Rollback Deployment
-    stepsInParallel: false
-  - type: K8S_PHASE_STEP
-    name: Wrap Up
-    phaseStepNameForRollback: Wrap Up
-    stepsInParallel: false
-  provisionNodes: false
-  serviceName: ADP_Test
   statefulSet: false
 templatized: false

@@ -5,6 +5,7 @@ artifactSelections:
   regex: false
   serviceName: todo-list tomcat service
   type: WEBHOOK_VARIABLE
+continueWithDefaultValues: false
 executionName: tomcat todolist workflow aws canary new relic
 executionType: Workflow
 triggerCondition:

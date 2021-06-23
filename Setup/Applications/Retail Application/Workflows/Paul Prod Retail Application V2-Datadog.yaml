@@ -9,10 +9,12 @@ failureStrategies:
   - VERIFICATION_FAILURE
   repairActionCode: ROLLBACK_WORKFLOW
   retryCount: 0
-- executionScope: WORKFLOW
+- actionAfterTimeout: END_EXECUTION
+  executionScope: WORKFLOW
   failureTypes:
   - CONNECTIVITY
   - AUTHENTICATION
+  manualInterventionTimeout: 1209600000
   repairActionCode: MANUAL_INTERVENTION
   retryCount: 0
 notificationRules:
